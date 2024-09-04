@@ -1,0 +1,71 @@
+@import './fonts/index.css';
+@import './_datePicker.css';
+:root {
+  /* knito blue */
+  --knitto-blue-100: #2f3574;
+  --knitto-blue-80: #595d90;
+  --knitto-blue-60: #e8eaff;
+  --knitto-blue-40: #eceeff;
+  --knitto-blue-20: #f6f6ff;
+
+  /* navy */
+  --navy-80: #3f4565;
+  --navy-100: #0f163f;
+  --navy-60: #6f738c;
+  --navy-40: #9fa2b2;
+  --navy-20: #cfd0d9;
+
+  /* steel blue */
+  --steel-blue-100: #3e6282;
+  --steel-blue-80: #4f7faa;
+  --steel-blue-60: #7299bb;
+  --steel-blue-40: #95b2cc;
+  --steel-blue-20: #dce5ee;
+
+  /* burnt orange */
+  --burnt-orange-100: #c4592a;
+  --burnt-orange-80: #d15f2c;
+  --burnt-orange-60: #e06934;
+  --burnt-orange-40: #f3c3ae;
+  --burnt-orange-20: #f9e1d6;
+
+  /* Greyish */
+  --greyish-down: #b7becb;
+  --greyish-semi-dark: #e9ebef;
+  --greyish-semi-dark-50: #eff0f6;
+  --greyish-semi-white: #f7f7fc;
+  --greyish-bright-white: #f5f7f6;
+
+  /* Black */
+  --black-100: #1d1f26;
+  --black-80: #292c35;
+  --black-60: #4a4c51;
+  --black-40: #8e8f93;
+  --black-20: #d2d2d4;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  font-size: 16px;
+  font-weight: 400;
+  @apply font-open-sans;
+  /* @media screen and (max-height: 744px) {
+    font-size: 13px;
+  }
+  @media screen and (max-height: 500px) {
+    font-size: 12px;
+  } */
+}
+* {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.element-input__placeholder::before{
+  content: attr(data-placeholder);
+  @apply text-black-40 w-full absolute;
+}
