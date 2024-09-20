@@ -27,7 +27,6 @@ export default function LoginPage() {
         <LogoIcon />
       </div>
       <FormLogin isLoading={isLoading} onSubmitLogin={onSubmitLogin} />
-      <KNUI text={KNUI_LABEL.login} />
     </div>
   );
 }

@@ -51,7 +51,6 @@ export default function DataEnvironmentPage() {
             <Pagination currentPage={page} onNext={onNextPrev} onPrev={onNextPrev} onUpdatePage={setPage} totalPage={paginate?.totalPage} />
           </div>
         </CardDataTableContainer>
-        <KNUI text={KNUI_LABEL.master.env} />
       </section>
     </>
   );
