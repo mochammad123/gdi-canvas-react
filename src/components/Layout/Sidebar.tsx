@@ -35,7 +35,6 @@ function SidebarMemoized({ data }: { data: ISidebarMenu[] }) {
     >
       <SearchMenu value={search} onSearch={setSearch} />
       <ListMenu data={filteredMenu} />
-      <KNUI text={KNUI_LABEL.sidebar} classNameText="h-6 global-strong" />
     </div>
   );
 }

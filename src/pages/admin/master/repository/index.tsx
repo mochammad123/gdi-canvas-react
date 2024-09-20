@@ -57,7 +57,6 @@ export default function DataRepositoryPage() {
           </div>
         </CardDataTableContainer>
       </section>
-      <KNUI text={KNUI_LABEL.master.repository} />
     </div>
   );
 }
