@@ -2,6 +2,9 @@ import { Button } from '@/components/button';
 import { Card, CardContent, CardTitle } from '@/components/Card';
 import {Form} from '@/components/form';
 import { Input } from '@/components/Input';
+import InputWithSuffix from '@/components/Input/InputWithSuffix';
+import Label from '@/components/Label';
+import { Typography } from '@/components/typhography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -46,7 +49,7 @@ export default function FormLogin({ onSubmitLogin, isLoading }: { isLoading: boo
     <Card className="w-[25rem] mx-auto p-12">
       <CardTitle className="text-left mb-8">{import.meta.env.VITE_APP_NAME}</CardTitle>
       <CardContent>
-        {/* <Form onSubmit={onSubmit} isValidated={isValidated}>
+        <form onSubmit={onSubmit}>
           <div>
             <Label className="mb-1">Username</Label>
             <Input {...register('username', { required: true })} className="!h-11" placeholder="Username" />
@@ -66,9 +69,7 @@ export default function FormLogin({ onSubmitLogin, isLoading }: { isLoading: boo
           <Button type="submit" className="w-full mt-5 h-[2.5625rem] flex justify-center items-center" disabled={isLoading}>
             LOGIN
           </Button>
-        </Form> */}
-
-        <Input />
+        </form>
       </CardContent>
     </Card>
   );
