@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import * as React from "react";
-import SortIcon from "../Icon/Sort";
+import SortIcon from "../icon/Sort";
 import { InputDebounce } from "../Input";
-import { Typography } from "../Text";
+import { Typography } from "../typhography";
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -96,7 +96,7 @@ const TableHead = React.forwardRef<
 
   React.useEffect(() => {
     if(activeSort) return;
-    setSort("unset"); 
+    setSort("unset");
   },[activeSort]);
   return (
     <th

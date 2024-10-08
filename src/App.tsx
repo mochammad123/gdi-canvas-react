@@ -1,6 +1,5 @@
 import loadable from "@loadable/component";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import withAuthMiddleware from "./lib/hoc/withAuthMiddleware";
 const AdminRoutes = loadable(() => import("./pages/admin"));
 const LoginPage = loadable(() => import("./pages/login"));
 import { registerSW } from 'virtual:pwa-register';
@@ -16,4 +15,4 @@ function App() {
     </BrowserRouter>
   );
 }
-export default withAuthMiddleware(App);
+export default App;

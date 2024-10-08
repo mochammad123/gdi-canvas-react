@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Calendar, { CalendarProps } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value, View } from "react-calendar/dist/cjs/shared/types";
-import CalendarIcon from "../Icon/Calendar";
+import CalendarIcon from "../icon/Calendar";
 import InputWithSuffix from "./InputWithSuffix";
 import { ICustomCalendarProps, IInputProps } from "./types";
 

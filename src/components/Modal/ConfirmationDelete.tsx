@@ -1,6 +1,6 @@
 import ButtonCancel from "@/components/Button/ButtonCancel";
 import ButtonSave from "@/components/Button/ButtonSave";
-import Spinner from "@/components/Icon/Spinner";
+import Spinner from "@/components/icon/Spinner";
 import Confirmation from "@/components/Modal/ModalConfirmation";
 import { IModalConfirmationProps } from "@/components/Modal/types";
 

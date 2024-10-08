@@ -1,7 +1,7 @@
 import { DATA_PER_PAGE } from "@/lib/variables/constants";
 import clsx from "clsx";
-import Button from "../Button";
-import { Typography } from "../Text";
+import Button from "../button";
+import { Typography } from "../typhography";
 
 
 export default function DataPerPageTable({ className, activePage=10, onClick }: { className?:string; activePage?:number; onClick: (page: number) => void }) {

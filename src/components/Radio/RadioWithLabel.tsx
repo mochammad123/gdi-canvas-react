@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '../Text';
+import { Typography } from '../typhography';
 import Radio from './Radio';
 import type { IRadioProps } from './types';
 

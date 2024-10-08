@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import clsx from "clsx";
 import React, { HTMLInputTypeAttribute, ReactNode, useRef } from "react";
-import EyeIcon from "../Icon/EyeIcon";
+import EyeIcon from "../icon/EyeIcon";
 import Input from "./Input";
 import { IInputWithSufixProps } from "./types";
 

@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/Icon/Logo';
+import LogoIcon from '@/components/icon/Logo';
 import KNUI from '@/components/KNUI';
 import { handleError } from '@/lib/utils';
 import { COOKIES_NAME, KNUI_LABEL } from '@/lib/variables/constants';
@@ -9,12 +9,11 @@ import FormLogin, { type IFormLogin } from './components/FormLogin';
 export default function LoginPage() {
   const navigate = useNavigate();
   const [mutateLogin, { isLoading }] = useAuthLoginMutation();
-  // const { data:authMe } = useAuthMeQuery();
 
   const onSubmitLogin = async (payload: IFormLogin) => {
     try {
-      const response = await mutateLogin(payload).unwrap();
-      Cookies.set(COOKIES_NAME.Token, response.result.token);
+      // const response = await mutateLogin(payload).unwrap();
+      // Cookies.set(COOKIES_NAME.Token, response.result.token);
       window.location.href = 'admin/dashboard';
     } catch (e: unknown) {
        handleError(e);

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Typography } from '../Text';
+import { Typography } from '../typhography';
 import { IDropdownMenuItem } from './types';
 
 export default function DropdownMenu({

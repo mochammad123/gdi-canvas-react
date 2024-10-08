@@ -1,10 +1,10 @@
-import CaretIcon from "@/components/Icon/Caret";
+import CaretIcon from "@/components/icon/Caret";
 import { useOnClickOutside, useSensorKeyboard } from "@/lib/hooks";
 import clsx from "clsx";
 import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import Checkbox from "../Checkbox";
-import CloseIcon from "../Icon/Close";
-import Spinner from "../Icon/Spinner";
+import CloseIcon from "../icon/Close";
+import Spinner from "../icon/Spinner";
 import InputSearch from "../Input/InputSearch";
 import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from "./types";
 
@@ -328,14 +328,14 @@ function SelectionDropdown({
     const rect = wrapperRef.current?.getBoundingClientRect();
     const wrapperPositionY = rect.top;
     const wrapperHeight = rect.height;
-    
+
     if (wrapperPositionY + wrapperHeight + tolerance > window.innerHeight) {
       setPosition("top");
       return;
     }
     setPosition("bottom");
   }, [wrapperRef.current]);
-  
+
   const selectionInputHeight = wrapperRef.current?.previousElementSibling?.getBoundingClientRect().height || 0;
   const wrapperHeight = wrapperRef.current?.getBoundingClientRect().height || 0;
   const top = position === "top" ? { top: -(selectionInputHeight + wrapperHeight) + tolerance } : {}

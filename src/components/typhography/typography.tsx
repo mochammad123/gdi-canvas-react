@@ -15,17 +15,22 @@ const globalClass = [
   'global-button',
   'global-report-content',
   'global-hint',
+  'global-description',
 ] as const;
 
 type TGlobalClass = (typeof globalClass)[number];
 
-export default function Typography({
+const Typography = ({
   as,
   children,
   className,
   ...props
-}: { as: TBaseTag | TGlobalClass } & React.HTMLAttributes<TBaseTag | HTMLParagraphElement>) {
+}: { as: TBaseTag | TGlobalClass } & React.HTMLAttributes<TBaseTag | HTMLParagraphElement>) => {
   return baseTags.includes(as as TBaseTag)
     ? createElement(as, { className, ...props }, children)
     : createElement(defaultTag, { className: clsx(as, className), ...props }, children);
-}
+};
+
+Typography.displayName = 'Typography';
+
+export default Typography;

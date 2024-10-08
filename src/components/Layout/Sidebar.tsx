@@ -6,9 +6,9 @@ import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "../Icon/Search";
+import SearchIcon from "../icon/Search";
 import KNUI from "../KNUI";
-import { Typography } from "../Text";
+import { Typography } from "../typhography";
 import { ISidebarMenu, ISidebarMenuItem } from "./types";
 
 const Sidebar = React.memo(SidebarMemoized);

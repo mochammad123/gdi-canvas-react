@@ -1,6 +1,6 @@
 import { useOnClickOutside } from "@/lib/hooks";
 import { useEffect, useRef, useState } from "react";
-import ButtonChevron from "../Button/ButtonChevron";
+import ButtonChevron from "../button/ButtonChevron";
 import { InputDebounce } from "../Input";
 
 export default function Pagination({

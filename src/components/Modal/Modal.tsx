@@ -1,10 +1,10 @@
 import { useSensorKeyboard } from '@/lib/hooks';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef } from 'react';
-import CloseIcon from '../Icon/Close';
+import CloseIcon from '../icon/Close';
 import KNUI from '../KNUI';
 import Portal from '../Portal';
-import { Typography } from '../Text';
+import { Typography } from '../typhography';
 import { IModalProps } from './types';
 
 export default function Modal({

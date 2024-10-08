@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import SearchIcon from "../Icon/Search";
+import SearchIcon from "../icon/Search";
 import InputDebounce from "./InputDebounce";
 import { IInputDebounceProps } from "./types";
 
