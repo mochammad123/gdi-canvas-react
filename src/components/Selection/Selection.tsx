@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from "re
 import Checkbox from "../Checkbox";
 import CloseIcon from "../icon/Close";
 import Spinner from "../icon/Spinner";
-import InputSearch from "../Input/InputSearch";
+import InputSearch from "../input/input-search";
 import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from "./types";
 
 type ActionReducer = { type: "ON_CLICK_SELECTION" } |

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Spinner from '../icon/Spinner';
+import Spinner from '../icon/spinner';
 
 const variantButtons = {
   contain: 'text-white',

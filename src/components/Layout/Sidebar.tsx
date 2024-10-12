@@ -1,4 +1,4 @@
-import InputSearch from "@/components/Input/InputSearch";
+import InputSearch from "@/components/input/input-search";
 import { KNUI_LABEL } from "@/lib/variables/constants";
 import { toggleSidebar } from "@/redux/layoutSlice";
 import { RootState } from "@/redux/store";

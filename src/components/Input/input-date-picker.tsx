@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Calendar, { CalendarProps } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value, View } from "react-calendar/dist/cjs/shared/types";
-import CalendarIcon from "../icon/Calendar";
-import InputWithSuffix from "./InputWithSuffix";
+import CalendarIcon from "../icon/calendar";
+import InputWithSuffix from "./input-with-suffix";
 import { ICustomCalendarProps, IInputProps } from "./types";
 
 const InputDatePicker = React.forwardRef<

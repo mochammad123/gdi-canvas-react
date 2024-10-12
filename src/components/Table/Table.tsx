@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import * as React from "react";
 import SortIcon from "../icon/Sort";
-import { InputDebounce } from "../Input";
+import { InputDebounce } from "../input";
 import { Typography } from "../typhography";
 
 const Table = React.forwardRef<

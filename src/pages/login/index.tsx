@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/icon/Logo';
+import LogoIcon from '@/components/icon/logo';
 import KNUI from '@/components/KNUI';
 import { handleError } from '@/lib/utils';
 import { COOKIES_NAME, KNUI_LABEL } from '@/lib/variables/constants';

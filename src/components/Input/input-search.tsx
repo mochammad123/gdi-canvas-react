@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import SearchIcon from "../icon/Search";
-import InputDebounce from "./InputDebounce";
+import SearchIcon from "../icon/search";
+import InputDebounce from "./input-debounce";
 import { IInputDebounceProps } from "./types";
 
 export default function InputSearch({

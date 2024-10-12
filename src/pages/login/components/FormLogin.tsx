@@ -1,8 +1,8 @@
 import { Button } from '@/components/button';
 import { Card, CardContent, CardTitle } from '@/components/Card';
 import {Form} from '@/components/form';
-import { Input } from '@/components/Input';
-import InputWithSuffix from '@/components/Input/InputWithSuffix';
+import { Input } from '@/components/input';
+import InputWithSuffix from '@/components/input/input-with-suffix';
 import Label from '@/components/Label';
 import { Typography } from '@/components/typhography';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -1,7 +1,7 @@
 import { debounce } from "@/lib/utils";
 import clsx from "clsx";
 import { ChangeEvent, useEffect, useState } from "react";
-import InputWithSuffix from "./InputWithSuffix";
+import InputWithSuffix from "./input-with-suffix";
 import { IInputProps, IInputWithSufixProps } from "./types";
 
 export default function InputDebounce({
