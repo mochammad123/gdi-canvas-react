@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import React, { HTMLInputTypeAttribute, ReactNode, useRef } from "react";
 import EyeIcon from "../icon/eye-icon";
-import Input from "./Input";
+import Input from "./input";
 import { IInputWithSufixProps } from "./types";
 
 const InputWithSuffix = React.forwardRef<
