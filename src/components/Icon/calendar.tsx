@@ -1,12 +1,20 @@
-export default function CalendarIcon() {
+import clsx from 'clsx';
+
+interface SVGProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+  color?: string;
+}
+
+export default function CalendarIcon({ className, color, ...props }: SVGProps) {
   return (
     <svg
-      className="w-[1.3125rem] h-[1.375rem]"
+      className={clsx('w-[1.3125rem] h-[1.375rem]', className)}
       width="21"
       height="22"
       viewBox="0 0 21 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_109_299)">
         <path
@@ -16,12 +24,7 @@ export default function CalendarIcon() {
       </g>
       <defs>
         <clipPath id="clip0_109_299">
-          <rect
-            width="21"
-            height="21"
-            fill="white"
-            transform="translate(0 0.5)"
-          />
+          <rect width="21" height="21" fill={color || 'white'} transform="translate(0 0.5)" />
         </clipPath>
       </defs>
     </svg>
