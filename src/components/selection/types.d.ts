@@ -1,4 +1,4 @@
-import { initialValues } from "./Selection";
+import { initialValues } from "./selection";
 
 export interface ISelectionOption {
   [key: string | number]: string | number;

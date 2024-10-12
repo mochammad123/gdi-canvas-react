@@ -1,9 +1,8 @@
-import Modal, { Backdrop } from ".";
-import Button from "../button";
-import ButtonCancel from "../button/ButtonCancel";
-import Spinner from "../icon/spinner";
-import Portal from "../portal";
-import { IModalConfirmationProps } from "./types";
+import Modal, { Backdrop } from '.';
+import { Button } from '../button';
+import Spinner from '../icon/spinner';
+import Portal from '../portal';
+import { IModalConfirmationProps } from './types';
 
 export default function Confirmation({
   onHide,
@@ -47,11 +46,9 @@ export default function Confirmation({
           )}
           {!hideButton && (
             <div className="mt-4 flex gap-x-3 justify-center">
-              <ButtonCancel
-                text={buttonCancelText}
-                onClick={onHide}
-                disabled={isLoading}
-              />
+              <Button variant="outline" onClick={onHide} disabled={isLoading} className="shrink-0 !w-1/2">
+                {buttonCancelText}
+              </Button>
               <Button
                 disabled={isLoading}
                 className="px-3 flex justify-center items-center"

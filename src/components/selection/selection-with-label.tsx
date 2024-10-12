@@ -1,8 +1,8 @@
 import Label from "@/components/label";
 import clsx from "clsx";
 import React from "react";
-import Selection from "./Selection";
 import { ISelectionProps } from "./types";
+import Selection from "./selection";
 
 const SelectionWithLabel = React.forwardRef<
   HTMLInputElement,

@@ -7,7 +7,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "./Table";
+} from "./table";
 
 export {
     Table,

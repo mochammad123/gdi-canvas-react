@@ -1,5 +1,5 @@
-import CardDataTableContainer from './CardDatatableContainer';
-import CardFormContainer from './CardFormContainer';
+import CardDataTableContainer from './card-datatable-container';
+import CardFormContainer from './card-form-container';
 
 export { CardDataTableContainer, CardFormContainer };
 

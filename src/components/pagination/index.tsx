@@ -1,6 +1,5 @@
-import DataPerPageTable from './DataPerPageTable';
-import Pagination from './Pagination';
+import DataPerPageTable from './data-per-page-table';
+import Pagination from './pagination';
 
 export default Pagination;
 export { DataPerPageTable };
-

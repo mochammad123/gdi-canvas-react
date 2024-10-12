@@ -1,4 +1,3 @@
-import InputSearch from "@/components/InputTemp/input-search";
 import { KNUI_LABEL } from "@/lib/variables/constants";
 import { toggleSidebar } from "@/redux/layoutSlice";
 import { RootState } from "@/redux/store";
@@ -9,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "../icon/search";
 import KNUI from "../knui";
 import { Typography } from "../typhography";
-import { ISidebarMenu, ISidebarMenuItem } from "./types";
+import { ISidebarMenu, ISidebarMenuItem } from "./types.d";
+import InputSearch from "../inputs/input-search";
 
 const Sidebar = React.memo(SidebarMemoized);
 function SidebarMemoized({ data }: { data: ISidebarMenu[] }) {

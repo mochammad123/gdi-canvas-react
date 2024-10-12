@@ -4,9 +4,9 @@ import { toggleSidebar } from '@/redux/layoutSlice';
 import Cookies from 'js-cookie';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import HamburgerIcon from '../icon/Hamburger';
-import { ISidebarMenu } from './types';
-import {Button} from '@/components/button'
+import { Button } from '@/components/button';
+import { ISidebarMenu } from './types.d';
+import HamburgerIcon from '../icon/hamburger';
 
 function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
   const { data: userLogin } = useUserLogin();
@@ -24,17 +24,20 @@ function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
     return temp;
   }, [sidebar]);
 
-  const textTitle = parsedMenu.find((menu) => window.location.pathname.includes(menu.url))?.title || sidebar?.[0]?.menu?.[0]?.title || '';
+  const textTitle =
+    parsedMenu.find((menu: { title: string; url: string }) => window.location.pathname.includes(menu.url))?.title ||
+    sidebar?.[0]?.menu?.[0]?.title ||
+    '';
 
   return (
     <header className="z-[999] h-[3.25rem] fixed top-0 left-0 right-0 flex justify-between px-[.875rem] bg-navy-100 header">
       <TitleHeader menuName={textTitle} />
       <div className="flex gap-x-[.625rem] items-center">
-        <Button variant="outline" color='white' className="">
+        <Button variant="outline" color="white" className="">
           {userLogin?.username || 'User'}
         </Button>
         <Button
-          color='burnt-orange'
+          color="burnt-orange"
           onClick={() => {
             Cookies.remove(COOKIES_NAME.Token);
             document.location = '/';

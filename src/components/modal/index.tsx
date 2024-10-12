@@ -1,4 +1,4 @@
-import Modal, { Backdrop } from './Modal';
+import Modal, { Backdrop } from './modal';
 
 export default Modal;
 export { Backdrop };

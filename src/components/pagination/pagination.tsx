@@ -1,14 +1,15 @@
-import { useOnClickOutside } from "@/lib/hooks";
-import { useEffect, useRef, useState } from "react";
-import ButtonChevron from "../button/ButtonChevron";
-import { InputDebounce } from "../InputTemp";
+import { useOnClickOutside } from '@/lib/hooks';
+import { useEffect, useRef, useState } from 'react';
+import InputDebounce from '../inputs/input-debounce';
+import { Button } from '../button';
+import ChevronIcon from '../icon/chevron';
 
 export default function Pagination({
   currentPage,
   onNext,
   onPrev,
   onUpdatePage,
-  totalPage
+  totalPage,
 }: {
   currentPage: number;
   onNext?: (page: number) => void;
@@ -23,7 +24,7 @@ export default function Pagination({
 
   useEffect(() => {
     if (!editable) return;
-    const inputEl = wrapperRef.current?.querySelector("input");
+    const inputEl = wrapperRef.current?.querySelector('input');
     if (!inputEl) return;
     inputEl.select();
     inputEl.focus();
@@ -31,7 +32,9 @@ export default function Pagination({
 
   return (
     <div className="flex gap-x-4" ref={wrapperRef}>
-      <ButtonChevron disabled={currentPage === 1} arrow="left" onClick={() => onPrev && onPrev(-1)} />
+      <Button variant="text" onClick={() => onPrev && onPrev(-1)} disabled={currentPage === 1}>
+        <ChevronIcon rotate="left" />
+      </Button>
       <div
         className="w-[2.25rem] h-[2.25rem] flex justify-center items-center global-button"
         onClick={() => {
@@ -40,23 +43,25 @@ export default function Pagination({
       >
         {editable ? (
           <InputDebounce
-            onChangeValue={() => ""}
+            onChangeValue={() => ''}
             className="text-center rounded-none"
             onKeyUp={(e) => {
               const page = +e.currentTarget.value;
               if (page <= 0) return;
-              if (e.key === "Enter") {
-                onUpdatePage && onUpdatePage(page > totalPage ? totalPage : page );
+              if (e.key === 'Enter') {
+                onUpdatePage && onUpdatePage(page > totalPage ? totalPage : page);
                 setEditable(false);
               }
             }}
-            value={currentPage || ""}
+            value={currentPage || ''}
           />
         ) : (
           currentPage
         )}
       </div>
-      <ButtonChevron disabled={totalPage === currentPage || !totalPage} arrow="right" onClick={() => onNext && onNext(1)} />
+      <Button variant="text" onClick={() => onNext && onNext(1)} disabled={totalPage === currentPage || !totalPage}>
+        <ChevronIcon rotate="right" />
+      </Button>
     </div>
   );
 }

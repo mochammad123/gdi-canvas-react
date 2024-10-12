@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '../typhography';
-import Radio from './Radio';
+import Radio from './radio';
 import type { IRadioProps } from './types';
 
 export default function RadioWithLabel({ name, label, ...props }: IRadioProps & { label: string }) {
