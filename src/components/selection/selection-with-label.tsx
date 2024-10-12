@@ -1,4 +1,4 @@
-import Label from "@/components/Label";
+import Label from "@/components/label";
 import clsx from "clsx";
 import React from "react";
 import Selection from "./Selection";

@@ -1,4 +1,4 @@
-import InputSearch from "@/components/input/input-search";
+import InputSearch from "@/components/InputTemp/input-search";
 import { KNUI_LABEL } from "@/lib/variables/constants";
 import { toggleSidebar } from "@/redux/layoutSlice";
 import { RootState } from "@/redux/store";
@@ -6,8 +6,8 @@ import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "../icon/Search";
-import KNUI from "../KNUI";
+import SearchIcon from "../icon/search";
+import KNUI from "../knui";
 import { Typography } from "../typhography";
 import { ISidebarMenu, ISidebarMenuItem } from "./types";
 

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import Portal from "../Portal";
+import Portal from "../portal";
 
 const ContainerPrint = forwardRef<
   HTMLDivElement,

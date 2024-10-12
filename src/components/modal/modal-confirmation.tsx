@@ -1,8 +1,8 @@
 import Modal, { Backdrop } from ".";
 import Button from "../button";
 import ButtonCancel from "../button/ButtonCancel";
-import Spinner from "../icon/Spinner";
-import Portal from "../Portal";
+import Spinner from "../icon/spinner";
+import Portal from "../portal";
 import { IModalConfirmationProps } from "./types";
 
 export default function Confirmation({

@@ -1,8 +1,8 @@
 import ButtonCancel from "@/components/Button/ButtonCancel";
 import ButtonSave from "@/components/Button/ButtonSave";
-import Spinner from "@/components/icon/Spinner";
-import Confirmation from "@/components/Modal/ModalConfirmation";
-import { IModalConfirmationProps } from "@/components/Modal/types";
+import Spinner from "@/components/icon/spinner";
+import Confirmation from "@/components/modal/modal-confirmation";
+import { IModalConfirmationProps } from "@/components/modal/types";
 
 export default function ConfirmationDelete({
   show,

@@ -2,10 +2,10 @@ import CaretIcon from "@/components/icon/Caret";
 import { useOnClickOutside, useSensorKeyboard } from "@/lib/hooks";
 import clsx from "clsx";
 import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import Checkbox from "../Checkbox";
+import Checkbox from "../checkbox";
 import CloseIcon from "../icon/Close";
-import Spinner from "../icon/Spinner";
-import InputSearch from "../input/input-search";
+import Spinner from "../icon/spinner";
+import InputSearch from "../InputTemp/input-search";
 import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from "./types";
 
 type ActionReducer = { type: "ON_CLICK_SELECTION" } |

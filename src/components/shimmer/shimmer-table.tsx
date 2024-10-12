@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "../Table";
+import { TableCell, TableRow } from "../table";
 import { Line, Shimmer } from "./Shimmer";
 
 export default function ShimmerTableRow({

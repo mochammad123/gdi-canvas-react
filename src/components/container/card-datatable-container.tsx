@@ -1,6 +1,6 @@
-import Title from "@/components/Title";
 import clsx from "clsx";
-import { Card } from "../Card";
+import { Card } from "../card";
+import { Typography } from "../typhography";
 
 export default function CardDataTableContainer({
   title,
@@ -21,7 +21,7 @@ export default function CardDataTableContainer({
         className
       )}
     >
-      {title && <Title className="py-[.4063rem] px-4" text={title} />}
+      {title && <Typography as="global-strong" className="py-[.4063rem] px-4">{title}</Typography>}
       {children}
     </Card>
   );

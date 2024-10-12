@@ -1,11 +1,11 @@
-import Portal from "@/components/Portal";
+import Portal from "@/components/portal";
 import { toggleSidebar } from "@/redux/layoutSlice";
 import { RootState } from "@/redux/store";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import { ISidebarMenu } from "./types";
+import Header from "./header";
+import Sidebar from "./sidebar";
+import { ISidebarMenu } from "./types.d";
 
 export default function Layout({
   sidebar,

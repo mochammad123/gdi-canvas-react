@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
-import { Card } from "../Card";
-import Title from "../Title";
+import { Card } from "../card";
+import { Typography } from "../typhography";
 
 export default function CardFormContainer({
   title,
@@ -20,7 +20,7 @@ export default function CardFormContainer({
         className
       )}
     >
-      <Title text={title} />
+      <Typography as="global-strong">{title}</Typography>
       {children}
     </Card>
   );

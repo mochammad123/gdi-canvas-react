@@ -2,8 +2,8 @@ import { useSensorKeyboard } from '@/lib/hooks';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef } from 'react';
 import CloseIcon from '../icon/Close';
-import KNUI from '../KNUI';
-import Portal from '../Portal';
+import KNUI from '../knui';
+import Portal from '../portal';
 import { Typography } from '../typhography';
 import { IModalProps } from './types';
 

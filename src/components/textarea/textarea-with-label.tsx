@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import Label from "../Label";
+import Label from "../label";
 import { Textarea } from "./index";
 import { ITextareaProps } from "./types";
 

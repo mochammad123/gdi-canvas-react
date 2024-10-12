@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "../Table";
+import { TableCell, TableRow } from "../table";
 
 export default function EmptyDataTable({ colSpan = 2, searched="" }: { colSpan?: number; searched?:string }) {
     return (

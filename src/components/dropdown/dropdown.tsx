@@ -1,6 +1,6 @@
 import { useOnClickOutside } from '@/lib/hooks';
 import { useEffect, useRef } from 'react';
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from './dropdown-menu';
 import { IDropdownMenuItem } from './types';
 
 const defaultDropdownMenus: IDropdownMenuItem[] = [
