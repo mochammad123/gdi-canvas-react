@@ -1,14 +1,9 @@
 import { useAuthMeQuery } from '@/redux/api/auth';
-import { useLazyGetLastFetchRepositoryQuery, useLazyGetRepositoryFetchQuery } from '@/redux/api/repository';
 import { ResponseWithPaginate } from '@/redux/api/types';
-import { setLastFetch } from '@/redux/layoutSlice';
-import { RootState } from '@/redux/store';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getLocalStorage, setLocalStorage } from './storage';
 import { IuseModal, IuseParams } from './types';
-import { handleError } from './utils';
 import { DEFAULT_DATA_PER_PAGE } from './variables/constants';
 
 export function useOnClickOutside(
@@ -242,30 +237,4 @@ export function useResponseData<TData>(data: TData | any) {
   const dataSource: ResponseWithPaginate<TData>['data'] = data?.result?.data || [];
   const paginate: ResponseWithPaginate<TData>['paginate'] = data?.result?.paginate;
   return { dataSource, paginate };
-}
-
-export function useLastFetchRepository() {
-  const [lazyLastFetchRepo, { isLoading: isLoadingLastFetch }] = useLazyGetLastFetchRepositoryQuery();
-  const [lazyRepositoryFetch, { isLoading: isLoadingFetch }] = useLazyGetRepositoryFetchQuery();
-  const lastFetch = useSelector((state: RootState) => state.layout.lastFetch);
-  const dispatch = useDispatch();
-  const fetchLastRepository = async () => {
-    try {
-      await lazyRepositoryFetch().unwrap();
-      const response = await lazyLastFetchRepo().unwrap();
-      dispatch(setLastFetch({
-        last_fetch_repo: dayjs(response?.result?.last_fetch_repo).format("YYYY-MM-DD HH:mm:ss") || "",
-        last_fetch_repo_epoch_time: response?.result?.last_fetch_repo_epoch_time || "",
-      }));
-    } catch (e) {
-      handleError(e);
-    }
-  };
-
-  return {
-    isLoading:isLoadingLastFetch || isLoadingFetch,
-    lastFetchRepo:lastFetch.last_fetch_repo,
-    lastFetchRepoEpochTime:lastFetch.last_fetch_repo_epoch_time,
-    fetchLastRepository,
-  };
 }

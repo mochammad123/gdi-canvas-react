@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@knittotextile/react-ui": "^1.0.0",
     "@loadable/component": "^5.16.3",
     "@reduxjs/toolkit": "^1.9.7",
     "clsx": "^2.1.0",
@@ -87,6 +88,5 @@
         "header": "# Changelog"
       }
     }
-  },
-  "packageManager": "pnpm@9.0.6+sha512.f6d863130973207cb7a336d6b439a242a26ac8068077df530d6a86069419853dc1ffe64029ec594a9c505a3a410d19643c870aba6776330f5cfddcf10a9c1617"
+  }
 }

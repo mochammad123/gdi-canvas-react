@@ -1,5 +1,5 @@
-import LogoIcon from '@/components/Icon/Logo';
-import KNUI from '@/components/KNUI';
+import LogoIcon from '@/components/icon/logo';
+import KNUI from '@/components/knui';
 import { handleError } from '@/lib/utils';
 import { COOKIES_NAME, KNUI_LABEL } from '@/lib/variables/constants';
 import { useAuthLoginMutation } from '@/redux/api/auth';
@@ -9,12 +9,11 @@ import FormLogin, { type IFormLogin } from './components/FormLogin';
 export default function LoginPage() {
   const navigate = useNavigate();
   const [mutateLogin, { isLoading }] = useAuthLoginMutation();
-  // const { data:authMe } = useAuthMeQuery();
 
   const onSubmitLogin = async (payload: IFormLogin) => {
     try {
-      const response = await mutateLogin(payload).unwrap();
-      Cookies.set(COOKIES_NAME.Token, response.result.token);
+      // const response = await mutateLogin(payload).unwrap();
+      // Cookies.set(COOKIES_NAME.Token, response.result.token);
       window.location.href = 'admin/dashboard';
     } catch (e: unknown) {
        handleError(e);

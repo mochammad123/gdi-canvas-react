@@ -1,29 +1,22 @@
-import Layout from '@/components/Layout';
-import { ISidebarMenu } from '@/components/Layout/types';
+import Layout from '@/components/layout';
+import { ISidebarMenu } from '@/components/layout/types.d';
 import loadable from '@loadable/component';
 import { Suspense, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-// master
-const DataRepositoryPage = loadable(() => import('./master/repository'));
-const DataEnvironmentPage = loadable(() => import('./master/environment'));
+const DashboardPage = loadable(() => import('./dashboard'));
 
 export default function AdminRoutes() {
 
   const sidebarAdmin: ISidebarMenu[] = useMemo(
     () => [
       {
-        title: 'Data Master',
+        title: 'Dashboard',
         menu: [
           {
-            title: 'Data Repository',
-            url: 'master/data-repository',
-            element: <DataRepositoryPage />,
-          },
-          {
-            title: 'Data Env',
-            url: 'master/data-env',
-            element: <DataEnvironmentPage />,
+            title: 'Dashboard',
+            url: 'dashboard',
+            element: <DashboardPage />,
           },
         ],
       },

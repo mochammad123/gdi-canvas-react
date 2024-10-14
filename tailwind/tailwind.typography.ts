@@ -99,9 +99,9 @@ export default plugin(({ addUtilities }) => {
       letterSpacing: '0.32px',
     },
     '.global-report-title': {
+      fontFamily: `"Open Sans", sans-serif`,
       fontSize: '13px',
       lineHeight: '19.5px',
-      color: 'var(--black-100)',
       fontWeight: '700',
     },
     '.global-report-content': {
@@ -109,7 +109,6 @@ export default plugin(({ addUtilities }) => {
       fontWeight: '400',
       fontSize: '13px',
       lineHeight: '19.5px',
-      color: 'var(--black-100)',
     },
     '.global-hint': {
       fontFamily: `"Open Sans", sans-serif`,
@@ -117,6 +116,13 @@ export default plugin(({ addUtilities }) => {
       fontSize: '10px',
       lineHeight: '15px ',
       letterSpacing: '0.08px',
+    },
+    '.global-description': {
+      fontFamily: `"Open Sans", sans-serif`,
+      fontWeight: '400',
+      fontSize: '14px',
+      lineHeight: '21px ',
+      letterSpacing: '0.2%',
     },
   };
 

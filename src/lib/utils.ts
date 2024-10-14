@@ -1,4 +1,4 @@
-import { ISelectionOption } from '@/components/Selection/types';
+import { ISelectionOption } from '@/components/selection/types';
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 import * as XLSX from 'xlsx';
