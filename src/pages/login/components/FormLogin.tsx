@@ -1,9 +1,9 @@
 import { Button } from '@/components/button';
-import { Card, CardContent, CardTitle } from '@/components/Card';
+import { Card, CardContent, CardTitle } from '@/components/card';
 import {Form} from '@/components/form';
-import { Input } from '@/components/Input';
-import InputWithSuffix from '@/components/Input/InputWithSuffix';
-import Label from '@/components/Label';
+import Input from '@/components/inputs/input';
+import InputWithSuffix from '@/components/inputs/input-with-suffix';
+import Label from '@/components/label';
 import { Typography } from '@/components/typhography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';

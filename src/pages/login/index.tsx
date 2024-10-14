@@ -1,5 +1,5 @@
-import LogoIcon from '@/components/icon/Logo';
-import KNUI from '@/components/KNUI';
+import LogoIcon from '@/components/icon/logo';
+import KNUI from '@/components/knui';
 import { handleError } from '@/lib/utils';
 import { COOKIES_NAME, KNUI_LABEL } from '@/lib/variables/constants';
 import { useAuthLoginMutation } from '@/redux/api/auth';
