@@ -1,14 +1,12 @@
 import LogoIcon from '@/components/icon/logo';
-import KNUI from '@/components/knui';
-import { handleError } from '@/lib/utils';
-import { COOKIES_NAME, KNUI_LABEL } from '@/lib/variables/constants';
 import { useAuthLoginMutation } from '@/redux/api/auth';
-import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import FormLogin, { type IFormLogin } from './components/FormLogin';
+import { useToast } from '@/components/toast';
 export default function LoginPage() {
   const navigate = useNavigate();
   const [mutateLogin, { isLoading }] = useAuthLoginMutation();
+  const toast = useToast();
 
   const onSubmitLogin = async (payload: IFormLogin) => {
     try {
@@ -16,7 +14,7 @@ export default function LoginPage() {
       // Cookies.set(COOKIES_NAME.Token, response.result.token);
       window.location.href = 'admin/dashboard';
     } catch (e: unknown) {
-       handleError(e);
+      toast.open('info', JSON.stringify(e));
     }
   };
 

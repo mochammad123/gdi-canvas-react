@@ -6,7 +6,9 @@ interface IToast {
   toastType: TToastVariant;
   message: string;
   duration?: number;
-  transitionPosition?: 'bottom' | 'top';
+  transitionPosition?: TToastPosition;
+  animationClosed: boolean;
+  icon?: boolean;
   onClose: () => void;
 }
 

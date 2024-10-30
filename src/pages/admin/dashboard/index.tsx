@@ -1,11 +1,9 @@
-import { Typography } from '@/components/typhography';
 import ColorKnitto from '@/../tailwind/tailwind.colors';
 import { useMemo } from 'react';
-import { Button } from '@/components/button';
-import ChevronIcon from '@/components/icon/chevron';
 import ColorSchema from './components/color-schema';
 import TyphographiSchema from './components/typographi-schema';
 import ButtonSchema from './components/button-schema';
+import ToatSchema from './components/toast-schema';
 
 export default function Dashboard() {
   const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);
@@ -58,14 +56,17 @@ export default function Dashboard() {
 
   return (
     <div className="p-2 bg-knitto-blue-20 mb-44">
-      <section>
+      <section className='mb-5'>
         <ColorSchema arrayColors={splitArrays} />
       </section>
-      <section>
+      <section className='mb-5'>
         <TyphographiSchema />
       </section>
-      <section>
+      <section className='mb-5'>
         <ButtonSchema />
+      </section>
+      <section className='mb-5'>
+        <ToatSchema />
       </section>
     </div>
   );

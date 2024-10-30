@@ -1,6 +1,5 @@
 import { ISelectionOption } from '@/components/selection/types';
 import dayjs from 'dayjs';
-import toast from 'react-hot-toast';
 import * as XLSX from 'xlsx';
 import { IExcelColumnWidth } from './types';
 
@@ -46,15 +45,6 @@ export function formatRupiah(number: number, hideRp: boolean = false) {
   const parsed = number.toLocaleString('id-ID').replaceAll('.', ',');
   if (hideRp) return parsed;
   return `Rp. ${parsed}`;
-}
-
-export function handleError(e: unknown) {
-  if (e instanceof Error) {
-    toast.error(e.message);
-    return;
-  }
-
-  toast.error((e as any)?.data?.message);
 }
 
 export function exportDataToExcel<TData>(

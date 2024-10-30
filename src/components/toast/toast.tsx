@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 const TOAST_THEME = {
   error: 'bg-red-50 text-red-800',
-  success: 'bg-green-50 text-green-800',
+  success: 'text-white bg-navy-100',
   warning: 'bg-yellow-50 text-yellow-800',
   info: 'bg-blue-50 text-blue-800',
 };
@@ -28,7 +28,7 @@ const TOAST_ICON = {
   info: <WarningIcon className="!size-2.5" />,
 };
 
-export default function Toast({ toastType, message, duration, onClose, transitionPosition = 'bottom' }: IToast) {
+export default function Toast({ id, toastType, message, duration, onClose, transitionPosition = 'bottom-right', animationClosed }: IToast) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -50,30 +50,38 @@ export default function Toast({ toastType, message, duration, onClose, transitio
     }
   }, [duration, onClose]);
 
+
   return (
     <div
       className={clsx(
-        'rounded-md p-3 w-max transition-all duration-300 transform',
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6',
-        transitionPosition === 'top' && !isVisible ? '-translate-y-6' : '',
-        transitionPosition === 'bottom' && !isVisible ? 'translate-y-6' : '',
+        'rounded-md p-3 transition-all duration-500 transform',
+        {
+          '-translate-y-96': transitionPosition === 'center' && !isVisible,
+          '-translate-x-96': (transitionPosition === 'bottom-left' || transitionPosition === 'top-left') && !isVisible,
+          'translate-x-96': (transitionPosition === 'bottom-right' || transitionPosition === 'top-right') && !isVisible,
+        },{
+          '-translate-x-96': (transitionPosition === 'bottom-left' || transitionPosition === 'top-left') && animationClosed,
+          'translate-x-96': (transitionPosition === 'bottom-right' || transitionPosition === 'top-right') && animationClosed
+        },{
+          'translate-x-96': transitionPosition === 'center' && animationClosed,
+        },
         TOAST_THEME[toastType]
       )}
     >
-      <div className="flex items-center">
+      <div className="flex justify-between gap-5 items-center">
         <div className="flex-shrink-0">
           <div className={clsx('flex justify-center items-center size-6 rounded-full', ICON_BACKGROUND[toastType])}>{TOAST_ICON[toastType]}</div>
         </div>
 
-        <Typography as="global-paragraph" className="text-sm font-medium ms-2">
-          {message}
-        </Typography>
+        <Typography as="global-paragraph">{message}</Typography>
 
-        <div className="ml-auto pl-5">
-          <Button size="sm" className="!text-sm !bg-blue-50 rounded !border-black-20 shadow-none !text-black-60" onClick={onClose}>
-            Dismiss
-          </Button>
-        </div>
+        <Button
+          size="sm"
+          className="text-navy-100 shadow-none !p-0 !m-0"
+          variant="text"
+          LeftIcon={() => <CloseIcon color="white" />}
+          onClick={onClose}
+        ></Button>
       </div>
     </div>
   );
