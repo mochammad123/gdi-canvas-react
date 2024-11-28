@@ -56,17 +56,14 @@ export default function Dashboard() {
 
   return (
     <div className="p-2 bg-knitto-blue-20 mb-44">
-      <section className='mb-5'>
+      <section>
         <ColorSchema arrayColors={splitArrays} />
       </section>
-      <section className='mb-5'>
+      <section>
         <TyphographiSchema />
       </section>
-      <section className='mb-5'>
+      <section>
         <ButtonSchema />
-      </section>
-      <section className='mb-5'>
-        <ToatSchema />
       </section>
     </div>
   );
