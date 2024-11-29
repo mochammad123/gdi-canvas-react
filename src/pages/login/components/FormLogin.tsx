@@ -1,10 +1,9 @@
-import { Button } from '@/components/button';
-import { Card, CardContent, CardTitle } from '@/components/card';
-import {Form} from '@/components/form';
-import Input from '@/components/inputs/input';
-import InputWithSuffix from '@/components/inputs/input-with-suffix';
-import Label from '@/components/label';
-import { Typography } from '@/components/typhography';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import Input from '@/components/ui/inputs/input';
+import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
+import Label from '@/components/ui/label';
+import { Typography } from '@/components/ui/typhography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';

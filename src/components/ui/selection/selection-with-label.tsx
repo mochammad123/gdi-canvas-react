@@ -1,4 +1,4 @@
-import Label from "@/components/label";
+import Label from "@/components/ui/label";
 import clsx from "clsx";
 import React from "react";
 import { ISelectionProps } from "./types";

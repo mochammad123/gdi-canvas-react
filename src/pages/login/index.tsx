@@ -1,8 +1,8 @@
-import LogoIcon from '@/components/icon/logo';
+import LogoIcon from '@/components/ui/icon/logo';
 import { useAuthLoginMutation } from '@/redux/api/auth';
 import { useNavigate } from 'react-router-dom';
 import FormLogin, { type IFormLogin } from './components/FormLogin';
-import { useToast } from '@/components/toast';
+import { useToast } from '@/components/ui/toast';
 export default function LoginPage() {
   const navigate = useNavigate();
   const [mutateLogin, { isLoading }] = useAuthLoginMutation();

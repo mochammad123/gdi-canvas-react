@@ -1,4 +1,4 @@
-export interface IResponseDataRepository {
+interface IResponseDataRepository {
     id: number;
     created_date:string;
     name:string;
@@ -6,7 +6,7 @@ export interface IResponseDataRepository {
     status:string;
 }
 
-export interface IResponseDataEnvironment {
+interface IResponseDataEnvironment {
     id: number;
     created_date:string;
     catatan_env:string;
@@ -16,7 +16,7 @@ export interface IResponseDataEnvironment {
     nama_variant:string;
     script:string;
 }
-export interface IResponseDataRepository {
+interface IResponseDataRepository {
     id: number;
     created_date:string;
     name:string;
@@ -24,7 +24,7 @@ export interface IResponseDataRepository {
     status:string;
 }
 
-export interface IResponseDataBranch {
+interface IResponseDataBranch {
     id: number;
     created_date: string;
     nama: string;

@@ -1,19 +1,19 @@
-export interface IResponse<T = null> {
+interface IResponse<T = null> {
   message: string;
   result: T;
 }
 
-export interface ISuccessMessage {
+interface ISuccessMessage {
   message: string;
 }
 
-export interface BasicParameter {
+interface BasicParameter {
   search?: string;
   perPage: number;
   page: number;
 }
 
-export interface ResponseWithPaginate<TData = any> {
+interface ResponseWithPaginate<TData = any> {
   data: TData;
   paginate: {
     page: number;
@@ -23,7 +23,7 @@ export interface ResponseWithPaginate<TData = any> {
   };
 }
 
-export declare namespace AuthApi {
+declare namespace AuthApi {
   interface ResponseLogin {
     token: string;
   }
@@ -38,7 +38,7 @@ export declare namespace AuthApi {
   }
 }
 
-export declare namespace RepositoryApi {
+declare namespace RepositoryApi {
   interface ResponseGetRepository
     extends ResponseWithPaginate<{
       id: number;
@@ -56,7 +56,7 @@ export declare namespace RepositoryApi {
   }
 }
 
-export declare namespace EnvApi {
+declare namespace EnvApi {
   interface ResponseGetEnv
     extends ResponseWithPaginate<{
       id: number;
@@ -70,7 +70,7 @@ export declare namespace EnvApi {
     }> {}
 }
 
-export declare namespace BranchApi {
+declare namespace BranchApi {
   interface ResponseGetBranch
     extends ResponseWithPaginate<{
       id: number;
@@ -82,7 +82,7 @@ export declare namespace BranchApi {
     }> {}
 }
 
-export declare namespace JobApi {
+declare namespace JobApi {
   interface ResponseGetJob
     extends ResponseWithPaginate<{
       id: number;
@@ -130,7 +130,7 @@ export declare namespace JobApi {
   }
 }
 
-export declare namespace JobGroupApi {
+declare namespace JobGroupApi {
   interface ResponseGetJobGroup
     extends ResponseWithPaginate<{
       id: number;
@@ -156,7 +156,7 @@ export declare namespace JobGroupApi {
   }
 }
 
-export declare namespace ComboBoxApi {
+declare namespace ComboBoxApi {
   interface ResponseGetComboBoxRepoBranch {
     id: number;
     name: string;
@@ -185,7 +185,7 @@ export declare namespace ComboBoxApi {
   }
 }
 
-export declare namespace HistoryJobApi {
+declare namespace HistoryJobApi {
   interface ResponseGetHistoryJob
     extends ResponseWithPaginate<{
       id: number;

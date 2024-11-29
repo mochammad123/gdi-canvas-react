@@ -1,4 +1,4 @@
-export interface IResponseDataJob {
+interface IResponseDataJob {
     id: number;
     created_date: string;
     nama: string;
@@ -10,10 +10,10 @@ export interface IResponseDataJob {
     env: string;
 }
 
-export interface IResponseDataJobGroup {
+interface IResponseDataJobGroup {
     id: number;
     created_date: string;
     nama: string;
 }
 
-export interface IResponseSelectDataJob extends Omit<IResponseDataJob,'env'> {}
+interface IResponseSelectDataJob extends Omit<IResponseDataJob,'env'> {}

@@ -1,6 +1,6 @@
-import Spinner from '@/components/icon/spinner';
-import Confirmation from '@/components/modal/modal-confirmation';
-import { IModalConfirmationProps } from '@/components/modal/types';
+import Spinner from '@/components/ui/icon/spinner';
+import Confirmation from '@/components/ui/modal/modal-confirmation';
+import { IModalConfirmationProps } from '@/components/ui/modal/types';
 import { Button } from '../button';
 
 export default function ConfirmationDelete({

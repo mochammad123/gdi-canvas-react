@@ -1,4 +1,4 @@
-import { Typography } from '@/components/typhography';
+import { Typography } from '@/components/ui/typhography';
 
 interface ITypographyComponent {
   arrayColors: string[][];

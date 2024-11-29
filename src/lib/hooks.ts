@@ -1,9 +1,7 @@
 import { useAuthMeQuery } from '@/redux/api/auth';
-import { ResponseWithPaginate } from '@/redux/api/types';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getLocalStorage, setLocalStorage } from './storage';
-import { IuseModal, IuseParams } from './types';
 import { DEFAULT_DATA_PER_PAGE } from './variables/constants';
 
 export function useOnClickOutside(

@@ -1,5 +1,4 @@
 import Layout from '@/components/layout';
-import { ISidebarMenu } from '@/components/layout/types.d';
 import loadable from '@loadable/component';
 import { Suspense, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';

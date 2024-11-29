@@ -5,7 +5,7 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/dist/query/react";
-export type TEndpointBuilder<TName> = EndpointBuilder<
+type TEndpointBuilder<TName> = EndpointBuilder<
   BaseQueryFn<
     string | FetchArgs,
     unknown,
@@ -17,17 +17,17 @@ export type TEndpointBuilder<TName> = EndpointBuilder<
   TName
 >;
 
-export interface IResponse<T> {
+interface IResponse<T> {
   status: number;
   values: T & { status?: string; message?: string };
 }
 
-export interface ISuccessMessage {
+interface ISuccessMessage {
   message: string;
 }
 
-export interface IResponseSuccesfully extends IResponse<{ message: string }> {}
+interface IResponseSuccesfully extends IResponse<{ message: string }> {}
 
-export interface IError {
+interface IError {
   status: string;
 }

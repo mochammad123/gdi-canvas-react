@@ -1,6 +1,6 @@
-import { Button } from '@/components/button'
-import ChevronIcon from '@/components/icon/chevron'
-import { Typography } from '@/components/typhography'
+import { Button } from '@/components/ui/button'
+import ChevronIcon from '@/components/ui/icon/chevron'
+import { Typography } from '@/components/ui/typhography'
 
 
 const ButtonSchema = () => {

@@ -1,7 +1,6 @@
-import { ISelectionOption } from '@/components/selection/types';
+import { ISelectionOption } from '@/components/ui/selection/types';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
-import { IExcelColumnWidth } from './types';
 
 export function convertObjectToDataOptions(obj: ISelectionOption, swap: boolean = false) {
   return Object.keys(obj).map((key) => ({

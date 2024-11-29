@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './redux/store';
 import './styles/main.css';
-import ToastProvider from './components/toast';
+import ToastProvider from './components/ui/toast';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement).render(
   <React.StrictMode>

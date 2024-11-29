@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import clsx from 'clsx';
-import React, { HTMLInputTypeAttribute, ReactNode, useRef } from 'react';
+import React, { HTMLInputTypeAttribute, ReactNode, useEffect, useRef } from 'react';
 import EyeIcon from '../icon/eye-icon';
 import Input from './input';
 import { IInputWithSufixProps } from './types';
@@ -8,6 +8,17 @@ import { IInputWithSufixProps } from './types';
 const InputWithSuffix = React.forwardRef<HTMLInputElement, IInputWithSufixProps>(
   ({ suffix, className, classNameInput, classNamePosition, type, onClickSuffix, ...props }, ref) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      if(type === 'password'){
+        const inputEl = wrapperRef.current?.querySelector('input');
+        if(!inputEl) return;
+        inputEl.type = 'password';
+        const eyeIconStroke = inputEl.nextElementSibling?.querySelector('.eye-icon > .eye-icon__stroke');
+        if(!eyeIconStroke) return;
+        eyeIconStroke.classList.remove('hidden');
+      }
+    },[])
 
     const handleClickSuffix = () => {
       if (type === 'password' && wrapperRef.current) {

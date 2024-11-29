@@ -1,6 +1,6 @@
-import { Button } from '@/components/button';
-import { useToast } from '@/components/toast';
-import { Typography } from '@/components/typhography';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/toast';
+import { Typography } from '@/components/ui/typhography';
 import { useState } from 'react';
 
 function ToatSchema() {

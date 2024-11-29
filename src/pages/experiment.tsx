@@ -1,7 +1,7 @@
-import { Button } from '@/components/button';
-import { useToast } from '@/components/toast';
-import { TToastVariant } from '@/components/toast/types';
-import { Typography } from '@/components/typhography';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/toast';
+import { TToastVariant } from '@/components/ui/toast/types';
+import { Typography } from '@/components/ui/typhography';
 
 export default function Experiment() {
   const toast = useToast();

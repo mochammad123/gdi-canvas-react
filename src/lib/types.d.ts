@@ -1,13 +1,13 @@
-export interface IuseModal<TModalName> {
+interface IuseModal<TModalName> {
   show?: boolean;
   modalName?: TModalName;
 }
 
-export interface IExcelColumnWidth {
+interface IExcelColumnWidth {
   wch: number;
 }
 
-export interface IuseParams {
+interface IuseParams {
   search?: string;
   perPage?: number;
   page?: number;

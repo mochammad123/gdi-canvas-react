@@ -4,9 +4,8 @@ import { toggleSidebar } from '@/redux/layoutSlice';
 import Cookies from 'js-cookie';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '@/components/button';
-import { ISidebarMenu } from './types.d';
-import HamburgerIcon from '../icon/hamburger';
+import { Button } from '@/components/ui/button';
+import HamburgerIcon from '@/components/ui/icon/hamburger';
 
 function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
   const { data: userLogin } = useUserLogin();
