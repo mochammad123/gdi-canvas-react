@@ -1,18 +1,7 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-} from "@reduxjs/toolkit/dist/query/react";
+import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/react';
 type TEndpointBuilder<TName> = EndpointBuilder<
-  BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError,
-    object,
-    FetchBaseQueryMeta
-  >,
+  BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, object, FetchBaseQueryMeta>,
   never,
   TName
 >;

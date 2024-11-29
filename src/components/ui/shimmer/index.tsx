@@ -1,3 +1,3 @@
-import { Shimmer } from "./shimmer";
+import { Shimmer } from './shimmer';
 
 export default Shimmer;

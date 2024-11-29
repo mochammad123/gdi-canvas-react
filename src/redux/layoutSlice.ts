@@ -4,8 +4,8 @@ const initialState = {
   isSidebarOpen: false,
   branchName: 'HOLIS',
   lastFetch: {
-    last_fetch_repo: "",
-    last_fetch_repo_epoch_time: ""
+    last_fetch_repo: '',
+    last_fetch_repo_epoch_time: '',
   }, // TODO:hit from api and replace with result date
   location: '',
 };

@@ -1,10 +1,7 @@
-import { forwardRef } from "react";
-import Portal from "../portal";
+import { forwardRef } from 'react';
+import Portal from '../portal';
 
-const ContainerPrint = forwardRef<
-  HTMLDivElement,
-  { children: React.ReactNode }
->(({ children }, ref) => {
+const ContainerPrint = forwardRef<HTMLDivElement, { children: React.ReactNode }>(({ children }, ref) => {
   return (
     <Portal>
       <div className="hidden">
@@ -14,5 +11,5 @@ const ContainerPrint = forwardRef<
   );
 });
 
-ContainerPrint.displayName = "ContainerPrint";
+ContainerPrint.displayName = 'ContainerPrint';
 export default ContainerPrint;

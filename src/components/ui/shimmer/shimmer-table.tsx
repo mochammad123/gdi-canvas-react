@@ -1,13 +1,7 @@
-import { TableCell, TableRow } from "../table";
-import { Line, Shimmer } from "./shimmer";
+import { TableCell, TableRow } from '../table';
+import { Line, Shimmer } from './shimmer';
 
-export default function ShimmerTableRow({
-  cells = 4,
-  classNameCell,
-}: {
-  classNameCell?: string;
-  cells?: number;
-}) {
+export default function ShimmerTableRow({ cells = 4, classNameCell }: { classNameCell?: string; cells?: number }) {
   return (
     <TableRow>
       {Array(cells)
@@ -23,10 +17,8 @@ export default function ShimmerTableRow({
   );
 }
 
-export function ShimmerTableRows({ rows=7, cells=2 }: { rows?: number; cells?: number }) {
+export function ShimmerTableRows({ rows = 7, cells = 2 }: { rows?: number; cells?: number }) {
   return Array(rows)
     .fill(1)
-    .map((_, key) => (
-      <ShimmerTableRow classNameCell="!py-3.5" cells={cells} key={key} />
-    ));
+    .map((_, key) => <ShimmerTableRow classNameCell="!py-3.5" cells={cells} key={key} />);
 }

@@ -1,4 +1,4 @@
 export interface IDropdownMenuItem {
-    value: string | number;
-    text: string;
+  value: string | number;
+  text: string;
 }

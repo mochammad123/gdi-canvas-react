@@ -21,7 +21,7 @@ const Dropdown = ({
   dropdownMenu,
   width,
 }: {
-  width?:string;
+  width?: string;
   dropdownMenu?: IDropdownMenuItem[];
   elementRef: HTMLElement | null;
   onHide: () => void;
@@ -35,7 +35,7 @@ const Dropdown = ({
     if (!elementRef || !rect) return;
 
     const left = rect.left + (positions?.x || 0);
-    const top = (rect.top + (positions?.y || 0)) + window.scrollY;
+    const top = rect.top + (positions?.y || 0) + window.scrollY;
     wrapperRef.current.style.left = `${left}px`;
     wrapperRef.current.style.top = `${top}px`;
   }, [elementRef, positions]);

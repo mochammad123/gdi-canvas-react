@@ -1,4 +1,1 @@
-#!/usr/bin/env sh
-. "${0%/*}/h"
-
-npm run format:all && lint && git add .
+pnpm format:all && pnpm lint && git add .

@@ -1,1 +1,1 @@
-type TIconSort = { sort?: "asc" | "desc" | "unset" };
+type TIconSort = { sort?: 'asc' | 'desc' | 'unset' };

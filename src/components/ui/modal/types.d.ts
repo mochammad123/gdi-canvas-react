@@ -1,6 +1,6 @@
 export interface IModalProps {
   show: boolean;
-  onHide?: (data?:unknown) => void;
+  onHide?: (data?: unknown) => void;
 }
 
 export interface IModalConfirmationProps extends IModalProps {

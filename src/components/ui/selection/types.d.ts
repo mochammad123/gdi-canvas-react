@@ -1,4 +1,4 @@
-import { initialValues } from "./selection";
+import { initialValues } from './selection';
 
 export interface ISelectionOption {
   [key: string | number]: string | number;
@@ -25,13 +25,14 @@ export interface ISelectionProps {
   onClickSelectAll?: () => void;
 }
 
-export interface ISelectionInputProps extends  Pick<ISelectionProps, "required" | "values" | "value" | "placeholder" | "multiple" | "options" | "customDisplayValue" | "onClear"> {
+export interface ISelectionInputProps
+  extends Pick<ISelectionProps, 'required' | 'values' | 'value' | 'placeholder' | 'multiple' | 'options' | 'customDisplayValue' | 'onClear'> {
   classNameInput?: string;
   onClickSelection: () => void;
-  state: typeof initialValues
+  state: typeof initialValues;
 }
 
-export interface ISelectionDropdownProps extends Pick<ISelectionProps, "values" | "isLoading" | "multiple" | "options" | "enableSearch"> {
+export interface ISelectionDropdownProps extends Pick<ISelectionProps, 'values' | 'isLoading' | 'multiple' | 'options' | 'enableSearch'> {
   onSelect: (selectedOption: ISelectedOption) => void;
   hideDropdown: () => void;
   onPressArrowUp: () => void;
@@ -40,7 +41,7 @@ export interface ISelectionDropdownProps extends Pick<ISelectionProps, "values" 
   onPressArrowDown: (filtered: string[]) => void;
 }
 
-export interface IDropdownItemProps extends Pick<ISelectionProps, "values" | "multiple"> {
+export interface IDropdownItemProps extends Pick<ISelectionProps, 'values' | 'multiple'> {
   index: number;
   item: ISelectedOption;
   state: typeof initialValues;

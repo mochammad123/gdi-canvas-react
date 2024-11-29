@@ -85,8 +85,8 @@ export function useLocalStorage<TValue>(keyName?: string, options?: { jsonParse:
 
 export function useUserLogin() {
   const { data, status } = useAuthMeQuery();
-  const authorized = status === "fulfilled";
-  const unauthorized = status === "rejected";
+  const authorized = status === 'fulfilled';
+  const unauthorized = status === 'rejected';
   return { data: data?.result, authorized, unauthorized };
 }
 

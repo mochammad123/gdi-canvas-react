@@ -6,7 +6,6 @@ import { Route, Routes } from 'react-router-dom';
 const DashboardPage = loadable(() => import('./dashboard'));
 
 export default function AdminRoutes() {
-
   const sidebarAdmin: ISidebarMenu[] = useMemo(
     () => [
       {

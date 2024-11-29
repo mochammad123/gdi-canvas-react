@@ -15,6 +15,6 @@ export const baseService = () => {
       headers.set('Content-Type', 'application/json');
       return headers;
     },
-    responseHandler: (response) => response.json()
+    responseHandler: (response) => response.json(),
   });
 };

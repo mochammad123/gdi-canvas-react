@@ -1,3 +1,3 @@
-export interface IRadioProps extends React.ComponentPropsWithoutRef<"input"> {
-    onChecked: (checked: boolean) => void
+export interface IRadioProps extends React.ComponentPropsWithoutRef<'input'> {
+  onChecked: (checked: boolean) => void;
 }

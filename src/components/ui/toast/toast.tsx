@@ -50,7 +50,6 @@ export default function Toast({ id, toastType, message, duration, onClose, trans
     }
   }, [duration, onClose]);
 
-
   return (
     <div
       className={clsx(
@@ -59,10 +58,12 @@ export default function Toast({ id, toastType, message, duration, onClose, trans
           '-translate-y-96': transitionPosition === 'center' && !isVisible,
           '-translate-x-96': (transitionPosition === 'bottom-left' || transitionPosition === 'top-left') && !isVisible,
           'translate-x-96': (transitionPosition === 'bottom-right' || transitionPosition === 'top-right') && !isVisible,
-        },{
+        },
+        {
           '-translate-x-96': (transitionPosition === 'bottom-left' || transitionPosition === 'top-left') && animationClosed,
-          'translate-x-96': (transitionPosition === 'bottom-right' || transitionPosition === 'top-right') && animationClosed
-        },{
+          'translate-x-96': (transitionPosition === 'bottom-right' || transitionPosition === 'top-right') && animationClosed,
+        },
+        {
           'translate-x-96': transitionPosition === 'center' && animationClosed,
         },
         TOAST_THEME[toastType]

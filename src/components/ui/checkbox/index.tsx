@@ -1,9 +1,6 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
-export default function Checkbox({
-  checked,
-  onChecked,
-}: { onChecked?: (checked: boolean) => void} & React.ComponentPropsWithoutRef<"input">) {
+export default function Checkbox({ checked, onChecked }: { onChecked?: (checked: boolean) => void } & React.ComponentPropsWithoutRef<'input'>) {
   return (
     <div className="w-4 h-4 relative">
       <input
@@ -13,13 +10,10 @@ export default function Checkbox({
         onChange={(e) => onChecked && onChecked(e.target.checked)}
       />
       <div
-        className={clsx(
-          "w-4 h-4 flex justify-center items-center border border-black-40 absolute",
-          {
-            "bg-knitto-blue-100": checked,
-            "bg-white": !checked,
-          }
-        )}
+        className={clsx('w-4 h-4 flex justify-center items-center border border-black-40 absolute', {
+          'bg-knitto-blue-100': checked,
+          'bg-white': !checked,
+        })}
       >
         {checked && <CheckedIcon />}
       </div>
@@ -29,13 +23,7 @@ export default function Checkbox({
 
 function CheckedIcon() {
   return (
-    <svg
-      width="12"
-      height="9"
-      viewBox="0 0 12 9"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1.5 4L4.57407 7L10.5 1" stroke="white" strokeWidth="2" />
     </svg>
   );

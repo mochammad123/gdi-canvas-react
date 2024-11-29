@@ -22,7 +22,11 @@ export default function DropdownMenu({
 
 function DropdownItem({ value, text, onClick }: { value: string | number; text: string; onClick: (value: string | number, text: string) => void }) {
   return (
-    <Typography as="global-report-content" className="px-2 py-1 hover:bg-navy-100 hover:text-white hover:font-medium cursor-pointer" onClick={() => onClick(value, text)}>
+    <Typography
+      as="global-report-content"
+      className="px-2 py-1 hover:bg-navy-100 hover:text-white hover:font-medium cursor-pointer"
+      onClick={() => onClick(value, text)}
+    >
       {text}
     </Typography>
   );

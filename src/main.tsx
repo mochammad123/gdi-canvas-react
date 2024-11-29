@@ -9,7 +9,7 @@ import ToastProvider from './components/ui/toast';
 ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastProvider position='bottom-right' duration={10000}>
+      <ToastProvider position="bottom-right" duration={10000}>
         <App />
       </ToastProvider>
     </Provider>

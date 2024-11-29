@@ -1,34 +1,33 @@
-import { toggleSidebar } from "@/redux/layoutSlice";
-import { RootState } from "@/redux/store";
-import clsx from "clsx";
-import React, { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import SearchIcon from "@/components/ui/icon//search";
-import { Typography } from "@/components/ui/typhography";
-import InputSearch from "@/components/ui/inputs/input-search";
+import { toggleSidebar } from '@/redux/layoutSlice';
+import { RootState } from '@/redux/store';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@/components/ui/icon//search';
+import { Typography } from '@/components/ui/typhography';
+import InputSearch from '@/components/ui/inputs/input-search';
 
 const Sidebar = React.memo(SidebarMemoized);
 function SidebarMemoized({ data }: { data: ISidebarMenu[] }) {
-  const sidebarIsOpen = useSelector(
-    (state: RootState) => state.layout.isSidebarOpen
-  );
+  const sidebarIsOpen = useSelector((state: RootState) => state.layout.isSidebarOpen);
 
-  const [search, setSearch] = useState<string>("");
-  const filteredMenu = useMemo(() => data.map((item) => {
-    const menus = item.menu.filter(menu => menu.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
-    return { ...item, menu: menus };
-  }),[data, search]);
+  const [search, setSearch] = useState<string>('');
+  const filteredMenu = useMemo(
+    () =>
+      data.map((item) => {
+        const menus = item.menu.filter((menu) => menu.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+        return { ...item, menu: menus };
+      }),
+    [data, search]
+  );
 
   return (
     <div
-      className={clsx(
-        "shadow-md bg-white z-[999] transition-all duration-300 top-[3.25rem] bottom-0 w-[15.625rem] pt-[.625rem] fixed",
-        {
-          "left-0": sidebarIsOpen,
-          "-left-[260px]": !sidebarIsOpen,
-        }
-      )}
+      className={clsx('shadow-md bg-white z-[999] transition-all duration-300 top-[3.25rem] bottom-0 w-[15.625rem] pt-[.625rem] fixed', {
+        'left-0': sidebarIsOpen,
+        '-left-[260px]': !sidebarIsOpen,
+      })}
     >
       <SearchMenu value={search} onSearch={setSearch} />
       <ListMenu data={filteredMenu} />
@@ -36,7 +35,7 @@ function SidebarMemoized({ data }: { data: ISidebarMenu[] }) {
   );
 }
 
-function SearchMenu({ value, onSearch }: { value?: string; onSearch: (value:string) => void }) {
+function SearchMenu({ value, onSearch }: { value?: string; onSearch: (value: string) => void }) {
   return (
     <div className="flex justify-between w-full">
       <InputSearch
@@ -63,9 +62,7 @@ function ListMenu({ data }: { data: ISidebarMenu[] }) {
               {item.title}
             </Typography>
             <div className="flex flex-col">
-              {item.menu.map((menu, key) =>
-                menu?.hide ? null : <MenuItem menu={menu} key={key} activeMenu={pathName.includes(menu.url)} />
-              )}
+              {item.menu.map((menu, key) => (menu?.hide ? null : <MenuItem menu={menu} key={key} activeMenu={pathName.includes(menu.url)} />))}
             </div>
           </div>
         );
@@ -80,13 +77,13 @@ function MenuItem({ menu, activeMenu }: { menu: ISidebarMenuItem; activeMenu: bo
 
   return (
     <div
-      className={clsx("p-[.625rem] cursor-pointer global-report-content hover:bg-knitto-blue-40", {
-        "bg-knitto-blue-40": activeMenu
+      className={clsx('p-[.625rem] cursor-pointer global-report-content hover:bg-knitto-blue-40', {
+        'bg-knitto-blue-40': activeMenu,
       })}
       onClick={() => {
         menu.url && navigate(menu.url);
         dispatch(toggleSidebar());
-        document.body.classList.remove("modal-open");
+        document.body.classList.remove('modal-open');
       }}
     >
       {menu.title}
