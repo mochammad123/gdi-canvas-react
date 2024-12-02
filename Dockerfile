@@ -9,6 +9,9 @@ WORKDIR /app
 FROM base AS build
 WORKDIR /build
 COPY . .
+ARG GITHUB_TOKEN
+ENV GITHUB_TOKEN=$GITHUB_TOKEN
+RUN echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
