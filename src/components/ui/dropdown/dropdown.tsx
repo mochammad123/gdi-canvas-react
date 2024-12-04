@@ -1,4 +1,4 @@
-import { useOnClickOutside } from '@/lib/hooks';
+import { useOnClickOutside } from '@/lib/hooks/hooks';
 import { useEffect, useRef } from 'react';
 import DropdownMenu from './dropdown-menu';
 import { IDropdownMenuItem } from './types';

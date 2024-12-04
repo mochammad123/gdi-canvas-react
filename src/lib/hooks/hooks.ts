@@ -1,8 +1,8 @@
 import { useAuthMeQuery } from '@/redux/api/auth';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { getLocalStorage, setLocalStorage } from './storage';
-import { DEFAULT_DATA_PER_PAGE } from './variables/constants';
+import { getLocalStorage, setLocalStorage } from '../storage';
+import { DEFAULT_DATA_PER_PAGE } from '../variables/example';
 
 export function useOnClickOutside(
   ref: React.RefObject<HTMLDivElement | HTMLElement>,
@@ -87,7 +87,7 @@ export function useUserLogin() {
   const { data, status } = useAuthMeQuery();
   const authorized = status === 'fulfilled';
   const unauthorized = status === 'rejected';
-  return { data: data?.result, authorized, unauthorized };
+  return { data, authorized, unauthorized };
 }
 
 export function usePagination<TData>({
@@ -229,10 +229,4 @@ export function useParams(options?: IuseParams) {
     setTanggalAwal,
     setTanggalAkhir,
   };
-}
-
-export function useResponseData<TData>(data: TData | any) {
-  const dataSource: ResponseWithPaginate<TData>['data'] = data?.result?.data || [];
-  const paginate: ResponseWithPaginate<TData>['paginate'] = data?.result?.paginate;
-  return { dataSource, paginate };
 }

@@ -1,4 +1,4 @@
-import { DATA_PER_PAGE } from '@/lib/variables/constants';
+import { DATA_PER_PAGE } from '@/lib/variables/example';
 import clsx from 'clsx';
 import { Typography } from '../typhography';
 import { Button } from '../button';

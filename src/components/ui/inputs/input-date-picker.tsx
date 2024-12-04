@@ -1,4 +1,4 @@
-import { useOnClickOutside } from '@/lib/hooks';
+import { useOnClickOutside } from '@/lib/hooks/hooks';
 import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';

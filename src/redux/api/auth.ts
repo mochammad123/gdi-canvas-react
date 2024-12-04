@@ -12,11 +12,12 @@ export const authService = createApi({
         body: payload,
       }),
     }),
-    authMe: build.query<IResponse<AuthApi.Me>, void>({
+    authMe: build.query<AuthApi.Me, void>({
       query: () => ({
         method: 'GET',
         url: '/auth/me',
       }),
+      transformResponse: (res: IResponse<AuthApi.Me>) => res.result,
     }),
   }),
 });

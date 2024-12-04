@@ -21,7 +21,7 @@
 |  |     ├─ [nama-component-kit]   # Folder component ui kit
 |  |     └─ [...]
 |  ├─ lib                          # Kumpulan lib
-|  |  ├─ helper                    # Folder util atau function (folder)
+|  |  ├─ utils                     # Folder util atau function (folder)
 |  |  ├─ hooks                     # Function (logic) state, state global yang di share (folder)
 |  |  ├─ variabels                 # Kelompok variabel global atau konstan
 |  |  └─ [...]

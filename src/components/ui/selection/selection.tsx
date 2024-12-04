@@ -1,4 +1,4 @@
-import { useOnClickOutside, useSensorKeyboard } from '@/lib/hooks';
+import { useOnClickOutside, useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import Checkbox from '../checkbox';

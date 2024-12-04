@@ -1,4 +1,4 @@
-import { useSensorKeyboard } from '@/lib/hooks';
+import { useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef } from 'react';
 import KNUI from '../knui';

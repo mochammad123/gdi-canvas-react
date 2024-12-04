@@ -1,4 +1,4 @@
-import { useOnClickOutside } from '@/lib/hooks';
+import { useOnClickOutside } from '@/lib/hooks/hooks';
 import { useEffect, useRef, useState } from 'react';
 import InputDebounce from '../inputs/input-debounce';
 import { Button } from '../button';

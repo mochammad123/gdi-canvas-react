@@ -1,4 +1,4 @@
-import { COOKIES_NAME } from '@/lib/variables/constants';
+import { COOKIES_NAME } from '@/lib/variables/example';
 import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import Cookies from 'js-cookie';
 export const baseService = () => {

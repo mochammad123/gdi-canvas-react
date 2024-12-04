@@ -41,7 +41,7 @@ const TableHead = React.forwardRef<
     withSort?: boolean;
     onClickSort?: (sort: TIconSort['sort']) => void;
   }
->(({ activeSort, className, children, withSort = true, onClickSort, ...props }, ref) => {
+>(({ activeSort, className, children, withSort = false, onClickSort, ...props }, ref) => {
   const [sort, setSort] = React.useState<TIconSort['sort']>('unset');
 
   const getUpdateSort = (sort: TIconSort['sort']) => {

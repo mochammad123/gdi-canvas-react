@@ -1,4 +1,4 @@
-import { debounce } from '@/lib/utils';
+import { debounce } from '@/lib/utils/utils';
 import clsx from 'clsx';
 import { ChangeEvent, useEffect, useState } from 'react';
 import InputWithSuffix from './input-with-suffix';

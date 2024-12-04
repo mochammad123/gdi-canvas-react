@@ -1,5 +1,5 @@
-import { useUserLogin } from '@/lib/hooks';
-import { COOKIES_NAME } from '@/lib/variables/constants';
+import { useUserLogin } from '@/lib/hooks/hooks';
+import { COOKIES_NAME } from '@/lib/variables/example';
 import { toggleSidebar } from '@/redux/layoutSlice';
 import Cookies from 'js-cookie';
 import { useMemo } from 'react';

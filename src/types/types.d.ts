@@ -1,22 +1,47 @@
-import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/react';
-type TEndpointBuilder<TName> = EndpointBuilder<
-  BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, object, FetchBaseQueryMeta>,
-  never,
-  TName
->;
-
-interface IResponse<T> {
-  status: number;
-  values: T & { status?: string; message?: string };
-}
-
-interface ISuccessMessage {
+interface IResponse<T = null> {
   message: string;
+  result: T;
 }
 
-interface IResponseSuccesfully extends IResponse<{ message: string }> {}
+interface IPaginateResponse<T = null> {
+  message: string;
+  result: {
+    data: T[];
+    paginate: {
+      page: number;
+      perPage: number;
+      totalItem: number;
+      totalPage: number;
+      sortBy: string;
+      sortType: 'asc' | 'desc';
+    };
+    filter?: {
+      [key: string]: string;
+    };
+  };
+}
 
-interface IError {
-  status: string;
+interface IPayloadPagination {
+  search?: string;
+  perPage: number;
+  page: number;
+  sortBy?: string;
+  sortType?: 'asc' | 'desc';
+}
+
+interface IuseModal<TModalName> {
+  show?: boolean;
+  modalName?: TModalName;
+}
+
+interface IExcelColumnWidth {
+  wch: number;
+}
+
+interface IuseParams {
+  search?: string;
+  perPage?: number;
+  page?: number;
+  tanggal_awal?: string;
+  tanggal_akhir?: string;
 }

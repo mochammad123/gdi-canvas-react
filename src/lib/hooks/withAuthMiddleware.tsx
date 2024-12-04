@@ -1,4 +1,4 @@
-import { useUserLogin } from '../hooks';
+import { useUserLogin } from './hooks';
 
 export default function withAuthMiddleware<TProps extends object>(WrappedComponent: React.ComponentType<TProps>) {
   return (props: TProps) => {

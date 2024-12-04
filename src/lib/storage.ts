@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEY } from './variables/constants';
+import { LOCAL_STORAGE_KEY } from './variables/example';
 
 const env = import.meta.env.VITE_ENVIRONTMENT;
 export function setLocalStorage(key: string, value: string) {
