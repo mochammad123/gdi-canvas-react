@@ -1,0 +1,82 @@
+.element-input__placeholder::before {
+  content: attr(data-placeholder);
+  @apply text-black-40 w-full absolute;
+}
+
+.scrollbar:hover {
+  scrollbar-width: thin; /* Untuk Firefox */
+  scrollbar-color: var(--navy-100) white; /* Warna thumb dan track */
+}
+
+.scrollbar {
+  scrollbar-width: thin; /* Untuk Firefox */
+  scrollbar-color: white white; /* Warna thumb dan track */
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: var(--navy-100) !important;
+}
+
+.react-calendar__tile--active,
+.react-calendar .react-calendar__tile--now {
+  @apply rounded-md;
+}
+
+.react-calendar__tile:hover {
+  @apply rounded-md;
+}
+
+.react-calendar__navigation button {
+  min-width: 30px !important;
+}
+
+.date-time-picker input {
+  @apply group-hover:border-navy-100 hover:border-navy-100 group-hover:border-2 hover:border-2 hover:box-border focus:border-navy-100 focus:border-2;
+  @apply transition-all duration-75 ease-in-out;
+}
+
+.react-calendar {
+  @apply bg-white shadow-none rounded-none;
+}
+
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__label {
+  @apply rounded-md my-3 h-10;
+}
+
+.react-calendar__navigation {
+  @apply mt-2 !mb-2;
+}
+
+@keyframes dropdownIn {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes dropdownOut {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+}
+
+.animate-dropdownIn {
+  animation: dropdownIn 0.1s ease-out forwards;
+  transform-origin: all;
+}
+
+.animate-dropdownOut {
+  animation: dropdownOut 0.1s ease-in forwards;
+  transform-origin: all;
+}

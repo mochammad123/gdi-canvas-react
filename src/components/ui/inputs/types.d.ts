@@ -21,3 +21,9 @@ export interface IInputWithSufixProps extends IInputProps {
 export interface ICustomCalendarProps {
   onDrillDown?: ({ action, activeStartDate, value, view }: OnArgs, cb?: () => void) => void;
 }
+
+interface Time {
+  hour: string;
+  minute: string;
+  second: string;
+}

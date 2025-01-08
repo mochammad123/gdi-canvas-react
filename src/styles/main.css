@@ -1,5 +1,7 @@
 @import './fonts/index.css';
 @import './_datePicker.css';
+@import './_dateTimePicker.css';
+
 :root {
   /* knito blue */
   --knitto-blue-100: #2f3574;

@@ -194,6 +194,7 @@ const initFilter = {
   page: 1,
   tanggal_awal: dayjs().format('YYYY-MM-DD'),
   tanggal_akhir: dayjs().format('YYYY-MM-DD'),
+  dateTime: '',
 };
 
 export function useParams(options?: IuseParams) {
@@ -203,6 +204,7 @@ export function useParams(options?: IuseParams) {
     page: options?.page || initFilter.page,
     tanggal_awal: options?.tanggal_awal || initFilter.tanggal_awal,
     tanggal_akhir: options?.tanggal_akhir || initFilter.tanggal_akhir,
+    dateTime: options?.dateTime || initFilter.dateTime,
   });
 
   const setSearch = (search: string) => setCurrentFilter((state) => ({ ...state, search }));
@@ -210,6 +212,9 @@ export function useParams(options?: IuseParams) {
   const setPage = (page: number) => setCurrentFilter((state) => ({ ...state, page }));
   const setTanggalAwal = (tanggal_awal: string) => setCurrentFilter((state) => ({ ...state, tanggal_awal }));
   const setTanggalAkhir = (tanggal_akhir: string) => setCurrentFilter((state) => ({ ...state, tanggal_akhir }));
+  const setDateTime = useCallback((dateTime: string) => {
+    setCurrentFilter((state) => ({ ...state, dateTime }));
+  }, []);
 
   const onNextPrev = (page: number) => {
     if (currentFilter.page < 0) return;
@@ -222,11 +227,13 @@ export function useParams(options?: IuseParams) {
     page: currentFilter.page,
     tanggal_awal: currentFilter.tanggal_awal,
     tanggal_akhir: currentFilter.tanggal_akhir,
+    dateTime: currentFilter.dateTime,
     setSearch,
     setPerPage,
     setPage,
     onNextPrev,
     setTanggalAwal,
     setTanggalAkhir,
+    setDateTime,
   };
 }

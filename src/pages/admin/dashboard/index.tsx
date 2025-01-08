@@ -4,6 +4,7 @@ import ColorSchema from './components/color-schema';
 import TyphographiSchema from './components/typographi-schema';
 import ButtonSchema from './components/button-schema';
 import ToatSchema from './components/toast-schema';
+import InputDateTimeSchema from './components/input-date-time-schema';
 
 export default function Dashboard() {
   const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);
@@ -55,7 +56,7 @@ export default function Dashboard() {
   // ];
 
   return (
-    <div className="p-2 bg-knitto-blue-20 mb-44">
+    <div className="p-2 bg-knitto-blue-20 pb-96">
       <section>
         <ColorSchema arrayColors={splitArrays} />
       </section>
@@ -64,6 +65,9 @@ export default function Dashboard() {
       </section>
       <section>
         <ButtonSchema />
+      </section>
+      <section>
+        <InputDateTimeSchema />
       </section>
     </div>
   );

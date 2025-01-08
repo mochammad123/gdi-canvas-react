@@ -44,4 +44,5 @@ interface IuseParams {
   page?: number;
   tanggal_awal?: string;
   tanggal_akhir?: string;
+  dateTime?: string;
 }
