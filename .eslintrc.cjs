@@ -12,10 +12,16 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
   rules: {
     'react/jsx-no-target-blank': 'off',
     'react/prop-types': 'off',
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react/display-name': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
 };
