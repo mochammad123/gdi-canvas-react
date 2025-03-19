@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import ColorSchema from './components/color-schema';
 import TyphographiSchema from './components/typographi-schema';
 import ButtonSchema from './components/button-schema';
-import ToatSchema from './components/toast-schema';
 import InputDateTimeSchema from './components/input-date-time-schema';
+import TableVirtual from './components/table-virtual';
 
 export default function Dashboard() {
   const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);
@@ -68,6 +68,9 @@ export default function Dashboard() {
       </section>
       <section>
         <InputDateTimeSchema />
+      </section>
+      <section>
+        <TableVirtual />
       </section>
     </div>
   );
