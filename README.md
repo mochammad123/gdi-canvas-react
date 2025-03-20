@@ -4,7 +4,7 @@
 	<div>Repository ini merupakan template atau boilerplate untuk frontend knitto (website), menggunakan react sebagai library, vite sebagai builder website dan tailwind sebagai pembangun css</div>
 </div>
 
-# Struktur Projek
+# Struktur  Projek
 
 
 ```
