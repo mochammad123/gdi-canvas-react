@@ -48,12 +48,24 @@ const RightClickContent = ({ data, value, callbackFn }: IRightClickContentProps)
   };
 
   const handleClickCopy = () => {
-    navigator.clipboard.writeText(value.toString());
+    const textArea = document.createElement('textarea');
+    textArea.value = value.toString();
+    document.body.appendChild(textArea);
+    textArea.select();
+    textArea.setSelectionRange(0, 99999);
+
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      navigator.clipboard.writeText(value.toString());
+    }
+
+    document.body.removeChild(textArea);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
       callbackFn?.();
-    }, 200);
+    }, 150);
   };
 
   return (
