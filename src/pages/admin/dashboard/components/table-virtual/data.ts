@@ -90,7 +90,7 @@ export const getHeaders = (dataSource: ITableDataSource[]): ITableVirtual<ITable
       caption: 'Harga (Rp)',
       freezed: false,
       children: [
-        { caption: 'Harga 1', key: 'harga_1' },
+        { caption: 'Harga 1', key: 'harga_1', useAdvanceFilter: true },
         { caption: 'Harga 2', key: 'harga_2' },
       ],
     },
