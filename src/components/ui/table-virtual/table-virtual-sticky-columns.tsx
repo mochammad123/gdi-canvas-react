@@ -6,6 +6,7 @@ import TableRightClickCardWrapper from './components/table-right-click-card-wrap
 import { useHeaderContext } from './service/header-context';
 import { useDataContext } from './service/data-context';
 import { useUIContext } from './service/ui-context';
+import { HEADER_GROUP_HEIGHT } from './constants';
 
 const TableVirtualStickyColumns = ({ minRow, maxRow }: ITableVirtualStickyColumns) => {
   const rightClickWrapperRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ const TableVirtualStickyColumns = ({ minRow, maxRow }: ITableVirtualStickyColumn
     classNameCell,
   } = useUIContext();
   const { finalDataSource } = useDataContext();
-  const { freezedHeaders } = useHeaderContext();
+  const { freezedHeaders, headersHasChildren } = useHeaderContext();
 
   useOnClickOutside(rightClickWrapperRef, () => onRightClickCell?.(null));
 
@@ -36,7 +37,7 @@ const TableVirtualStickyColumns = ({ minRow, maxRow }: ITableVirtualStickyColumn
   return (
     <div
       style={{
-        marginTop: isScrolling && useFooter ? -stickyHeaderHeight - stickyFooterHeight : 0,
+        marginTop: isScrolling && useFooter ? -stickyHeaderHeight - stickyFooterHeight - (headersHasChildren ? HEADER_GROUP_HEIGHT : 0) : 0,
       }}
     >
       {freezedHeaders.map(({ key: columnKeyName, render, fixedWidth }, idx) => {
