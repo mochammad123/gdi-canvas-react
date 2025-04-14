@@ -1,11 +1,19 @@
 import { ReactNode } from 'react';
 
 import { Typography } from '@/components/ui/typhography';
-import StandarSingleRow from './standar-single-row';
-import StandarDoubleRow from './standar-double-row';
-import AutoWidth from './auto-width';
-import SingleHeaderFilter from './single-header-filter';
-import DoubleHeaderFilter from './double-header-filter';
+import TableStandarSingleRow from './table-standar-single-row';
+import TableStandarDoubleRow from './table-standar-double-row';
+import TableAutoWidth from './table-auto-width';
+import TableSingleHeaderWithFilter from './table-single-header-with-filter';
+import TableDoubleHeaderWithFilter from './table-double-header-with-filter';
+import TableCheckboxSelection from './table-checkbox-selection';
+import TableWithActionCell from './table-with-action-cell';
+import TableWithFooter from './table-with-footer';
+import TableStickyColumn from './table-sticky-columns';
+import TableOnClickRow from './table-onclick-row';
+import TableRightKlikPopupCard from './table-right-klik-popup-card';
+import TableServerSideFilter from './table-server-side-filter';
+import TableSubHeader from './table-sub-header';
 
 export default function SectionTableVirtual() {
   return (
@@ -16,21 +24,46 @@ export default function SectionTableVirtual() {
       <div className="grid grid-cols-2 gap-4 auto-rows-auto">
         <div className="flex flex-col gap-4">
           <Card title="Standard (Single Row Header)">
-            <StandarSingleRow />
-          </Card>
-          <Card title="Standard (Double Row Header)">
-            <StandarDoubleRow />
-          </Card>
-          <Card title="Double Row Header with Filter">
-            <DoubleHeaderFilter />
-          </Card>
-        </div>
-        <div className="flex flex-col gap-4">
-          <Card title="Auto Width">
-            <AutoWidth />
+            <TableStandarSingleRow />
           </Card>
           <Card title="Single Row Header with Filter">
-            <SingleHeaderFilter />
+            <TableSingleHeaderWithFilter />
+          </Card>
+          <Card title="Checkbox Selection">
+            <TableCheckboxSelection />
+          </Card>
+          <Card title="Footer">
+            <TableWithFooter />
+          </Card>
+          <Card title="Freezed Column">
+            <TableStickyColumn />
+          </Card>
+          <Card title="Right Click PopUp Card">
+            <TableRightKlikPopupCard />
+          </Card>
+          <Card title="Server Side Filter">
+            <TableServerSideFilter />
+          </Card>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Card title="Standard (Double Row Header)">
+            <TableStandarDoubleRow />
+          </Card>
+          <Card title="Double Row Header with Filter">
+            <TableDoubleHeaderWithFilter />
+          </Card>
+          <Card title="Action Cell">
+            <TableWithActionCell />
+          </Card>
+          <Card title="Auto Width">
+            <TableAutoWidth />
+          </Card>
+          <Card title="OnClick Row">
+            <TableOnClickRow />
+          </Card>
+          <Card title="Sub Header">
+            <TableSubHeader />
           </Card>
         </div>
       </div>

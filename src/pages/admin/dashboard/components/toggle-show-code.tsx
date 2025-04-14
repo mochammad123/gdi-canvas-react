@@ -1,7 +1,12 @@
+import clsx from 'clsx';
+
 export default function ToggleShowCode({ show, setShow }: { show: boolean; setShow: (show: boolean) => void }) {
   return (
     <button
-      className="w-max inline-flex items-center bg-gray-500 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+      className={clsx(
+        'w-max inline-flex items-center bg-gray-400 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1',
+        show && '!bg-blue-900'
+      )}
       onClick={() => setShow(!show)}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="size-5">

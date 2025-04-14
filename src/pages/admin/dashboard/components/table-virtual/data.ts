@@ -18,7 +18,7 @@ const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Miami'];
 const countries = ['USA', 'Canada', 'UK', 'Germany', 'Australia'];
 const jobTitles = ['Software Engineer', 'Designer', 'Project Manager', 'Data Analyst', 'HR Manager'];
 
-export const dummyData: IDummyData[] = Array.from({ length: 50 }, (_, index) => ({
+export const dummyData: IDummyData[] = Array.from({ length: 20 }, (_, index) => ({
   id: index + 1,
   name: `User ${index + 1}`,
   email: `user${index + 1}@example.com`,
