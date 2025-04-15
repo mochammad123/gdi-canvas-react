@@ -1,10 +1,12 @@
 import { useOnClickOutside } from '@/lib/hooks/hooks';
+import clsx from 'clsx';
 import dayjs from 'dayjs';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { Value, View } from 'react-calendar/dist/cjs/shared/types';
 import CalendarIcon from '../icon/calendar';
+import CloseIcon from '../icon/close';
 import InputWithSuffix from './input-with-suffix';
 import { ICustomCalendarProps, IInputProps } from './types';
 
@@ -19,15 +21,22 @@ const InputDatePicker = React.forwardRef<
     onChange?: (value: string) => void;
     classNameInput?: string;
   } & Omit<IInputProps, 'onChange'>
->(({ formatDate = 'YYYY-MM-DD', value, onChange, classNameInput, view = 'month', calendarProps, disableValueFormat, ...props }, ref) => {
+>(({ formatDate = 'YYYY-MM-DD', value, onChange, classNameInput, view = 'month', calendarProps, ...props }, ref) => {
   const [show, setShow] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  useOnClickOutside(wrapperRef, () => setShow(false));
+  useOnClickOutside(wrapperRef, () => {
+    const calendarEl = wrapperRef.current?.querySelector('.react-calendar') as HTMLDivElement;
+    calendarEl?.classList.remove('animate-dropdownIn');
+    calendarEl?.classList.add('animate-dropdownOut');
+    setTimeout(() => {
+      setShow(false);
+    }, 300);
+  });
 
   const handleChange = (value: Value) => {
     if (!value) return;
-    const dateValue: string = dayjs(value as Date).format(formatDate);
+    const dateValue: string = dayjs(value as Date).format('YYYY-MM-DD');
     setShow(false);
     onChange && onChange(dateValue);
   };
@@ -59,14 +68,20 @@ const InputDatePicker = React.forwardRef<
       }
     });
   };
+
+  const getDisplayValue = useMemo(() => {
+    if (!value) return '';
+    return dayjs(value).format(formatDate);
+  }, [value, formatDate]);
+
   return (
     <div ref={wrapperRef} className="relative">
       <InputWithSuffix
         placeholder="Pilih Tanggal"
-        suffix={<CalendarIcon />}
+        suffix={value ? <BtnClose onClick={() => onChange?.('')} /> : <CalendarIcon className="w-[1rem] me-1" color="#9fa2b2" />}
         onClick={() => setShow((o) => !o)}
         onClickSuffix={() => setShow(true)}
-        value={value && !disableValueFormat ? dayjs(value).format(formatDate) : value || ''}
+        value={getDisplayValue || ''}
         classNameInput={classNameInput}
         onChange={() => ''}
         ref={ref}
@@ -74,7 +89,7 @@ const InputDatePicker = React.forwardRef<
       />
       {show && (
         <Calendar
-          className="z-[999] absolute"
+          className={clsx('z-[999] absolute animate-dropdownIn')}
           locale="id-ID"
           value={value}
           onChange={handleChange}
@@ -99,6 +114,23 @@ const InputDatePicker = React.forwardRef<
   );
 });
 
+function BtnClose({ onClick }: { onClick: () => void }) {
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className={clsx(
+        'absolute transition-all duration-200 ease-in-out right-0 me-1 -top-2 z-[999] w-4 h-4',
+        'flex items-center justify-center rounded-full bg-gray-300',
+        'hover:bg-gray-400 cursor-pointer pointer-events-auto'
+      )}
+    >
+      <CloseIcon color="white" width=".5rem" height=".5rem" />
+    </div>
+  );
+}
 InputDatePicker.displayName = 'Input-Date-Picker';
 
 export default InputDatePicker;

@@ -1,10 +1,10 @@
 import ColorKnitto from '@/../tailwind/tailwind.colors';
 import { useMemo } from 'react';
-import ColorSchema from './components/color-schema';
-import TyphographiSchema from './components/typographi-schema';
 import ButtonSchema from './components/button-schema';
-import InputDateTimeSchema from './components/input-date-time-schema';
+import ColorSchema from './components/color-schema';
+import InputDateTimeSchema from './components/input-date-picker';
 import TableVirtual from './components/table-virtual';
+import TyphographiSchema from './components/typographi-schema';
 
 export default function Dashboard() {
   const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);

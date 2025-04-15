@@ -10,7 +10,6 @@ import { ICustomCalendarProps, IInputProps, Time } from './types';
 import { Card } from '../card';
 import { Button } from '../button';
 import CloseIcon from '../icon/close';
-import { copyWithStructuralSharing } from '@reduxjs/toolkit/query';
 
 const timeData = {
   hour: Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')),
@@ -54,7 +53,7 @@ const InputDateTimePicker = React.forwardRef<
 
   const handleChange = (value: Value) => {
     if (!value) return;
-    const date: string = dayjs(value as Date).format(formatDate);
+    const date: string = dayjs(value as Date).format('YYYY-MM-DD');
 
     handleOnChange(date);
     setDateValue(date);
@@ -155,7 +154,13 @@ const InputDateTimePicker = React.forwardRef<
     scrollToSelected(hourListRef, selectedTime.hour);
     scrollToSelected(minuteListRef, selectedTime.minute);
     scrollToSelected(secondListRef, selectedTime.second);
-  }, [isVisible]);
+  }, [isVisible, selectedTime.hour, selectedTime.minute, selectedTime.second, show]);
+
+  const getDisplayValue = useMemo(() => {
+    const value = dateValue || currentDateTime;
+    if (!value) return '';
+    return dayjs(value).format(formatDate);
+  }, [dateValue, currentDateTime, formatDate]);
 
   return (
     <div ref={wrapperRef} className="group relative">
@@ -163,7 +168,7 @@ const InputDateTimePicker = React.forwardRef<
         className="group"
         placeholder="Pilih Tanggal & Waktu"
         suffix={
-          dateValue || currentDateTime ? (
+          getDisplayValue ? (
             <div
               className="absolute transition-all duration-200 ease-in-out right-0 me-1 -top-2 z-[999] w-4 h-4 flex items-center justify-center rounded-full bg-gray-300 hover:bg-gray-400 cursor-pointer pointer-events-auto"
               onClick={(e) => {
