@@ -17,7 +17,7 @@ export function useScrollToSelected({
       if (selectedValue === listValue[i]) {
         const li = nodeRef.current?.querySelectorAll('li')[i];
         nodeRef.current?.scrollTo({
-          top: (li as HTMLElement).offsetTop - (nodeRef.current as HTMLElement).offsetTop,
+          top: (li as HTMLElement).offsetTop - (nodeRef.current as HTMLElement).offsetTop - 150,
           behavior: increment ? 'smooth' : 'instant',
         });
         break;
