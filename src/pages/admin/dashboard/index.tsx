@@ -4,6 +4,7 @@ import ButtonSchema from './components/button-schema';
 import ColorSchema from './components/color-schema';
 import InputDateTimeSchema from './components/input-date-picker';
 import TableVirtual from './components/table-virtual';
+import Selection from './components/selection';
 import TyphographiSchema from './components/typographi-schema';
 
 export default function Dashboard() {
@@ -71,6 +72,9 @@ export default function Dashboard() {
       </section>
       <section>
         <TableVirtual />
+      </section>
+      <section>
+        <Selection />
       </section>
     </div>
   );

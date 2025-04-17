@@ -1,0 +1,31 @@
+@keyframes animate-dropdown-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes animate-dropdown-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+}
+
+.animate-dropdown-in {
+  animation: animate-dropdown-in 0.1s ease-out forwards;
+  transform-origin: all;
+}
+
+.animate-dropdown-out {
+  animation: animate-dropdown-out 0.1s ease-in forwards;
+  transform-origin: all;
+}

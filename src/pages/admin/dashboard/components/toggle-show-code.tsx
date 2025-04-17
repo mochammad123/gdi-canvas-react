@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 
-export default function ToggleShowCode({ show, setShow }: { show: boolean; setShow: (show: boolean) => void }) {
+export default function ToggleShowCode({ show, setShow, className }: { show: boolean; className?: string; setShow: (show: boolean) => void }) {
   return (
     <button
       className={clsx(
         'w-max inline-flex items-center bg-gray-400 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1',
-        show && '!bg-blue-900'
+        show && '!bg-blue-900',
+        className
       )}
       onClick={() => setShow(!show)}
     >
