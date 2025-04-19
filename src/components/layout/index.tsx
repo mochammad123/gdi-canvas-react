@@ -1,18 +1,19 @@
-import Portal from '@/components/ui/portal';
+import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { toggleSidebar } from '@/redux/layoutSlice';
 import { RootState } from '@/redux/store';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import Portal from '@/components/ui/portal';
+import Sidebar, { ISidebarMenu } from './sidebar';
 import Header from './header';
-import Sidebar from './sidebar';
 
 export default function Layout({ sidebar, children }: { sidebar: ISidebarMenu[]; children: React.ReactNode }) {
   const sidebarIsOpen = useSelector((state: RootState) => state.layout.isSidebarOpen);
+
   return (
     <div>
       <Header sidebar={sidebar} />
       {sidebarIsOpen && <Backdrop />}
-      <Sidebar data={sidebar} />
+      <Sidebar sidebarMenu={sidebar} />
       <Content>{children}</Content>
     </div>
   );

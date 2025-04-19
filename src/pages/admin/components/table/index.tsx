@@ -18,8 +18,8 @@ import DelayedRender from '@/components/delayed-render';
 
 const SectionTableVirtual = () => {
   return (
-    <DelayedRender>
-      <div className="flex flex-col gap-3 mt-10">
+    <DelayedRender delay={200}>
+      <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3 mt-10">
         <Typography as="h3">Table Virtual</Typography>
         <div className="h-2 w-72 bg-burnt-orange-100" />
 

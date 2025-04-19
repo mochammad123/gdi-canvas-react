@@ -1,0 +1,51 @@
+import { useState } from 'react';
+import { ISelect, Select } from '@/components/ui/select';
+import ToggleShowCode from '@/components/toggle-show-code';
+import { Typography } from '@/components/ui/typhography';
+import ContentExampleCode from '@/components/content-example-code';
+
+export default function SelectionMultiple({ options }: { options: ISelect['options'] }) {
+  const [show, setShow] = useState<boolean>(false);
+  const [value, setValue] = useState<string[] | null>(null);
+
+  return (
+    <>
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col gap-2">
+          <Typography as="global-description">Selection dengan opsi yang bisa dipilih lebih dari 1.</Typography>
+        </div>
+        <ToggleShowCode show={show} setShow={setShow} className="-mt-[40px]" />
+      </div>
+
+      <Select
+        multiple
+        options={options}
+        value={value}
+        onChangeMultipleOption={(value) => setValue(value as string[])}
+        onResetSelection={() => setValue(null)}
+        className="!w-[20rem]"
+      />
+
+      <ContentExampleCode show={show} code={code} />
+    </>
+  );
+}
+
+const code = `
+import { useState } from 'react';
+import { ISelect, Select } from '@/components/ui/select';
+
+export default function SelectionMultiple({ options }: { options: ISelect['options'] }) {
+  const [value, setValue] = useState<string[] | null>(null);
+
+  return (
+      <Select
+        multiple
+        options={options}
+        value={value}
+        onChangeMultipleOption={(value) => setValue(value as string[])}
+        onResetSelection={() => setValue(null)}
+      />
+  );
+}
+`;
