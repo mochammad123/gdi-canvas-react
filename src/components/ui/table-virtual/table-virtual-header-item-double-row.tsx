@@ -45,7 +45,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { boxRef, handleMouseDown, resizableWidth, isTempResize } = useResizableHeader({
-    caption,
+    keyName,
     columnIndex,
     currentWidth: Number(style.width || 40),
     isFreezed,

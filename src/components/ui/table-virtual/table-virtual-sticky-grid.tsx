@@ -19,7 +19,7 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
     useAutoWidth,
     setOuterSize,
     setScrollbarWidth,
-    outerSize,
+    // outerSize,
     isLoading,
     isScrolling,
     setIsScrolling,
@@ -75,7 +75,7 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
     return nonFreezedHeaders?.map(({ fixedWidth }) => fixedWidth || adjustedColumnWidth) || [];
   }, [nonFreezedHeaders, adjustedColumnWidth]);
 
-  const calculatingHeight = outerSize.height - finalDataSource?.length * rowHeight;
+  //   const calculatingHeight = outerSize.height - finalDataSource?.length * rowHeight;
 
   return (
     <div className="size-max relative">
@@ -90,7 +90,8 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
         rowHeight={() => rowHeight}
         columnWidth={(index) => gridColumnWidths[index]}
         columnCount={totalCountColumnNonFreezedHeaders || 0}
-        rowCount={finalDataSource?.length + (Math.abs(calculatingHeight) >= 12 && useFooter ? 1 : 0) || 0}
+        // rowCount={finalDataSource?.length + (Math.abs(calculatingHeight) >= 12 && useFooter ? 1 : 0) || 0}
+        rowCount={finalDataSource?.length}
         innerElementType={tableVirtualInnerElement}
         overscanRowCount={5}
         overscanColumnCount={2}

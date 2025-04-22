@@ -11,7 +11,7 @@ interface IGenerateHeaders<T> {
 }
 
 interface IAdjustedHeaderWidth {
-  [caption: string]: { width: number };
+  [key: PropertyKey]: { width: number };
 }
 
 export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
@@ -42,19 +42,19 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
       )
       ?.reduce(
         (acc, data, idx) => {
-          const width = adjustedHeaderWidth[data.caption]?.width || adjustedColumnWidth;
-          const fixedWidth = adjustedHeaderWidth[data.caption]?.width || data.fixedWidth || 0;
+          const width = adjustedHeaderWidth[data.key]?.width || adjustedColumnWidth;
+          const fixedWidth = adjustedHeaderWidth[data.key]?.width || data.fixedWidth || 0;
 
           // ======== Define data header dari data yang tetap maupun yang adjustable ========
           const header: ITableVirtualHeaderColumn = {
             ...(data as ITableVirtualHeaderColumn),
             filterOptions: data.filterOptions || [],
             width: data.children?.length
-              ? data.children.reduce((total, child) => total + (adjustedHeaderWidth[child.caption]?.width || adjustedColumnWidth), 0)
+              ? data.children.reduce((total, child) => total + (adjustedHeaderWidth[child.key]?.width || adjustedColumnWidth), 0)
               : width,
             fixedWidth: data.children?.length
               ? data.children.reduce(
-                  (total, child) => total + (adjustedHeaderWidth[child.caption]?.width || child.fixedWidth || adjustedColumnWidth || 0),
+                  (total, child) => total + (adjustedHeaderWidth[child.key]?.width || child.fixedWidth || adjustedColumnWidth || 0),
                   0
                 )
               : fixedWidth,
@@ -83,8 +83,8 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
                 ...data.children.map((child, childIdx) => ({
                   ...(child as ITableVirtualHeaderColumn),
                   height: stickyHeaderHeight,
-                  width: adjustedHeaderWidth[child.caption]?.width || adjustedColumnWidth,
-                  fixedWidth: adjustedHeaderWidth[child.caption]?.width || child.fixedWidth,
+                  width: adjustedHeaderWidth[child.key]?.width || adjustedColumnWidth,
+                  fixedWidth: adjustedHeaderWidth[child.key]?.width || child.fixedWidth,
                   left: childIdx * adjustedColumnWidth,
                   useHeaderAction: data.useHeaderAction ?? headerModel === 'double-row',
                   useFilter: child.useFilter ?? false,
@@ -115,8 +115,8 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
                 ...data.children.map((child, childIdx) => ({
                   ...(child as ITableVirtualHeaderColumn),
                   height: stickyHeaderHeight,
-                  width: adjustedHeaderWidth[child.caption]?.width || adjustedColumnWidth,
-                  fixedWidth: adjustedHeaderWidth[child.caption]?.width || child.fixedWidth,
+                  width: adjustedHeaderWidth[child.key]?.width || adjustedColumnWidth,
+                  fixedWidth: adjustedHeaderWidth[child.key]?.width || child.fixedWidth,
                   left: childIdx * adjustedColumnWidth,
                   useHeaderAction: data.useHeaderAction ?? headerModel === 'double-row',
                   useFilter: child.useFilter ?? false,
@@ -139,10 +139,10 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
           nonFreezedGroup: ITableVirtualHeaderParentColumn[];
         }
       );
-  }, [headers, adjustedColumnWidth, stickyHeaderHeight, adjustedHeaderWidth, visibleColumns]);
+  }, [headers, adjustedColumnWidth, stickyHeaderHeight, adjustedHeaderWidth, visibleColumns, headerModel]);
 
-  const handleResizeHeaderColumn = useCallback((caption: string, newWidth: number) => {
-    setAdjustedHeaderWidth((prev) => ({ ...prev, [caption]: { width: newWidth } }));
+  const handleResizeHeaderColumn = useCallback((keyName: string, newWidth: number) => {
+    setAdjustedHeaderWidth((prev) => ({ ...prev, [keyName]: { width: newWidth } }));
   }, []);
 
   const handleOpenVisibilityColumnsCard = useCallback((e: React.MouseEvent<HTMLElement>) => {

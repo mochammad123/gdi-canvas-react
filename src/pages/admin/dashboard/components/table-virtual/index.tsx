@@ -15,6 +15,7 @@ import TableRightKlikPopupCard from './table-right-klik-popup-card';
 import TableServerSideFilter from './table-server-side-filter';
 import TableSubHeader from './table-sub-header';
 import DelayedRender from '@/components/delayed-render';
+import TableFullFeature from './table-full-feature';
 
 const SectionTableVirtual = () => {
   return (
@@ -66,6 +67,9 @@ const SectionTableVirtual = () => {
             </Card>
             <Card title="Sub Header">
               <TableSubHeader />
+            </Card>
+            <Card title="Full Feature">
+              <TableFullFeature />
             </Card>
           </div>
         </div>

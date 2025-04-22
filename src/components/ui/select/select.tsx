@@ -134,6 +134,7 @@ const Select = (props: ISelect) => {
       inputRef={inputRef}
       options={selectionOptions}
       value={value}
+      hint={hint}
       displayValue={displayValue}
       isLoading={isLoading}
       placeHolder={placeHolder}

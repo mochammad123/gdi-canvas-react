@@ -7,6 +7,7 @@ import ContentExampleCode from '../content-example-code';
 import ToggleShowCode from '../toggle-show-code';
 import { dummyData, IDummyData } from './data';
 import TextCode from './text-code';
+import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 
 const headers: ITableVirtual<IDummyData>['headers'] = [
   { key: 'name', caption: 'Nama' },
@@ -70,34 +71,53 @@ interface IRightClickContentProps {
 }
 
 const RightClickContent = ({ data, value, callbackFn }: IRightClickContentProps) => {
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState({
+    'Copy Kolom': false,
+    'Copy Baris': false,
+  });
 
   const handleClickHapus = () => {
     console.log('HAPUS: ', data);
     callbackFn?.();
   };
 
-  const handleClickCopy = () => {
-    navigator.clipboard
-      .writeText(value.toString())
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => {
-          setIsCopied(false);
-          callbackFn?.();
-        }, 100);
-      })
-      .catch(() => console.log('Failed to copy!'));
+  const handleClickCopy = (value: string, key: keyof typeof isCopied) => {
+    const isSuccess = fallbackCopyTextToClipboard(value);
+    if (isSuccess) {
+      setIsCopied((prev) => ({ ...prev, [key]: true }));
+
+      setTimeout(() => {
+        setIsCopied((prev) => ({ ...prev, [key]: false }));
+        callbackFn?.();
+      }, 200);
+    } else {
+      console.log('Failed to copy!');
+    }
   };
 
+  const options = [
+    { label: 'Hapus', onClick: handleClickHapus },
+    { label: 'Copy Kolom', onClick: () => handleClickCopy(value.toString(), 'Copy Kolom') },
+    { label: 'Copy Baris', onClick: () => handleClickCopy(JSON.stringify(data), 'Copy Baris') },
+  ];
+
   return (
-    <div className="max-w-sm overflow-auto p-4 text-sm flex flex-col gap-2">
-      <button className="cursor-pointer p-1.5 bg-red-600 text-white rounded inline-flex items-center" onClick={handleClickHapus}>
-        Hapus
-      </button>
-      <button className="cursor-pointer p-1.5 bg-blue-950 text-white rounded inline-flex items-center" onClick={handleClickCopy}>
-        {isCopied ? 'Copied' : 'Copy'}
-      </button>
+    <div className="max-w-sm overflow-auto p-1 text-xs flex flex-col gap-1">
+      {options.map((item, idx) => {
+        return (
+          <button
+            key={item.label}
+            className={clsx(
+              'cursor-pointer p-1.5 px-3 bg-blue-950 text-white rounded inline-flex items-center',
+              idx === 0 && '!bg-red-800/80',
+              idx === 1 && '!bg-green-800/80'
+            )}
+            onClick={item.onClick}
+          >
+            {isCopied[item.label as keyof typeof isCopied] ? 'Copied' : item.label}
+          </button>
+        );
+      })}
     </div>
   );
 };
@@ -106,6 +126,7 @@ export const StandarSingleRowExample = `
 import { memo } from 'react';
 import clsx from 'clsx';
 
+import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 import { TableVirtual, ITableVirtual } from '@/components/ui/table-virtual';
 import { dummyData, IDummyData } from './data';
 
@@ -153,34 +174,53 @@ interface IRightClickContentProps {
 }
 
 const RightClickContent = ({ data, value, callbackFn }: IRightClickContentProps) => {
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState({
+    'Copy Kolom': false,
+    'Copy Baris': false,
+  });
 
   const handleClickHapus = () => {
     console.log('HAPUS: ', data);
     callbackFn?.();
   };
 
-  const handleClickCopy = () => {
-    navigator.clipboard
-      .writeText(value.toString())
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => {
-          setIsCopied(false);
-          callbackFn?.();
-        }, 100);
-      })
-      .catch(() => console.log('Failed to copy!'));
+  const handleClickCopy = (value: string, key: keyof typeof isCopied) => {
+    const isSuccess = fallbackCopyTextToClipboard(value);
+    if (isSuccess) {
+      setIsCopied((prev) => ({ ...prev, [key]: true }));
+
+      setTimeout(() => {
+        setIsCopied((prev) => ({ ...prev, [key]: false }));
+        callbackFn?.();
+      }, 200);
+    } else {
+      console.log('Failed to copy!');
+    }
   };
 
+  const options = [
+    { label: 'Hapus', onClick: handleClickHapus },
+    { label: 'Copy Kolom', onClick: () => handleClickCopy(value.toString(), 'Copy Kolom') },
+    { label: 'Copy Baris', onClick: () => handleClickCopy(JSON.stringify(data), 'Copy Baris') },
+  ];
+
   return (
-    <div className="max-w-sm overflow-auto p-4 text-sm flex flex-col gap-2">
-      <button className="cursor-pointer p-1.5 bg-red-600 text-white rounded inline-flex items-center" onClick={handleClickHapus}>
-        Hapus
-      </button>
-      <button className="cursor-pointer p-1.5 bg-blue-950 text-white rounded inline-flex items-center" onClick={handleClickCopy}>
-        {isCopied ? 'Copied' : 'Copy'}
-      </button>
+    <div className="max-w-sm overflow-auto p-1 text-xs flex flex-col gap-1">
+      {options.map((item, idx) => {
+        return (
+          <button
+            key={item.label}
+            className={clsx(
+              'cursor-pointer p-1.5 px-3 bg-blue-950 text-white rounded inline-flex items-center',
+              idx === 0 && '!bg-red-800/80',
+              idx === 1 && '!bg-green-800/80'
+            )}
+            onClick={item.onClick}
+          >
+            {isCopied[item.label as keyof typeof isCopied] ? 'Copied' : item.label}
+          </button>
+        );
+      })}
     </div>
   );
 };

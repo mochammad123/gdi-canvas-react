@@ -320,7 +320,7 @@ const TableSubHeader = () => {
         <ToggleShowCode show={show} setShow={setShow} />
       </div>
       <div className="w-full h-[25rem]">
-        <TableVirtual headerModel="single-row" stickyHeaderHeight={36} headers={dataHeaders} dataSource={dataSource} />
+        <TableVirtual headerModel="single-row" headers={dataHeaders} dataSource={dataSource} stickyHeaderHeight={36} />
       </div>
       <ContentExampleCode show={show} code={StandarSingleRowExample} />
     </>

@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   onSort: (order: 'asc' | 'desc' | 'unset') => void;
 }
 
-const LIST_MENU = ['Sort Ascending', 'Sort Descending', 'Unsort', 'Kolom', 'Tutup Filter'] as const;
+const LIST_MENU = ['Sort Ascending', 'Sort Descending', 'Unsort', 'Hide/Show Kolom', 'Tutup Filter'] as const;
 
 const TableVirtualMenuCard = (props: Props) => {
   const { onSort, className, position, menuCardRef, ...properties } = props;
@@ -24,7 +24,7 @@ const TableVirtualMenuCard = (props: Props) => {
 
   const handleClickMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, menu: (typeof LIST_MENU)[number]) => {
     switch (menu) {
-      case 'Kolom':
+      case 'Hide/Show Kolom':
         return handleOpenColumnVibilityCard(e);
       case 'Sort Ascending':
         return onSort('asc');

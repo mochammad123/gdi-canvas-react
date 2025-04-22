@@ -4,13 +4,13 @@ import { useUIContext } from '../service/ui-context';
 
 interface IResizableBox {
   currentWidth: number;
-  caption: string;
+  keyName: string;
   columnIndex: number;
   isFreezed: boolean;
 }
 
 export default function useResizableHeader(props: IResizableBox) {
-  const { currentWidth, caption, columnIndex, isFreezed } = props;
+  const { currentWidth, keyName, columnIndex, isFreezed } = props;
   const { onResizeHeaderColumn } = useHeaderContext();
 
   const { gridRef } = useUIContext();
@@ -37,7 +37,7 @@ export default function useResizableHeader(props: IResizableBox) {
   }, []);
 
   const handleMouseUp = () => {
-    onResizeHeaderColumn?.(caption, resizableWidthRef.current);
+    onResizeHeaderColumn?.(keyName, resizableWidthRef.current);
     gridRef?.current?.resetAfterColumnIndex(isFreezed ? 0 : columnIndex, false);
 
     setIsTempResize(false);

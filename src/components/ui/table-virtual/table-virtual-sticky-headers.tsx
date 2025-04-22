@@ -47,15 +47,6 @@ const TableVirtualStickyHeaders = ({ className, style }: ITableVirtualStickyHead
 
   const { isSearchCardOpen, handleOpenSearch, searchCardRef, searchCardPosition, activeSearch, updateSearch, resetSearch } = search || {};
 
-  //   useEffect(() => {
-  //     if (!isMenuCardOpen.show) return;
-  //     window.addEventListener('scroll', () => onCloseMenuCard?.());
-
-  //     return () => {
-  //       window.removeEventListener('scroll', () => onCloseMenuCard?.());
-  //     };
-  //   }, [isMenuCardOpen, onCloseMenuCard]);
-
   const selectedHeader = useMemo(() => {
     return [...(freezedHeaders || []), ...(nonFreezedHeaders || [])]?.find(({ key }) => key === isFilterCardOpen?.key);
   }, [freezedHeaders, nonFreezedHeaders, isFilterCardOpen]);

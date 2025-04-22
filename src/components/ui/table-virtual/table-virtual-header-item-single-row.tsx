@@ -41,7 +41,7 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
   const { filter, search, checkBoxSelection } = useDataContext();
 
   const { boxRef, handleMouseDown, resizableWidth, isTempResize } = useResizableHeader({
-    caption,
+    keyName,
     columnIndex,
     currentWidth: Number(style.width || 80),
     isFreezed,
