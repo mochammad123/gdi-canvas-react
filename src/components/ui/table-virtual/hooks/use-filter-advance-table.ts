@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 
 import { getFixedCardPosition } from '../utils';
@@ -29,10 +29,6 @@ export default function useFilterAdvanceTable<TDataSource>(props: IAdvanceFilter
   });
 
   useOnClickOutside(filterAdvanceCardRef, () => setIsFilterAdvanceCardOpen({ show: false, key: '' }));
-
-  useEffect(() => {
-    onChangeAdvanceFilter?.(activeAdvanceFilters);
-  }, [activeAdvanceFilters, onChangeAdvanceFilter]);
 
   const filteredAdvanceData = useMemo(() => {
     if (Object.keys(activeAdvanceFilters).length === 0) return data;
@@ -71,24 +67,37 @@ export default function useFilterAdvanceTable<TDataSource>(props: IAdvanceFilter
     setIsFilterAdvanceCardOpen({ show: true, key: activeFilterKey });
   }, []);
 
-  const applyAdvanceFilter = useCallback((dataKey: keyof TDataSource | string, filterName: TAdvanceFilterName, value: string) => {
-    setActiveAdvanceFilters((prev) => ({
-      ...prev,
-      [dataKey]: { filterName, value },
-    }));
-    setIsFilterAdvanceCardOpen({ show: false, key: '' });
-  }, []);
+  const applyAdvanceFilter = useCallback(
+    (dataKey: keyof TDataSource | string, config_name: string, value: string) => {
+      setActiveAdvanceFilters((prev) => {
+        const newFilters = {
+          ...prev,
+          [dataKey]: { config_name, value },
+        };
 
-  const resetAdvanceFilter = useCallback((dataKey: keyof TDataSource | string) => {
-    gridRef.current?.scrollTo({ scrollTop: 0 });
+        onChangeAdvanceFilter?.(newFilters);
 
-    setActiveAdvanceFilters((prev) => {
-      const newFilters = { ...prev };
-      delete newFilters[dataKey as keyof TDataSource];
-      return newFilters;
-    });
-    setIsFilterAdvanceCardOpen({ show: false, key: '' });
-  }, []);
+        return newFilters;
+      });
+      setIsFilterAdvanceCardOpen({ show: false, key: '' });
+    },
+    [onChangeAdvanceFilter]
+  );
+
+  const resetAdvanceFilter = useCallback(
+    (dataKey: keyof TDataSource | string) => {
+      gridRef.current?.scrollTo({ scrollTop: 0 });
+
+      setActiveAdvanceFilters((prev) => {
+        const newFilters = { ...prev };
+        delete newFilters[dataKey as keyof TDataSource];
+        onChangeAdvanceFilter?.(newFilters);
+        return newFilters;
+      });
+      setIsFilterAdvanceCardOpen({ show: false, key: '' });
+    },
+    [onChangeAdvanceFilter]
+  );
 
   return {
     filteredAdvanceData,

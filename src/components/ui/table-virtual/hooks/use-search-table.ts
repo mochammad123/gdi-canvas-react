@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 
 import { getFixedCardPosition } from '../utils';
@@ -20,10 +20,6 @@ export default function useSearchTable<TDataSource>(props: ISearchTable<TDataSou
   const [searchCardPosition, setSearchCardPosition] = useState({ top: 0, left: 0 });
 
   const [activeSearch, seActiveSearch] = useState<Record<keyof TDataSource, string>>({} as Record<keyof TDataSource, string>);
-
-  useEffect(() => {
-    onChangeSearch?.(activeSearch);
-  }, [activeSearch]);
 
   useCloseOnWindowScroll({
     enabled: isSearchCardOpen.show,
@@ -56,30 +52,40 @@ export default function useSearchTable<TDataSource>(props: ISearchTable<TDataSou
     setIsSearchCardOpen({ show: true, key: activeSearchKey });
   }, []);
 
-  const updateSearch = useCallback((dataKey: keyof TDataSource | string, searchValue: string) => {
-    gridRef.current?.scrollTo({ scrollTop: 0 });
+  const updateSearch = useCallback(
+    (dataKey: keyof TDataSource | string, searchValue: string) => {
+      gridRef.current?.scrollTo({ scrollTop: 0 });
 
-    if (searchValue.length === 0) {
+      seActiveSearch((prev) => {
+        const newSearch = { ...prev };
+
+        if (searchValue.length === 0) {
+          delete newSearch[dataKey as keyof TDataSource];
+        } else {
+          newSearch[dataKey as keyof TDataSource] = searchValue;
+        }
+
+        onChangeSearch?.(newSearch);
+
+        return newSearch;
+      });
+      setIsSearchCardOpen({ show: false, key: '' });
+    },
+    [onChangeSearch]
+  );
+
+  const resetSearch = useCallback(
+    (dataKey: keyof TDataSource | string) => {
       seActiveSearch((prev) => {
         const cpActiveSearch = { ...prev };
         delete cpActiveSearch[dataKey as keyof TDataSource];
+        onChangeSearch?.(cpActiveSearch);
         return cpActiveSearch;
       });
-    } else {
-      seActiveSearch((prev) => ({ ...prev, [dataKey]: searchValue }));
-    }
-
-    setIsSearchCardOpen({ show: false, key: '' });
-  }, []);
-
-  const resetSearch = useCallback((dataKey: keyof TDataSource | string) => {
-    seActiveSearch((prev) => {
-      const cpActiveSearch = { ...prev };
-      delete cpActiveSearch[dataKey as keyof TDataSource];
-      return cpActiveSearch;
-    });
-    setIsSearchCardOpen({ show: false, key: '' });
-  }, []);
+      setIsSearchCardOpen({ show: false, key: '' });
+    },
+    [onChangeSearch]
+  );
 
   const resetAllSearch = useCallback(() => seActiveSearch({} as Record<keyof TDataSource, string>), []);
 

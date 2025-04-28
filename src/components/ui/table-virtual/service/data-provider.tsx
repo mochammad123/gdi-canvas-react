@@ -147,6 +147,14 @@ const DataProvider = <TDataSource,>(props: IDataProvider<TDataSource>) => {
       activeSearch,
       selectedCheckBoxes,
       isCheckedAll,
+      onChangeSort,
+      onChangeSearch,
+      onChangeFilter,
+      onChangeAdvanceFilter,
+      useServerSearch,
+      useServerFilter,
+      useServerSearch,
+      useServerSort,
     ]
   );
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 
 import { getFixedCardPosition } from '../utils';
@@ -28,10 +28,6 @@ export default function useFilterTable<TDataSource>(props: IFilterTable<TDataSou
 
   useOnClickOutside(filterCardRef, () => setIsFilterCardOpen({ show: false, key: '' }));
 
-  useEffect(() => {
-    onChangeFilter?.(activeFilters);
-  }, [activeFilters, onChangeFilter]);
-
   const filteredData = useMemo(() => {
     if (Object.keys(activeFilters).length === 0) return data;
     if (useServerFilter) return data;
@@ -54,30 +50,41 @@ export default function useFilterTable<TDataSource>(props: IFilterTable<TDataSou
     setIsFilterCardOpen({ show: true, key: activeFilterKey });
   }, []);
 
-  const updateFilter = useCallback((dataKey: keyof TDataSource | string, filterValues: string[]) => {
-    gridRef.current?.scrollTo({ scrollTop: 0 });
+  const updateFilter = useCallback(
+    (dataKey: keyof TDataSource | string, filterValues: string[]) => {
+      gridRef.current?.scrollTo({ scrollTop: 0 });
 
-    if (filterValues.length === 0) {
+      setActiveFilters((prev) => {
+        const newFilters = { ...prev };
+
+        if (filterValues.length === 0) {
+          delete newFilters[dataKey as keyof TDataSource];
+        } else {
+          newFilters[dataKey as keyof TDataSource] = filterValues;
+        }
+
+        onChangeFilter?.(newFilters);
+
+        return newFilters;
+      });
+
+      setIsFilterCardOpen({ show: false, key: '' });
+    },
+    [onChangeFilter]
+  );
+
+  const resetFilter = useCallback(
+    (dataKey: keyof TDataSource | string) => {
       setActiveFilters((prev) => {
         const newFilters = { ...prev };
         delete newFilters[dataKey as keyof TDataSource];
+        onChangeFilter?.(newFilters);
         return newFilters;
       });
-    } else {
-      setActiveFilters((prev) => ({ ...prev, [dataKey]: filterValues }));
-    }
-
-    setIsFilterCardOpen({ show: false, key: '' });
-  }, []);
-
-  const resetFilter = useCallback((dataKey: keyof TDataSource | string) => {
-    setActiveFilters((prev) => {
-      const newFilters = { ...prev };
-      delete newFilters[dataKey as keyof TDataSource];
-      return newFilters;
-    });
-    setIsFilterCardOpen({ show: false, key: '' });
-  }, []);
+      setIsFilterCardOpen({ show: false, key: '' });
+    },
+    [onChangeFilter]
+  );
 
   const resetAllFilter = useCallback(() => setActiveFilters({} as Record<keyof TDataSource, string[]>), []);
 
