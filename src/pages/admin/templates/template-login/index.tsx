@@ -26,14 +26,13 @@ export default function TemplateLogin() {
   });
 
   const onSave = (values: FormLoginSchema) => {
-    window.location.href = 'admin/dashboard';
-    values;
+    console.log(values);
   };
 
   return (
     <>
       <section className="h-screen w-full bg-knitto-blue-100 flex justify-center items-center">
-        <div className="absolute left-5 top-5">
+        <div className="absolute left-5 top-20">
           <LogoIcon />
         </div>
         <FormProvider {...form}>

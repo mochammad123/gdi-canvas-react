@@ -1,21 +1,21 @@
 import { memo, ReactNode } from 'react';
 
+import DelayedRender from '@/components/delayed-render';
 import { Typography } from '@/components/ui/typhography';
-import TableStandarSingleRow from './table-standar-single-row';
-import TableStandarDoubleRow from './table-standar-double-row';
 import TableAutoWidth from './table-auto-width';
-import TableSingleHeaderWithFilter from './table-single-header-with-filter';
-import TableDoubleHeaderWithFilter from './table-double-header-with-filter';
 import TableCheckboxSelection from './table-checkbox-selection';
-import TableWithActionCell from './table-with-action-cell';
-import TableWithFooter from './table-with-footer';
-import TableStickyColumn from './table-sticky-columns';
+import TableDoubleHeaderWithFilter from './table-double-header-with-filter';
+import TableFullFeature from './table-full-feature';
 import TableOnClickRow from './table-onclick-row';
 import TableRightKlikPopupCard from './table-right-klik-popup-card';
 import TableServerSideFilter from './table-server-side-filter';
+import TableSingleHeaderWithFilter from './table-single-header-with-filter';
+import TableStandarDoubleRow from './table-standar-double-row';
+import TableStandarSingleRow from './table-standar-single-row';
+import TableStickyColumn from './table-sticky-columns';
 import TableSubHeader from './table-sub-header';
-import DelayedRender from '@/components/delayed-render';
-import TableFullFeature from './table-full-feature';
+import TableWithActionCell from './table-with-action-cell';
+import TableWithFooter from './table-with-footer';
 
 const SectionTableVirtual = () => {
   return (

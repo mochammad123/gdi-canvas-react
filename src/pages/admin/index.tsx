@@ -1,8 +1,8 @@
-import { Route, Routes } from 'react-router-dom';
-import { Suspense, useMemo } from 'react';
+import Layout from '@/components/layout';
 import { ISidebarMenu } from '@/components/layout/sidebar';
 import loadable from '@loadable/component';
-import Layout from '@/components/layout';
+import { Suspense, useMemo } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 const DashboardPage = loadable(() => import('./dashboard'));
 const ColorPage = loadable(() => import('./utilities/color'));
@@ -11,6 +11,8 @@ const TablePage = loadable(() => import('./components/table'));
 const ButtonPage = loadable(() => import('./components/button'));
 const InputDateAndTimePage = loadable(() => import('./components/input-date-and-time'));
 const SelectionPage = loadable(() => import('./components/selection'));
+const PaginationPage = loadable(() => import('./components/pagination'));
+const TemplateLoginPage = loadable(() => import('./templates/template-login'));
 
 const Icon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" className="-ml-0.5">
@@ -42,7 +44,12 @@ export default function AdminRoutes() {
           { label: 'Button', url: 'komponen/button', element: <ButtonPage /> },
           { label: 'Selection', url: 'komponen/selection', element: <SelectionPage /> },
           { label: 'Input Date & Time', url: 'komponen/input-date-and-time', element: <InputDateAndTimePage /> },
+          { label: 'Pagination', url: 'komponen/pagination', element: <PaginationPage /> },
         ],
+      },
+      {
+        module: 'Template',
+        menu: [{ label: 'Login', url: '/', element: <TemplateLoginPage /> }],
       },
       {
         module: 'Contoh Sidebar',

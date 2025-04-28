@@ -1,10 +1,10 @@
+import ContentExampleCode from '@/components/content-example-code';
+import ToggleShowCode from '@/components/toggle-show-code';
 import { ITableVirtual, TableVirtual } from '@/components/ui/table-virtual';
-import { memo, useState } from 'react';
 import { generateTableFilterOptions } from '@/components/ui/table-virtual/utils';
 import { Typography } from '@/components/ui/typhography';
+import { memo, useState } from 'react';
 import TextCode from './text-code';
-import ToggleShowCode from '@/components/toggle-show-code';
-import ContentExampleCode from '@/components/content-example-code';
 
 interface IDataSource {
   [key: string]: string | number;

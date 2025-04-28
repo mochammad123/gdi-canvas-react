@@ -187,8 +187,15 @@ export function useSortData<TData>({ data, defaultField }: { data: TData[]; defa
     registerSort,
   };
 }
-
-const initFilter = {
+type Filter = {
+  search: string;
+  perPage: number | null;
+  page: number | null;
+  tanggal_awal: string;
+  tanggal_akhir: string;
+  dateTime: string;
+};
+const initFilter: Filter = {
   search: '',
   perPage: DEFAULT_DATA_PER_PAGE,
   page: 1,
@@ -208,8 +215,8 @@ export function useParams(options?: IuseParams) {
   });
 
   const setSearch = (search: string) => setCurrentFilter((state) => ({ ...state, search }));
-  const setPerPage = (perPage: number) => setCurrentFilter((state) => ({ ...state, perPage }));
-  const setPage = (page: number) => setCurrentFilter((state) => ({ ...state, page }));
+  const setPerPage = (perPage: number | null) => setCurrentFilter((state) => ({ ...state, perPage }));
+  const setPage = (page: number | null) => setCurrentFilter((state) => ({ ...state, page }));
   const setTanggalAwal = (tanggal_awal: string) => setCurrentFilter((state) => ({ ...state, tanggal_awal }));
   const setTanggalAkhir = (tanggal_akhir: string) => setCurrentFilter((state) => ({ ...state, tanggal_akhir }));
   const setDateTime = useCallback((dateTime: string) => {
@@ -217,8 +224,9 @@ export function useParams(options?: IuseParams) {
   }, []);
 
   const onNextPrev = (page: number) => {
+    if (!currentFilter.page) return;
     if (currentFilter.page < 0) return;
-    setCurrentFilter((state) => ({ ...state, page: state.page + page }));
+    setCurrentFilter((state) => ({ ...state, page: (state.page || 1) + page }));
   };
 
   return {

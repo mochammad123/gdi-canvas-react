@@ -1,15 +1,15 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { toggleSidebar } from '@/redux/layoutSlice';
+import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
-import { toggleSidebar } from '@/redux/layoutSlice';
-import { useSidebarContext } from './service/sidebar-context';
-import { DEFAULT_PADDING_LEFT } from './constant';
-import { ISidebarSectionItem } from './types';
-import { hasActiveChild } from './utils';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarChildIndicator from './components/sidebar-child-indicator';
 import SidebarLabelItem from './components/sidebar-label-item';
 import SidebarLineVertical from './components/sidebar-line-vertical';
+import { DEFAULT_PADDING_LEFT } from './constant';
+import { useSidebarContext } from './service/sidebar-context';
+import { ISidebarSectionItem } from './types';
+import { hasActiveChild } from './utils';
 
 export default function SidebarSectionItem(props: ISidebarSectionItem) {
   const { item, level, isLastMenu, paddingLeft = DEFAULT_PADDING_LEFT } = props;

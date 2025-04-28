@@ -1,13 +1,13 @@
-import { memo, useState } from 'react';
 import clsx from 'clsx';
+import { memo, useState } from 'react';
 
-import { TableVirtual, ITableVirtual } from '@/components/ui/table-virtual';
+import ContentExampleCode from '@/components/content-example-code';
+import ToggleShowCode from '@/components/toggle-show-code';
+import { ITableVirtual, TableVirtual } from '@/components/ui/table-virtual';
 import { Typography } from '@/components/ui/typhography';
+import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 import { dummyData, IDummyData } from './data';
 import TextCode from './text-code';
-import ToggleShowCode from '@/components/toggle-show-code';
-import ContentExampleCode from '@/components/content-example-code';
-import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 
 const headers: ITableVirtual<IDummyData>['headers'] = [
   { key: 'name', caption: 'Nama' },

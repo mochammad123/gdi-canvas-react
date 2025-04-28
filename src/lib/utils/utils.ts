@@ -41,7 +41,7 @@ export function debounce<T extends unknown[], U>(callback: (...args: T) => Promi
 }
 
 export function formatRupiah(number: number, hideRp: boolean = false) {
-  const parsed = number.toLocaleString('id-ID').replaceAll('.', ',');
+  const parsed = number.toLocaleString('id-ID').replaceAll('.', '.');
   if (hideRp) return parsed;
   return `Rp. ${parsed}`;
 }
