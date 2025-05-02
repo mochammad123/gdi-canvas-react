@@ -4,8 +4,7 @@
 	<div>Repository ini merupakan template atau boilerplate untuk frontend knitto (website), menggunakan react sebagai library, vite sebagai builder website dan tailwind sebagai pembangun css</div>
 </div>
 
-# Struktur  Projek
-
+# Struktur Projek
 
 ```
 / root directory
@@ -54,8 +53,8 @@
 - Masukan ke dalam folder jika component tersebut mempunyai tujuan yang sama.
 - Pastikan untuk mengaktifkan eslint dan prettier pada vscode atau IDE yang digunakan.
 
-
 # Requirements (Tech Stack)
+
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux Tool Kit](https://redux-toolkit.js.org/)
@@ -63,7 +62,12 @@
 - [Tailwind](https://tailwindcss.com/)
 
 ### Penggunaan NPM github
+
 Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/knittotextile/knitto-desgin-system/pkgs/npm/react-ui) secara private, gunakan panduan berikut untuk cara install library [**`Working with the npm registry`**](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
 
-### Penggunaan Komponen **Table Virtual**
-Terkait penggunakan komponen **Table Virtual** dapat dilihat pada [**`Readme Table Virtual`**](https://github.com/knittotextile/knitto-react-template/blob/feat/table-virtual/src/components/ui/table-virtual/readme.md)
+# Dokumentasi Penggunaan
+
+
+- [Tabel Virtual](https://github.com/knittotextile/knitto-react-template/blob/feat/table-virtual/src/components/ui/table-virtual/readme.md)
+- [Big Calendar](https://github.com/knittotextile/knitto-react-template/blob/feat/big-calendar/src/components/ui/big-calendar/README.md)
+
