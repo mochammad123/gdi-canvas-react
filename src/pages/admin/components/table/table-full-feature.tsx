@@ -1,12 +1,12 @@
+import ContentExampleCode from '@/components/content-example-code';
+import ToggleShowCode from '@/components/toggle-show-code';
 import { ITableVirtual, TableVirtual } from '@/components/ui/table-virtual';
+import { generateTableFilterOptions } from '@/components/ui/table-virtual/utils';
+import { Typography } from '@/components/ui/typhography';
+import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 import clsx from 'clsx';
 import { memo, useMemo, useState } from 'react';
-import { Typography } from '@/components/ui/typhography';
 import { dummyData, IDummyData } from './data';
-import { generateTableFilterOptions } from '@/components/ui/table-virtual/utils';
-import ToggleShowCode from '@/components/toggle-show-code';
-import ContentExampleCode from '@/components/content-example-code';
-import { fallbackCopyTextToClipboard } from '@/lib/utils/utils';
 
 const TableFullFeature = () => {
   const [show, setShow] = useState<boolean>(false);

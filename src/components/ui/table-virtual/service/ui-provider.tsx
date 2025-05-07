@@ -1,8 +1,8 @@
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { IUIContext, UIContext } from './ui-context';
-import { ICellPosition } from '../types';
 import { HEADER_FILTER_HEIGHT, MINIMUM_ROW_HEIGHT } from '../constants';
 import useCloseOnWindowScroll from '../hooks/use-close-on-window-scroll';
+import { ICellPosition } from '../types';
+import { IUIContext, UIContext } from './ui-context';
 
 interface IUIProvider {
   children: ReactNode;

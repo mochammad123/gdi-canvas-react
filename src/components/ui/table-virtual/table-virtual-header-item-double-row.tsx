@@ -100,7 +100,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
         )}
         onClick={handleSort}
       >
-        {keyName !== 'action' && keyName !== 'checkbox-selection' && (
+        {keyName !== 'action' && keyName !== 'checkbox-selection' && keyName !== 'expand' && (
           <>
             <div className="inline-flex items-center shrink-0">
               {caption}
@@ -145,7 +145,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
           style={{ height: headerFilterHeight }}
           className="bg-gray-100 border-r border-b border-gray-300 flex justify-center items-center gap-2 px-2"
         >
-          {keyName !== 'action' && keyName !== 'checkbox-selection' && (
+          {keyName !== 'action' && keyName !== 'checkbox-selection' && keyName !== 'expand' && (
             <>
               <div className="!w-full relative group/input">
                 <TableVirtualInput

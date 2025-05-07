@@ -1,21 +1,22 @@
-import { memo, useRef, useState } from 'react';
 import clsx from 'clsx';
+import { memo, useRef, useState } from 'react';
 
-import { ITableVirtualCell } from './types';
-import useOnClickOutside from './hooks/use-click-outside';
-import { useHeaderContext } from './service/header-context';
-import { useDataContext } from './service/data-context';
-import { useUIContext } from './service/ui-context';
 import TableRightClickCardWrapper from './components/table-right-click-card-wrapper';
-import TableVirtualCellCheckbox from './table-virtual-cell-checkbox';
+import useOnClickOutside from './hooks/use-click-outside';
+import { useDataContext } from './service/data-context';
+import { useHeaderContext } from './service/header-context';
+import { useUIContext } from './service/ui-context';
 import TableVirtualCellAction from './table-virtual-cell-action';
+import TableVirtualCellCheckbox from './table-virtual-cell-checkbox';
+import TableVirtualCellExpand from './table-virtual-cell-expand';
+import { ITableVirtualCell } from './types';
 
-const TableVirtualCell = ({ rowIndex, columnIndex, style }: ITableVirtualCell) => {
+const TableVirtualCell = ({ rowIndex, columnIndex, style, expandComponent, data }: ITableVirtualCell) => {
   const rightClickWrapperRef = useRef<HTMLDivElement>(null);
   const actionCardRef = useRef<HTMLDivElement>(null);
 
   const { selectedRowIndex, onClickGridRow, classNameCell, onRightClickCell, cellPosition, renderRightClickRow } = useUIContext();
-  const { finalDataSource, checkBoxSelection } = useDataContext();
+  const { finalDataSource, checkBoxSelection, expandedRow } = useDataContext();
   const { freezedHeaders, nonFreezedHeaders } = useHeaderContext();
 
   const [showActionCard, setShowActionCard] = useState({ show: false, rowIndex: -1 });
@@ -55,7 +56,7 @@ const TableVirtualCell = ({ rowIndex, columnIndex, style }: ITableVirtualCell) =
         classNameCell?.(finalDataSource[rowIndex], rowIndex, columnIndex, false)
       )}
     >
-      {headerKey !== 'checkbox-selection' && headerKey !== 'action' && (
+      {headerKey !== 'checkbox-selection' && headerKey !== 'action' && headerKey !== 'expand' && (
         <div className={clsx('truncate w-full', headerClassName)}>
           {headerRender ? headerRender(finalDataSource[rowIndex], rowIndex) : (finalValue as string | number)}{' '}
         </div>
@@ -63,6 +64,16 @@ const TableVirtualCell = ({ rowIndex, columnIndex, style }: ITableVirtualCell) =
 
       {headerKey === 'checkbox-selection' && (
         <TableVirtualCellCheckbox rowIndex={rowIndex} checkBoxSelection={checkBoxSelection} finalDataSource={finalDataSource} />
+      )}
+
+      {headerKey === 'expand' && (
+        <TableVirtualCellExpand
+          rowIndex={rowIndex}
+          item={data[rowIndex]}
+          expandedRow={expandedRow}
+          expandComponent={expandComponent}
+          finalDataSource={finalDataSource}
+        />
       )}
 
       {headerKey === 'action' &&

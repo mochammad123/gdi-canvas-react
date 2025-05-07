@@ -5,6 +5,7 @@ import { Typography } from '@/components/ui/typhography';
 import TableAutoWidth from './table-auto-width';
 import TableCheckboxSelection from './table-checkbox-selection';
 import TableDoubleHeaderWithFilter from './table-double-header-with-filter';
+import TableExpand from './table-expand';
 import TableFullFeature from './table-full-feature';
 import TableOnClickRow from './table-onclick-row';
 import TableRightKlikPopupCard from './table-right-klik-popup-card';
@@ -16,6 +17,7 @@ import TableStickyColumn from './table-sticky-columns';
 import TableSubHeader from './table-sub-header';
 import TableWithActionCell from './table-with-action-cell';
 import TableWithFooter from './table-with-footer';
+import TableExpandNested from './table-expand-nested';
 
 const SectionTableVirtual = () => {
   return (
@@ -47,6 +49,9 @@ const SectionTableVirtual = () => {
             <Card title="Server Side Filter">
               <TableServerSideFilter />
             </Card>
+            <Card title="Expand">
+              <TableExpand />
+            </Card>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -70,6 +75,9 @@ const SectionTableVirtual = () => {
             </Card>
             <Card title="Full Feature">
               <TableFullFeature />
+            </Card>
+            <Card title="Expand Nested">
+              <TableExpandNested />
             </Card>
           </div>
         </div>

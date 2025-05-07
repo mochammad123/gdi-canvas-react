@@ -1,7 +1,7 @@
-import { VariableSizeGrid as Grid } from 'react-window';
 import { CSSProperties, HTMLAttributes, JSX, ReactNode } from 'react';
-import { TSortOrder } from './hooks/use-sort-table';
+import { VariableSizeGrid as Grid } from 'react-window';
 import { ADVANCE_FILTER_NAMES } from './constants';
+import { TSortOrder } from './hooks/use-sort-table';
 
 export interface ITableVirtual<TDataSource> {
   dataSource?: TDataSource[];
@@ -21,6 +21,7 @@ export interface ITableVirtual<TDataSource> {
   useServerAdvanceFilter?: boolean;
   useColumnHiddenIndicator?: boolean;
   searchValue?: string;
+  onExpandRow?: (id: number, status: boolean) => void;
   onChangeCheckBoxSelection?: (selectedCheckBoxes: string[]) => void;
   onChangeAdvanceFilter?: (data: Record<string, { filterName: TAdvanceFilterName; value: string }>) => void;
   onChangeSearch?: (data: Record<string, string>) => void;
@@ -31,6 +32,7 @@ export interface ITableVirtual<TDataSource> {
   classNameCell?: (data: Record<string, string | number>, rowIndex: number, columnIndex: number, isFreezed: boolean) => string;
   renderRightClickRow?: (data: Record<string, string | number> | null, value: string | number, callbackFn?: () => void) => JSX.Element;
   renderActionCard?: (data: Record<string, string | number>, rowIndex: number) => ReactNode;
+  expandComponent?: (id: number) => React.ReactNode;
 }
 
 export interface ICellPosition {
@@ -44,15 +46,20 @@ export interface ICellPosition {
 export interface ITableVirtualStickyGrid {
   width: number;
   height: number;
+  data: unknown[];
   gridRef: React.RefObject<Grid>;
   outerRef: React.RefObject<HTMLElement | null>;
   onScrollTouchBottom?: () => void;
   searchValue?: string;
+  expandComponent?: (id: number) => React.ReactNode;
 }
 
 export interface ITableVirtualInnerElement {
   children: ReactNode;
   style: CSSProperties;
+  expandComponent?: (id: number) => React.ReactNode;
+  outerRef: React.RefObject<HTMLElement | null>;
+  data: unknown[];
 }
 
 export interface ITableVirtualStickyHeaders {
@@ -81,7 +88,7 @@ export interface ITableVirtualHeaderParentColumn {
 }
 
 export interface IDataHeader<TDataSource> {
-  key: keyof TDataSource | 'checkbox-selection' | 'action';
+  key: keyof TDataSource | 'checkbox-selection' | 'action' | 'expand' | 'expand-component';
   caption: string;
   className?: string;
   useHeaderAction?: boolean;
@@ -98,7 +105,7 @@ export interface IDataHeader<TDataSource> {
   children?: Omit<IDataHeader<TDataSource>, 'freezed'>[];
 }
 
-export interface ITableVirtualCell {
+export interface ITableVirtualCell extends Pick<ITableVirtualStickyGrid, 'expandComponent' | 'data'> {
   rowIndex: number;
   columnIndex: number;
   style: CSSProperties;
@@ -160,3 +167,5 @@ export interface ITableVirtualFilterAdvanceCard extends HTMLAttributes<HTMLDivEl
 }
 
 export type TAdvanceFilterName = keyof typeof ADVANCE_FILTER_NAMES;
+
+export type TExpandedRows = Record<number, boolean>;

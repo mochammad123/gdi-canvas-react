@@ -1,14 +1,14 @@
-import { VariableSizeGrid as Grid } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import { memo, useMemo, useRef } from 'react';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { VariableSizeGrid as Grid } from 'react-window';
 
-import { ITableVirtual } from './types';
-import TableVirtualStickyGrid from './table-virtual-sticky-grid';
-import TableVirtualLoading from './table-virtual-loading';
-import HeaderProvider from './service/header-provider';
-import DataProvider from './service/data-provider';
-import UIProvider from './service/ui-provider';
 import { MINIMUM_ROW_HEIGHT } from './constants';
+import DataProvider from './service/data-provider';
+import HeaderProvider from './service/header-provider';
+import UIProvider from './service/ui-provider';
+import TableVirtualLoading from './table-virtual-loading';
+import TableVirtualStickyGrid from './table-virtual-sticky-grid';
+import { ITableVirtual } from './types';
 
 const TableVirtual = <T,>(props: ITableVirtual<T>) => {
   const {
@@ -30,6 +30,7 @@ const TableVirtual = <T,>(props: ITableVirtual<T>) => {
     useColumnHiddenIndicator,
     isLoading,
     onChangeCheckBoxSelection,
+    onExpandRow,
     onChangeSearch,
     onChangeAdvanceFilter,
     onChangeFilter,
@@ -39,6 +40,7 @@ const TableVirtual = <T,>(props: ITableVirtual<T>) => {
     classNameCell,
     renderRightClickRow,
     renderActionCard,
+    expandComponent,
   } = props;
 
   const gridRef = useRef<Grid | null>(null);
@@ -77,6 +79,7 @@ const TableVirtual = <T,>(props: ITableVirtual<T>) => {
           useServerAdvanceFilter={useServerAdvanceFilter}
           useServerSearch={useServerSearch}
           onChangeCheckBoxSelection={onChangeCheckBoxSelection}
+          onExpandRow={onExpandRow}
           onChangeSort={onChangeSort}
           onChangeFilter={onChangeFilter}
           onChangeAdvanceFilter={onChangeAdvanceFilter}
@@ -90,9 +93,11 @@ const TableVirtual = <T,>(props: ITableVirtual<T>) => {
                     width={width}
                     height={height}
                     gridRef={gridRef}
+                    data={memoizedDataSource}
                     outerRef={outerRef}
                     onScrollTouchBottom={onScrollTouchBottom}
                     searchValue={searchValue}
+                    expandComponent={expandComponent}
                   />
                 );
               }}

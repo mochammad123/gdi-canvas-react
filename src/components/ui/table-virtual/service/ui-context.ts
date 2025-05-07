@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
-import { ICellPosition } from '../types';
 import { HEADER_FILTER_HEIGHT } from '../constants';
+import { ICellPosition } from '../types';
 
 export interface IUIContext {
   gridRef?: React.RefObject<Grid | null>;

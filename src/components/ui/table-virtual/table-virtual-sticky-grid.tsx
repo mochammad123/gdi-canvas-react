@@ -1,16 +1,16 @@
-import { VariableSizeGrid as Grid } from 'react-window';
 import { memo, useCallback, useEffect, useMemo } from 'react';
-import { ITableVirtualStickyGrid } from './types';
-import tableVirtualInnerElement from './table-virtual-inner-element';
-import TableVirtualCell from './table-virtual-cell';
-import { useHeaderContext } from './service/header-context';
-import { useDataContext } from './service/data-context';
-import useGridScrolling from './hooks/use-grid-scrolling';
-import { useUIContext } from './service/ui-context';
+import { VariableSizeGrid as Grid } from 'react-window';
 import TableVirtualEmptyData from './components/table-virtual-empty-data';
+import useGridScrolling from './hooks/use-grid-scrolling';
+import { useDataContext } from './service/data-context';
+import { useHeaderContext } from './service/header-context';
+import { useUIContext } from './service/ui-context';
+import TableVirtualCell from './table-virtual-cell';
+import TableVirtualInnerElement from './table-virtual-inner-element';
+import { ITableVirtualStickyGrid } from './types';
 
 const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
-  const { width, height, gridRef, outerRef, onScrollTouchBottom, searchValue } = props;
+  const { width, height, gridRef, outerRef, onScrollTouchBottom, searchValue, expandComponent, data } = props;
 
   const {
     rowHeight,
@@ -27,7 +27,7 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
     onRightClickCell,
   } = useUIContext();
 
-  const { finalDataSource } = useDataContext();
+  const { finalDataSource, expandedRow } = useDataContext();
 
   const {
     nonFreezedHeaders,
@@ -52,8 +52,8 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
   }, [width, height, useAutoWidth, nonFreezedHeaders, finalDataSource]);
 
   useEffect(() => {
-    gridRef.current?.resetAfterIndices({ columnIndex: 0, rowIndex: 0 });
-  }, [totalCountColumnAllHeaders]);
+    gridRef.current?.resetAfterIndices({ columnIndex: 0, rowIndex: 0, shouldForceUpdate: true });
+  }, [totalCountColumnAllHeaders, expandedRow]);
 
   const itemKey = useCallback(
     ({ rowIndex, columnIndex }: { rowIndex: number; columnIndex: number }) => {
@@ -76,7 +76,6 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
   }, [nonFreezedHeaders, adjustedColumnWidth]);
 
   //   const calculatingHeight = outerSize.height - finalDataSource?.length * rowHeight;
-
   return (
     <div className="size-max relative">
       <Grid
@@ -85,14 +84,20 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
         className="border border-gray-300"
         ref={gridRef}
         outerRef={outerRef}
+        itemData={data}
         width={width}
         height={height}
-        rowHeight={() => rowHeight}
+        onItemsRendered={(res) => <>{(res.overscanColumnStartIndex = 1)}</>}
+        rowHeight={(index) => {
+          if (!expandComponent) return rowHeight;
+          return (data?.[index] as { id: string })?.id?.toString()?.startsWith('expanded') ? 300 + rowHeight : rowHeight;
+        }}
         columnWidth={(index) => gridColumnWidths[index]}
         columnCount={totalCountColumnNonFreezedHeaders || 0}
         // rowCount={finalDataSource?.length + (Math.abs(calculatingHeight) >= 12 && useFooter ? 1 : 0) || 0}
         rowCount={finalDataSource?.length}
-        innerElementType={tableVirtualInnerElement}
+        innerElementType={(props) => <TableVirtualInnerElement {...props} data={data} expandComponent={expandComponent} outerRef={outerRef} />}
+        // innerElementType={TableVirtualInnerElement}
         overscanRowCount={5}
         overscanColumnCount={2}
         onScroll={(props) => {
@@ -108,7 +113,13 @@ const TableVirtualStickyGrid = (props: ITableVirtualStickyGrid) => {
           }
         }}
       >
-        {({ columnIndex, rowIndex, style }) => <TableVirtualCell rowIndex={rowIndex} columnIndex={columnIndex} style={style} />}
+        {({ columnIndex, rowIndex, style, data }) => {
+          return (
+            <>
+              <TableVirtualCell rowIndex={rowIndex} columnIndex={columnIndex} style={style} expandComponent={expandComponent} data={data} />
+            </>
+          );
+        }}
       </Grid>
 
       {!finalDataSource?.length && !isLoading && <TableVirtualEmptyData searchValue={searchValue} />}

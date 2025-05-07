@@ -1,13 +1,14 @@
 import { ReactNode, useMemo } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 
-import { DataContext, IDataContext } from './data-context';
-import useSortTable from '../hooks/use-sort-table';
-import useFilterTable from '../hooks/use-filter-table';
-import useFilterAdvanceTable from '../hooks/use-filter-advance-table';
-import useSearchTable from '../hooks/use-search-table';
-import { ITableVirtual } from '../types';
 import useCheckboxSelection from '../hooks/use-checkbox-selection';
+import useExpandRow from '../hooks/use-expand-row';
+import useFilterAdvanceTable from '../hooks/use-filter-advance-table';
+import useFilterTable from '../hooks/use-filter-table';
+import useSearchTable from '../hooks/use-search-table';
+import useSortTable from '../hooks/use-sort-table';
+import { ITableVirtual } from '../types';
+import { DataContext, IDataContext } from './data-context';
 
 interface IDataProvider<TDataSource>
   extends Pick<
@@ -17,7 +18,9 @@ interface IDataProvider<TDataSource>
     | 'useServerAdvanceFilter'
     | 'onChangeSort'
     | 'onChangeFilter'
+    | 'onExpandRow'
     | 'onChangeAdvanceFilter'
+    | 'onExpandRow'
     | 'useServerSearch'
     | 'onChangeSearch'
     | 'checkBoxSelectionKey'
@@ -39,11 +42,15 @@ const DataProvider = <TDataSource,>(props: IDataProvider<TDataSource>) => {
     useServerAdvanceFilter,
     onChangeCheckBoxSelection,
     onChangeSort,
+    onExpandRow,
     onChangeFilter,
     onChangeAdvanceFilter,
     useServerSearch,
     onChangeSearch,
   } = props;
+  const { handleExpandChange, expanded } = useExpandRow({
+    onExpandRow,
+  });
 
   const { selectedCheckBoxes, isCheckedAll, handleSelectCheckboxRow, handleSelectAllCheckbox } = useCheckboxSelection({
     data: dataSource || [],
@@ -97,6 +104,10 @@ const DataProvider = <TDataSource,>(props: IDataProvider<TDataSource>) => {
       ({
         finalDataSource: (searchedData || []) as Record<string, string | number>[],
         sort: { sortKey, sortBy, handleSort, handleSpecificSort },
+        expandedRow: {
+          expanded,
+          handleExpandChange,
+        },
         checkBoxSelection: {
           checkBoxSelectionKey: checkBoxSelectionKey as string,
           isCheckedAll,
@@ -136,25 +147,36 @@ const DataProvider = <TDataSource,>(props: IDataProvider<TDataSource>) => {
       searchedData,
       sortKey,
       sortBy,
+      handleSort,
+      handleSpecificSort,
+      checkBoxSelectionKey,
+      isCheckedAll,
+      selectedCheckBoxes,
+      handleSelectCheckboxRow,
+      handleSelectAllCheckbox,
       isFilterCardOpen,
+      handleOpenFilter,
+      filterCardRef,
       filterCardPosition,
+      updateFilter,
+      resetFilter,
       activeFilters,
       isFilterAdvanceCardOpen,
+      handleOpenAdvanceFilter,
+      filterAdvanceCardRef,
       filterAdvanceCardPosition,
+      applyAdvanceFilter,
+      resetAdvanceFilter,
       activeAdvanceFilters,
       isSearchCardOpen,
+      handleOpenSearch,
+      searchCardRef,
       searchCardPosition,
+      updateSearch,
+      resetSearch,
       activeSearch,
-      selectedCheckBoxes,
-      isCheckedAll,
-      onChangeSort,
-      onChangeSearch,
-      onChangeFilter,
-      onChangeAdvanceFilter,
-      useServerSearch,
-      useServerFilter,
-      useServerSearch,
-      useServerSort,
+      expanded,
+      handleExpandChange,
     ]
   );
 

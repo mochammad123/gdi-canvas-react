@@ -11,6 +11,10 @@ export interface IDataContext {
     handleSelectCheckboxRow: (value: string) => void;
     handleSelectAllCheckbox: () => void;
   };
+  expandedRow?: {
+    expanded: Record<number, boolean>;
+    handleExpandChange: (index: number, status: boolean) => void;
+  };
   sort?: {
     sortKey: string | null;
     sortBy: TSortOrder;
