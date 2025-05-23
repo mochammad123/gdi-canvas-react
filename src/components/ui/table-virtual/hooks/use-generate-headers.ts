@@ -99,6 +99,36 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
             }
           }
 
+          // Jika Header bukan Freezed namun ia Freezed Right
+          else if (header.freezedRight) {
+            acc.freezedRightGroup.push({
+              width: header.width,
+              fixedWidth: header.fixedWidth || 0,
+              caption: header.caption,
+              hasChildren: !!data?.children?.length || false,
+            });
+
+            if (data.children) {
+              acc.freezedRight.push(
+                ...data.children.map((child, childIdx) => ({
+                  ...(child as ITableVirtualHeaderColumn),
+                  height: stickyHeaderHeight,
+                  width: adjustedHeaderWidth[child.key]?.width || adjustedColumnWidth,
+                  fixedWidth: adjustedHeaderWidth[child.key]?.width || child.fixedWidth,
+                  left: childIdx * adjustedColumnWidth,
+                  useHeaderAction: data.useHeaderAction ?? headerModel === 'double-row',
+                  useFilter: child.useFilter ?? false,
+                  useSort: child.useSort ?? true,
+                  useSearch: child.useSearch ?? false,
+                  useSingleFilter: child.useSingleFilter ?? false,
+                  freezedRight: true,
+                }))
+              );
+            } else {
+              acc.freezedRight.push(header);
+            }
+          }
+
           // ======== Jika header bukan yang freezed. ========
           else {
             // ======== Push data header ke arr non freezed parent headers ========
@@ -132,10 +162,12 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
 
           return acc;
         },
-        { freezed: [], nonFreezed: [], freezedGroup: [], nonFreezedGroup: [] } as {
+        { freezed: [], freezedRight: [], nonFreezed: [], freezedRightGroup: [], freezedGroup: [], nonFreezedGroup: [] } as {
           freezed: ITableVirtualHeaderColumn[];
+          freezedRight: ITableVirtualHeaderColumn[];
           nonFreezed: ITableVirtualHeaderColumn[];
           freezedGroup: ITableVirtualHeaderParentColumn[];
+          freezedRightGroup: ITableVirtualHeaderParentColumn[];
           nonFreezedGroup: ITableVirtualHeaderParentColumn[];
         }
       );
@@ -163,7 +195,9 @@ export function useGenerateHeaders<T>(props: IGenerateHeaders<T>) {
 
   return {
     freezedHeaders: headerData?.freezed,
+    freezedRightHeaders: headerData?.freezedRight,
     freezedGroupHeaders: headerData?.freezedGroup,
+    freezedRightGroupHeaders: headerData?.freezedRightGroup,
     nonFreezedHeaders: headerData?.nonFreezed,
     nonFreezedGroupHeaders: headerData?.nonFreezedGroup,
     handleResizeHeaderColumn,

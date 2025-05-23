@@ -36,6 +36,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
     handleResetSearch,
     sortValue,
     isFreezed = false,
+    isFreezedRight = false,
   } = props;
 
   const { showHeaderFilter, headerFilterHeight, outerSize, scrollbarWidth, useColumnHiddenIndicator } = useUIContext();
@@ -69,7 +70,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
 
   const wrapperStyle: CSSProperties = {
     ...style,
-    zIndex: isFreezed ? 99999999 - columnIndex : 9999999 - columnIndex,
+    zIndex: isFreezed || isFreezedRight ? 99999999 - columnIndex : 9999999 - columnIndex,
   };
 
   const contentStyle: CSSProperties = {
@@ -82,7 +83,7 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
   return (
     <div
       ref={boxRef}
-      className={clsx('group/outer', isFreezed ? 'sticky' : 'absolute')}
+      className={clsx('group/outer', isFreezed || isFreezedRight ? 'sticky' : 'absolute')}
       style={{ ...wrapperStyle, top: headersHasChildren ? HEADER_GROUP_HEIGHT : 0 }}
     >
       <ResizeIndicator onMouseDown={handleMouseDown} />
@@ -92,11 +93,12 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
       <div
         style={contentStyle}
         className={clsx(
-          'cursor-pointer',
-          'bg-gray-100 relative flex flex-row justify-between space-x-3 items-center text-xs font-bold h-full',
-          'px-1.5 border-b border-b-gray-300',
-          columnIndex !== totalHeaders - 1 && 'border-r border-r-gray-300',
-          isFreezed && '!border-r !border-r-gray-300'
+          'h-full relative px-1.5 flex flex-row justify-between space-x-3 items-center cursor-pointer',
+          'bg-gray-100 border-b border-gray-300',
+          'text-xs font-bold',
+          columnIndex !== totalHeaders - 1 && '!border-r',
+          isFreezedRight && !isFreezed && columnIndex === 0 && '!border-l',
+          isFreezed && !isFreezedRight && '!border-r'
         )}
         onClick={handleSort}
       >
@@ -143,7 +145,13 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
       {showHeaderFilter && (
         <div
           style={{ height: headerFilterHeight }}
-          className="bg-gray-100 border-r border-b border-gray-300 flex justify-center items-center gap-2 px-2"
+          className={clsx(
+            'flex justify-center items-center gap-2 px-2',
+            'bg-gray-100 border-b border-gray-300',
+            columnIndex !== totalHeaders - 1 && '!border-r',
+            isFreezedRight && !isFreezed && columnIndex === 0 && '!border-l',
+            isFreezed && !isFreezedRight && '!border-r'
+          )}
         >
           {keyName !== 'action' && keyName !== 'checkbox-selection' && keyName !== 'expand' && (
             <>

@@ -1,51 +1,81 @@
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/toast';
-import { TToastVariant } from '@/components/ui/toast/types';
-import { Typography } from '@/components/ui/typhography';
+import { ITableVirtual, TableVirtual } from '@/components/ui/table-virtual';
+import { useMemo } from 'react';
+
+interface IData {
+  name: string;
+  nama_depan: string;
+  nama_belakang: string;
+  email: string;
+  age: number;
+  age_1: number;
+  age_2: number;
+  isActive: boolean;
+  createdAt: string;
+  phone: string;
+  address: string;
+  city: string;
+}
+
+const dummyData: IData[] = Array.from({ length: 20 }).map((_, index) => ({
+  name: `Name ${index}`,
+  email: `email${index}@gmail.com`,
+  age: index,
+  isActive: index % 2 === 0,
+  createdAt: new Date().toLocaleString(),
+  phone: `08${index}-${index}-${index}`,
+  address: `Alamat ${index}`,
+  city: `Kota ${index}`,
+  nama_depan: `Nama Depan ${index}`,
+  nama_belakang: `Nama Belakang ${index}`,
+  age_1: index,
+  age_2: index + 1,
+}));
 
 export default function Experiment() {
-  const toast = useToast();
+  const headers = useMemo(() => {
+    const commonHeaders: ITableVirtual<IData>['headers'] = [
+      {
+        key: 'name',
+        caption: 'Nama',
+        freezed: true,
+        children: [
+          { key: 'nama_depan', caption: 'Nama Depan' },
+          { key: 'nama_belakang', caption: 'Nama Belakang' },
+        ],
+      },
+      { key: 'email', caption: 'Email' },
+      {
+        key: 'age',
+        caption: 'Umur',
+        className: '!text-end',
+        freezedRight: true,
+        children: [
+          { key: 'age_1', caption: 'Umur 1', fixedWidth: 140 },
+          { key: 'age_2', caption: 'Umur 2', fixedWidth: 140 },
+        ],
+      },
+      { key: 'isActive', caption: 'Aktif', render: (data) => (data?.isActive ? 'Active' : 'Inactive') },
+      { key: 'createdAt', caption: 'Tanggal Daftar' },
+      { key: 'phone', caption: 'No. Telepon' },
+      { key: 'address', caption: 'Alamat', fixedWidth: 160, renderSummary: () => 'Total Alamat' },
+      { key: 'city', caption: 'Kota', fixedWidth: 100 },
+      { key: 'action', caption: '', fixedWidth: 32, freezedRight: true },
+    ];
 
-  const handleTriggerToast = (type: TToastVariant) => {
-    switch (type) {
-      case 'success':
-        return toast.open('success', 'This is a success toast');
-      case 'error':
-        return toast.open('error', 'This is a error toast');
-      case 'info':
-        return toast.open('info', 'This is a info toast');
-      case 'warning':
-        return toast.open('warning', 'This is a warning toast yohohoho');
-      default:
-        return;
-    }
-  };
+    return commonHeaders.map((header) => ({ ...header, useFilter: true, useSearch: true }));
+  }, []);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center p-10">
-      <Typography as="h4">Experiment</Typography>
-
-      <div className="mt-10 grid grid-cols-3 w-full gap-3">
-        <div className="w-full p-2 rounded shadow">
-          <div className="w-full h-max flex flex-col space-y-2">
-            <Typography as="h6">Toast</Typography>
-
-            <div className="flex flex-row space-x-2">
-              <Button size="sm" className="!bg-green-500 border-none" onClick={() => handleTriggerToast('success')}>
-                Success
-              </Button>
-              <Button size="sm" className="bg-red-500 border-none" onClick={() => handleTriggerToast('error')}>
-                Error
-              </Button>
-              <Button size="sm" className="bg-yellow-500 border-none" onClick={() => handleTriggerToast('warning')}>
-                Warning
-              </Button>
-              <Button size="sm" className="!bg-blue-500 border-none" onClick={() => handleTriggerToast('info')}>
-                Info
-              </Button>
-            </div>
-          </div>
-        </div>
+    <div className="w-full min-h-screen flex flex-col p-5">
+      <div className="w-[95%] h-[500px]">
+        <TableVirtual
+          useFooter
+          headerModel="double-row"
+          stickyHeaderHeight={32}
+          headers={headers}
+          dataSource={dummyData}
+          onClickRow={(data, rowIndex) => console.log('On Click Row => ', { rowIndex, data })}
+        />
       </div>
     </div>
   );

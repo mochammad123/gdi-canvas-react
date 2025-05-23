@@ -17,7 +17,7 @@ const TableVirtualCell = ({ rowIndex, columnIndex, style, expandComponent, data 
 
   const { selectedRowIndex, onClickGridRow, classNameCell, onRightClickCell, cellPosition, renderRightClickRow } = useUIContext();
   const { finalDataSource, checkBoxSelection, expandedRow } = useDataContext();
-  const { freezedHeaders, nonFreezedHeaders } = useHeaderContext();
+  const { freezedHeaders, freezedRightHeaders, nonFreezedHeaders } = useHeaderContext();
 
   const [showActionCard, setShowActionCard] = useState({ show: false, rowIndex: -1 });
 
@@ -32,6 +32,7 @@ const TableVirtualCell = ({ rowIndex, columnIndex, style, expandComponent, data 
   if (!headerKey) return;
   const cellValue = finalDataSource[rowIndex]?.[headerKey as keyof (typeof finalDataSource)[0]];
   const finalValue = typeof cellValue === 'number' && cellValue === 0 ? 0 : cellValue || '';
+  const hasFreezedRight = freezedRightHeaders && freezedRightHeaders?.length > 0;
 
   return (
     <div
@@ -51,7 +52,7 @@ const TableVirtualCell = ({ rowIndex, columnIndex, style, expandComponent, data 
         {
           '!border-y !border-y-blue-900 !bg-blue-100': rowIndex === selectedRowIndex,
           '!border-l !border-l-blue-900': rowIndex === selectedRowIndex && columnIndex === 0 && !freezedHeaders?.length,
-          '!border-r !border-r-blue-900': rowIndex === selectedRowIndex && columnIndex === nonFreezedHeaders?.length - 1,
+          '!border-r !border-r-blue-900': rowIndex === selectedRowIndex && columnIndex === nonFreezedHeaders?.length - 1 && !hasFreezedRight,
         },
         classNameCell?.(finalDataSource[rowIndex], rowIndex, columnIndex, false)
       )}

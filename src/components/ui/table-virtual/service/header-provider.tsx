@@ -30,15 +30,28 @@ const HeaderProvider = <T,>(props: IHeaderProvider<T>) => {
 
   useCloseOnWindowScroll({
     enabled: isMenuCardOpen.show,
-    onClose: () => setIsMenuCardOpen({ show: false, dataKey: null, position: { top: 0, left: 0 } }),
+    onClose: () =>
+      setIsMenuCardOpen({
+        show: false,
+        dataKey: null,
+        position: { top: 0, left: 0 },
+      }),
   });
 
-  useOnClickOutside(menuCardRef, () => setIsMenuCardOpen({ show: false, dataKey: null, position: { top: 0, left: 0 } }));
+  useOnClickOutside(menuCardRef, () =>
+    setIsMenuCardOpen({
+      show: false,
+      dataKey: null,
+      position: { top: 0, left: 0 },
+    })
+  );
 
   const {
     freezedHeaders,
+    freezedRightHeaders,
     freezedGroupHeaders,
     nonFreezedHeaders,
+    freezedRightGroupHeaders,
     nonFreezedGroupHeaders,
     handleResizeHeaderColumn,
     visibleColumns,
@@ -64,6 +77,10 @@ const HeaderProvider = <T,>(props: IHeaderProvider<T>) => {
     return freezedHeaders?.reduce((prev, curr) => prev + (curr.fixedWidth || curr.width), 0) || 0;
   }, [freezedHeaders]);
 
+  const totalCountFreezedRightHeadersWidth = useMemo((): number => {
+    return freezedRightHeaders?.reduce((prev, curr) => prev + (curr.fixedWidth || curr.width), 0) || 0;
+  }, [freezedRightHeaders]);
+
   // 1. Hitung total kolom headers yang non-freezed.
   // 2. Hitung total kolom headers yang non-freezed, yang tidak memiliki width fixed.
   // 3. Hitung total lebar kolom headers yang non-freezed.
@@ -87,8 +104,10 @@ const HeaderProvider = <T,>(props: IHeaderProvider<T>) => {
   }, [defferedHeaders]);
 
   const headersHasChildren = useMemo(() => {
-    return freezedGroupHeaders?.some((header) => header.hasChildren) || nonFreezedGroupHeaders?.some((header) => header.hasChildren);
-  }, [freezedGroupHeaders, nonFreezedGroupHeaders]);
+    return [...(freezedGroupHeaders || []), ...(nonFreezedGroupHeaders || []), ...(freezedRightGroupHeaders || [])].some(
+      (header) => header.hasChildren
+    );
+  }, [freezedGroupHeaders, nonFreezedGroupHeaders, freezedRightGroupHeaders]);
 
   const handleOpenMenuCard = useCallback((e: React.MouseEvent<HTMLElement>, dataKey: string | null) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -105,10 +124,13 @@ const HeaderProvider = <T,>(props: IHeaderProvider<T>) => {
     (): IHeaderContext => ({
       headersHasChildren,
       freezedHeaders,
+      freezedRightHeaders,
       freezedGroupHeaders,
+      freezedRightGroupHeaders,
       nonFreezedHeaders,
       nonFreezedGroupHeaders,
       totalCountFreezedHeadersWidth,
+      totalCountFreezedRightHeadersWidth,
       totalCountGridWidth,
       totalCountColumnNonFreezedHeaders,
       totalCountColumnNonFreezedHeadersExceptFixedWidth,
@@ -130,9 +152,12 @@ const HeaderProvider = <T,>(props: IHeaderProvider<T>) => {
     [
       freezedHeaders,
       freezedGroupHeaders,
+      freezedRightHeaders,
+      freezedRightGroupHeaders,
       nonFreezedHeaders,
       nonFreezedGroupHeaders,
       totalCountFreezedHeadersWidth,
+      totalCountFreezedRightHeadersWidth,
       totalCountGridWidth,
       totalCountColumnNonFreezedHeaders,
       totalCountColumnNonFreezedHeadersExceptFixedWidth,

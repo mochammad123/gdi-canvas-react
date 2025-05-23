@@ -98,6 +98,7 @@ export interface IDataHeader<TDataSource> {
   useSingleFilter?: boolean;
   useAdvanceFilter?: boolean;
   freezed?: boolean;
+  freezedRight?: boolean;
   filterOptions?: string[];
   render?: (data?: TDataSource, rowIndex?: number) => ReactNode | string;
   renderSummary?: () => ReactNode | string;
@@ -131,6 +132,7 @@ export interface ITableVirtualHeaderItem {
   handleResetSearch?: (dataKey: string) => void;
   sortValue?: TSortOrder;
   isFreezed?: boolean;
+  isFreezedRight?: boolean;
   children?: ITableVirtualHeaderColumn[];
   headersHasChildren?: boolean;
   handleOpenSearch?: (e: React.MouseEvent<HTMLElement>) => void;

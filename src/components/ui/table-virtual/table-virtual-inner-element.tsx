@@ -13,10 +13,12 @@ const TableVirtualInnerElement = forwardRef<HTMLDivElement, ITableVirtualInnerEl
   const { data, expandComponent, outerRef } = props;
 
   const { stickyHeaderHeight, useFooter, stickyFooterHeight, isScrolling } = useUIContext();
-  const { freezedHeaders, totalCountFreezedHeadersWidth, totalCountGridWidth, headersHasChildren } = useHeaderContext();
+  const { freezedHeaders, totalCountFreezedHeadersWidth, totalCountGridWidth, totalCountFreezedRightHeadersWidth, headersHasChildren } =
+    useHeaderContext();
   const [minRow, maxRow, _minColumn, _maxColumn] = getRenderedCursor(Children.toArray(props.children));
 
   const groupedByRow: Record<number, any[]> = {};
+
   Children.toArray(props.children).forEach((child: any) => {
     const rowIndex = child?.props?.rowIndex;
     if (rowIndex !== undefined) {
@@ -33,7 +35,7 @@ const TableVirtualInnerElement = forwardRef<HTMLDivElement, ITableVirtualInnerEl
       ref={ref}
       style={{
         ...props.style,
-        width: totalCountGridWidth,
+        width: totalCountGridWidth + totalCountFreezedRightHeadersWidth,
         height: props.style.height || 0 + stickyHeaderHeight,
       }}
     >

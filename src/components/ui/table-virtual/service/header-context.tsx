@@ -3,10 +3,13 @@ import { ITableVirtualHeaderColumn, ITableVirtualHeaderParentColumn } from '../t
 
 export interface IHeaderContext {
   freezedHeaders?: ITableVirtualHeaderColumn[];
+  freezedRightHeaders?: ITableVirtualHeaderColumn[];
   nonFreezedHeaders?: ITableVirtualHeaderColumn[];
   freezedGroupHeaders?: ITableVirtualHeaderParentColumn[];
+  freezedRightGroupHeaders?: ITableVirtualHeaderParentColumn[];
   nonFreezedGroupHeaders?: ITableVirtualHeaderParentColumn[];
   totalCountFreezedHeadersWidth: number;
+  totalCountFreezedRightHeadersWidth: number;
   totalCountGridWidth: number;
   totalCountColumnNonFreezedHeaders: number;
   totalCountColumnNonFreezedHeadersExceptFixedWidth: number;
@@ -33,8 +36,7 @@ export interface IHeaderContext {
 
 export const HeaderContext = createContext<IHeaderContext>({
   visibilityColumnsCardRef: null,
-  freezedHeaders: [],
-  nonFreezedHeaders: [],
+  totalCountFreezedRightHeadersWidth: 0,
   totalCountFreezedHeadersWidth: 0,
   totalCountGridWidth: 0,
   totalCountColumnNonFreezedHeaders: 0,

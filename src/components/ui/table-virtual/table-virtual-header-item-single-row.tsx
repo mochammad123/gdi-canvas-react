@@ -35,6 +35,7 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
     handleSort,
     sortValue,
     isFreezed = false,
+    isFreezedRight = false,
   } = props;
   const { outerSize, scrollbarWidth } = useUIContext();
   const { headersHasChildren } = useHeaderContext();
@@ -80,10 +81,10 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
   return (
     <div
       ref={boxRef}
-      className={clsx('group', isFreezed ? 'sticky' : 'absolute')}
+      className={clsx('group', isFreezed || isFreezedRight ? 'sticky' : 'absolute')}
       style={{
         ...style,
-        zIndex: isFreezed ? 99999999 - columnIndex : 9999999 - columnIndex,
+        zIndex: isFreezed || isFreezedRight ? 99999999 - columnIndex : 9999999 - columnIndex,
         top: headersHasChildren ? HEADER_GROUP_HEIGHT : 0,
       }}
     >
@@ -96,10 +97,12 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
 
       <div
         className={clsx(
-          'bg-gray-100 relative flex flex-row justify-between space-x-3 items-center text-xs font-bold h-full',
-          'px-1.5 border-b border-b-gray-300',
-          columnIndex !== totalHeaders - 1 && 'border-r border-r-gray-300',
-          isFreezed && '!border-r !border-r-gray-300'
+          'h-full relative flex flex-row justify-between space-x-3 items-center',
+          'bg-gray-100 border-b px-1.5 border-gray-300',
+          'text-xs font-bold',
+          columnIndex !== totalHeaders - 1 && '!border-r',
+          isFreezedRight && !isFreezed && columnIndex === 0 && '!border-l',
+          isFreezed && !isFreezedRight && '!border-r'
         )}
       >
         {keyName !== 'checkbox-selection' && keyName !== 'action' && (

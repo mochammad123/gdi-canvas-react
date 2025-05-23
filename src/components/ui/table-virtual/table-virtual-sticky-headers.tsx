@@ -12,15 +12,20 @@ import TableVirtualHeaderItem from './table-virtual-header-item';
 import TableVirtualSearchCard from './components/table-virtual-search-card';
 import TableVirtualVisibilityColumnsCard from './components/table-virtual-visibility-columns-card';
 import Portal from './components/portal';
+import { useUIContext } from './service/ui-context';
 
 const TableVirtualStickyHeaders = ({ className, style }: ITableVirtualStickyHeaders) => {
+  const { outerSize, scrollbarWidth } = useUIContext();
   const { sort, filter, search, filterAdvance } = useDataContext();
   const {
     freezedHeaders,
     freezedGroupHeaders,
+    freezedRightHeaders,
+    freezedRightGroupHeaders,
     nonFreezedHeaders,
     nonFreezedGroupHeaders,
     totalCountFreezedHeadersWidth,
+    totalCountFreezedRightHeadersWidth,
     totalCountGridWidth,
     menuCard,
     headersHasChildren,
@@ -53,15 +58,21 @@ const TableVirtualStickyHeaders = ({ className, style }: ITableVirtualStickyHead
 
   let headerGroupLeftPosition = 0;
   let headerLeftPosition = 0;
+
   let headerGroupLeftFreezedPosition = 0;
   let headerLeftFreezedPosition = 0;
 
   return (
     <>
-      <div id="headers" className={clsx('sticky top-0 flex flex-row z-[3]', className)} style={{ ...style, width: totalCountGridWidth }}>
+      <div
+        id="headers"
+        className={clsx('sticky top-0 flex flex-row z-[3]', className)}
+        style={{ ...style, width: totalCountGridWidth + totalCountFreezedRightHeadersWidth }}
+      >
+        {/* Header Freezed On The Left */}
         <div className="sticky top-0 left-0 w-max z-[999999999]">
           {headersHasChildren && (
-            <div className="relative w-full h-[36px] flex">
+            <div className="relative w-full flex">
               {freezedGroupHeaders?.map((groupHeader, groupIdx) => {
                 const { hasChildren, caption, fixedWidth, width } = groupHeader ?? {};
 
@@ -84,7 +95,7 @@ const TableVirtualStickyHeaders = ({ className, style }: ITableVirtualStickyHead
             </div>
           )}
 
-          <div className="relative w-full bg-yellow-50 flex">
+          <div className="relative w-full flex">
             {freezedHeaders?.map((freezedHeader, columnIndex) => {
               const { key, caption, useAdvanceFilter, useFilter, useSearch, useSort, useSingleFilter, useHeaderAction, fixedWidth, width, ...style } =
                 freezedHeader;
@@ -125,17 +136,93 @@ const TableVirtualStickyHeaders = ({ className, style }: ITableVirtualStickyHead
           </div>
         </div>
 
+        {/* Header Freezed On The Right */}
+        <div className="sticky top-0 w-max z-[999999999]" style={{ left: outerSize?.width - totalCountFreezedRightHeadersWidth - scrollbarWidth }}>
+          {headersHasChildren && (
+            <div className="relative w-full flex">
+              {freezedRightGroupHeaders?.map((groupHeader, groupIdx) => {
+                const { hasChildren, caption, fixedWidth, width } = groupHeader ?? {};
+                const firstColumn = groupIdx === 0;
+                const lastColumn = groupIdx === freezedRightGroupHeaders?.length - 1;
+
+                headerGroupLeftFreezedPosition += fixedWidth || width;
+
+                return (
+                  <div
+                    key={'grou-header-freezed-right' + groupIdx}
+                    className={clsx(
+                      'bg-gray-100 border-b border-gray-300 flex justify-center items-center text-xs font-bold',
+                      firstColumn && 'border-l',
+                      !lastColumn && 'border-r'
+                    )}
+                    style={{
+                      height: HEADER_GROUP_HEIGHT,
+                      width: fixedWidth || width,
+                      left: headerGroupLeftFreezedPosition - (fixedWidth || width),
+                    }}
+                  >
+                    {hasChildren ? caption : ''}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <div className="relative w-full flex">
+            {freezedRightHeaders?.map((freezedHeader, columnIndex) => {
+              const { key, caption, useAdvanceFilter, useFilter, useSearch, useSort, useSingleFilter, useHeaderAction, fixedWidth, width, ...style } =
+                freezedHeader;
+
+              headerLeftFreezedPosition += fixedWidth || width;
+
+              return (
+                <TableVirtualHeaderItem
+                  isFreezedRight
+                  key={'table-header-freezed-right-' + key + columnIndex}
+                  keyName={key}
+                  caption={caption}
+                  columnIndex={columnIndex}
+                  useSort={useSort}
+                  useSearch={useSearch}
+                  useFilter={useFilter}
+                  useSingleFilter={useSingleFilter}
+                  useAdvanceFilter={useAdvanceFilter}
+                  useHeaderAction={useHeaderAction}
+                  totalHeaders={freezedRightHeaders.length}
+                  sortValue={sortKey === key ? sortBy : 'unset'}
+                  handleSort={() => handleSort?.(key)}
+                  handleOpenSearch={(e) => handleOpenSearch?.(e, key)}
+                  handleOpenFilter={(e) => handleOpenFilter?.(e, key)}
+                  handleOpenAdvanceFilter={(e) => handleOpenAdvanceFilter?.(e, key)}
+                  handleOpenMenuCard={(e) => onOpenMenuCard?.(e, key)}
+                  handleOpenVisibilityColumnsCard={(e) => onOpenVisibilityColumnsCard?.(e)}
+                  handleApplySearch={updateSearch}
+                  handleResetSearch={resetSearch}
+                  style={{
+                    ...style,
+                    width: fixedWidth || width,
+                    left: headerLeftFreezedPosition - (fixedWidth || width),
+                  }}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Header non Freezed */}
         <div className="absolute">
           {headersHasChildren &&
             nonFreezedGroupHeaders?.map((groupHeader, colIndex) => {
               const { hasChildren, caption, fixedWidth, width } = groupHeader ?? {};
-
+              const lastColumn = colIndex === nonFreezedGroupHeaders?.length - 1;
               headerGroupLeftPosition += fixedWidth || width;
 
               return (
                 <div
                   key={'grou-header-' + colIndex}
-                  className="absolute bg-gray-100 border-r border-b border-gray-300 flex justify-center items-center text-xs font-bold"
+                  className={clsx(
+                    'absolute bg-gray-100 border-b border-gray-300 flex justify-center items-center text-xs font-bold',
+                    !lastColumn && 'border-r'
+                  )}
                   style={{
                     ...style,
                     width: fixedWidth || width,
