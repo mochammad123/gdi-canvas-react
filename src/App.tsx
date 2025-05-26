@@ -1,9 +1,11 @@
 import loadable from '@loadable/component';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-const AdminRoutes = loadable(() => import('./pages/admin'));
+import { registerSW } from 'virtual:pwa-register';
+const ExampleRoutes = loadable(() => import('./pages/example'));
 const LoginPage = loadable(() => import('./pages/login'));
 const ExperimentPage = loadable(() => import('./pages/experiment'));
-import { registerSW } from 'virtual:pwa-register';
+const LoginCabangPage = loadable(() => import('./pages/login/login-cabang'));
+const LoginChatbotPage = loadable(() => import('./pages/login/login-chatbot'));
 
 function App() {
   registerSW({ immediate: true });
@@ -11,7 +13,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/admin/*" element={<AdminRoutes />} />
+        <Route path="/login-cabang" element={<LoginCabangPage />} />
+        <Route path="/login-chatbot" element={<LoginChatbotPage />} />
+
+        <Route path="/example/*" element={<ExampleRoutes />} />
         <Route path="/experiment" element={<ExperimentPage />} />
       </Routes>
     </BrowserRouter>

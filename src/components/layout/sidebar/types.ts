@@ -20,6 +20,7 @@ export interface ISidebarSectionItem {
 export interface ISidebarMenuItem {
   label: string;
   url?: string;
+  customUrl?: string;
   icon?: ReactNode;
   element?: ReactNode;
   children?: ISidebarMenuItem[];

@@ -1,5 +1,5 @@
 import Layout from '@/components/layout';
-import { ISidebarMenu } from '@/components/layout/sidebar';
+import { ISidebarMenu, ISidebarMenuItem } from '@/components/layout/sidebar';
 import loadable from '@loadable/component';
 import { Suspense, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -13,7 +13,9 @@ const InputDateAndTimePage = loadable(() => import('./components/input-date-and-
 const SelectionPage = loadable(() => import('./components/selection'));
 const PaginationPage = loadable(() => import('./components/pagination'));
 const BigCalendarPage = loadable(() => import('./components/big-calendar'));
-const TemplateLoginPage = loadable(() => import('./templates/template-login'));
+const TemplateMasterAndDetailPage = loadable(() => import('./templates/template-master-and-detail'));
+const TemplateMasterDetailHistoryPage = loadable(() => import('./templates/template-master-and-detail/history'));
+const TemplateMasterDetailHistoryDetailPage = loadable(() => import('./templates/template-master-and-detail/history-detail'));
 
 const Icon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" className="-ml-0.5">
@@ -51,7 +53,20 @@ export default function AdminRoutes() {
       },
       {
         module: 'Template',
-        menu: [{ label: 'Login', url: '/', element: <TemplateLoginPage /> }],
+        menu: [
+          { label: 'Login', customUrl: '/', element: null },
+          { label: 'Login Cabang', customUrl: '/login-cabang', element: null },
+          { label: 'Login Chatbot', customUrl: '/login-chatbot', element: null },
+          {
+            label: 'Master & Detail',
+            url: '',
+            children: [
+              { label: 'Master & Detail', url: 'master-and-detail', element: <TemplateMasterAndDetailPage /> },
+              { label: 'History', url: 'master-and-detail/history', element: <TemplateMasterDetailHistoryPage /> },
+              { label: 'History Detail', url: 'master-and-detail/history-detail', element: <TemplateMasterDetailHistoryDetailPage /> },
+            ],
+          },
+        ],
       },
       {
         module: 'Contoh Sidebar',
@@ -114,9 +129,27 @@ export default function AdminRoutes() {
         <Routes>
           <Route path="/" element={getFirstComponet()} />
           <Route path="/dashboard" element={getFirstComponet()} />
-          {sidebarAdmin.map((item) => item.menu.map((menu, keyMenu) => <Route key={keyMenu} path={menu.url} element={menu.element} />))}
+          {sidebarAdmin.flatMap((section) => renderRoutesFromMenu(section.menu))}
         </Routes>
       </Suspense>
     </Layout>
   );
+}
+
+function renderRoutesFromMenu(menuItems: ISidebarMenuItem[]): JSX.Element[] {
+  const routes: JSX.Element[] = [];
+
+  function recurse(items: ISidebarMenuItem[]) {
+    items.forEach((item) => {
+      if (item.url && item.element && !item.customUrl) {
+        routes.push(<Route key={item.url} path={item.url} element={item.element} />);
+      }
+      if (item?.children && item.children.length > 0) {
+        recurse(item.children);
+      }
+    });
+  }
+
+  recurse(menuItems);
+  return routes;
 }

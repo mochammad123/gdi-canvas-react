@@ -16,7 +16,7 @@ const formLoginSchema = z.object({
 });
 
 type FormLoginSchema = z.infer<typeof formLoginSchema>;
-export default function TemplateLogin() {
+export default function LoginPage() {
   const form = useForm<FormLoginSchema>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -26,7 +26,7 @@ export default function TemplateLogin() {
   });
 
   const onSave = (values: FormLoginSchema) => {
-    window.location.href = 'admin/dashboard';
+    window.location.href = 'example/dashboard';
     values;
   };
 

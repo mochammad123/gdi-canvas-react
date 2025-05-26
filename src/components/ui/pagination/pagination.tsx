@@ -104,7 +104,7 @@ export default function Pagination({
       <InputNumberRange
         disabledRange
         value={currentPerPage || ''}
-        className="text-center"
+        className="text-center pl-[4px]"
         onArrowUp={onUpdatePerPage}
         onArrowDown={onUpdatePerPage}
         onChange={(e) => {
@@ -116,11 +116,7 @@ export default function Pagination({
         }}
       />
 
-      <Button
-        className="h-[32px] !px-[16px] !py-[5.5px] w-[98px] shrink-0 flex justify-center"
-        rounded
-        onClick={() => onApplyPerPage(currentPerPage || 1)}
-      >
+      <Button className="h-[32px] !px-[16px] !py-[5.5px] w-[98px] shrink-0 flex justify-center" onClick={() => onApplyPerPage(currentPerPage || 1)}>
         Terapkan
       </Button>
 

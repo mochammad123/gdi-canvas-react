@@ -1,11 +1,11 @@
-import { memo, useState } from 'react';
 import clsx from 'clsx';
+import { memo, useState } from 'react';
 
-import { TableVirtual, ITableVirtual } from '@/components/ui/table-virtual';
+import ContentExampleCode from '@/components/content-example-code';
+import ToggleShowCode from '@/components/toggle-show-code';
+import { ITableVirtual, TableVirtual } from '@/components/ui/table-virtual';
 import { Typography } from '@/components/ui/typhography';
 import { dummyData, IDummyData } from './data';
-import ToggleShowCode from '@/components/toggle-show-code';
-import ContentExampleCode from '@/components/content-example-code';
 
 const headers: ITableVirtual<IDummyData>['headers'] = [
   { key: 'name', caption: 'Nama' },
@@ -50,7 +50,7 @@ export default memo(TableStandarSingleRow);
 export const StandarSingleRowExample = `
 import clsx from 'clsx';
 import { dummyData, IDummyData } from './data';
-import { TableVirtualV2, ITableVirtual } from '@/components/ui/table-virtual-v2';
+import { TableVirtual, ITableVirtual } from '@/components/ui/table-virtual';
 
 const headers: ITableVirtual<IDummyData>['headers'] = [
   { key: 'name', caption: 'Nama' },
@@ -77,7 +77,7 @@ const headers: ITableVirtual<IDummyData>['headers'] = [
 export default function StandarSingleRow() {
   return (
     <div className="w-full h-[25rem]">
-      <TableVirtualV2
+      <TableVirtual
         headers={headers}
         dataSource={dummyData}
         headerModel="single-row"

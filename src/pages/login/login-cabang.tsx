@@ -4,6 +4,7 @@ import LogoIcon from '@/components/ui/icon/logo';
 import InputwithLabel from '@/components/ui/inputs/input-with-label';
 import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
 import Label from '@/components/ui/label';
+import { SelectionWithLabel } from '@/components/ui/selection';
 import { Typography } from '@/components/ui/typhography';
 import FeedbackError from '@/components/ui/typhography/feedback-error-input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +14,14 @@ import { z } from 'zod';
 const formLoginSchema = z.object({
   username: z.string().min(1, { message: 'Username wajib diisi' }),
   password: z.string().min(1, { message: 'Password wajib diisi' }),
+  branch: z.string().min(1, { message: 'Cabang wajib diisi' }),
 });
+
+const branchOptions: Record<string, string> = {
+  HOLIS: 'HOLIS',
+  'KEBON JUKUT': 'KEBON JUKUT',
+  SUDIRMAN: 'SUDIRMAN',
+};
 
 type FormLoginSchema = z.infer<typeof formLoginSchema>;
 export default function TemplateLogin() {
@@ -22,6 +30,7 @@ export default function TemplateLogin() {
     defaultValues: {
       username: '',
       password: '',
+      branch: '',
     },
   });
 
@@ -32,7 +41,7 @@ export default function TemplateLogin() {
   return (
     <>
       <section className="h-screen w-full bg-knitto-blue-100 flex justify-center items-center">
-        <div className="absolute left-5 top-20">
+        <div className="absolute left-5 top-5">
           <LogoIcon />
         </div>
         <FormProvider {...form}>
@@ -41,7 +50,7 @@ export default function TemplateLogin() {
               Auth Login
             </Typography>
             <div className="mt-[32px]">
-              <FormWrapper errors={form.formState.errors} className="flex flex-col gap-y-[20px]" onSubmit={form.handleSubmit(onSave)}>
+              <FormWrapper errors={form.formState.errors} className="flex flex-col gap-y-[18px]" onSubmit={form.handleSubmit(onSave)}>
                 <Controller
                   control={form.control}
                   name="username"
@@ -63,6 +72,27 @@ export default function TemplateLogin() {
                         <Label>Password</Label>
                         <InputWithSuffix required placeholder="Password" type="password" classNameInput="h-[44px]" {...field} />
                         {form.formState.errors.password?.message && <FeedbackError text={form.formState.errors.password?.message} />}
+                      </div>
+                    );
+                  }}
+                />
+
+                <Controller
+                  control={form.control}
+                  name="branch"
+                  render={({ field }) => {
+                    return (
+                      <div>
+                        <SelectionWithLabel
+                          label="Cabang"
+                          options={branchOptions}
+                          onSelect={(selected) => {
+                            form.setValue('branch', selected.key.toString());
+                          }}
+                          value={branchOptions[field.value] || ''}
+                          placeholder="Pilih cabang"
+                        />
+                        {form.formState.errors.branch?.message && <FeedbackError text={form.formState.errors.branch?.message} />}
                       </div>
                     );
                   }}

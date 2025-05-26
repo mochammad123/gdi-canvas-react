@@ -2,11 +2,11 @@ import { useOnClickOutside, useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import Checkbox from '../checkbox';
-import Spinner from '../icon/spinner';
-import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from './types';
-import CloseIcon from '../icon/close';
 import CaretIcon from '../icon/caret';
+import CloseIcon from '../icon/close';
+import Spinner from '../icon/spinner';
 import InputSearch from '../inputs/input-search';
+import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from './types';
 
 type ActionReducer =
   | { type: 'ON_CLICK_SELECTION' }
@@ -96,24 +96,21 @@ function reducerFn(state: typeof initialValues, action: ActionReducer): typeof i
 }
 
 const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
-  (
-    {
-      customDisplayValue,
-      classNameInput = '',
-      values,
-      multiple,
-      isLoading,
-      value = '',
-      options,
-      enableSearch,
-      placeholder,
-      onClear,
-      onSelect,
-      onClickSelectAll,
-      required,
-    },
-    ref
-  ) => {
+  ({
+    customDisplayValue,
+    classNameInput = '',
+    values,
+    multiple,
+    isLoading,
+    value = '',
+    options,
+    enableSearch,
+    placeholder,
+    onClear,
+    onSelect,
+    onClickSelectAll,
+    required,
+  }) => {
     const [state, dispatch] = useReducer(reducerFn, initialValues);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const hideDropdown = () => {
@@ -276,7 +273,7 @@ function ButtonClear({ onClick }: { onClick: () => void }) {
 function ButtonCaret({ opened }: { opened: boolean }) {
   return (
     <div className="absolute right-[.625rem] top-1/2 -translate-y-1/2">
-      <CaretIcon rotate={opened ? 'top' : 'bottom'} className="w-[.8125rem]" />
+      <CaretIcon rotate={opened ? 'top' : 'bottom'} className="w-[.8125rem]" color="#333" />
     </div>
   );
 }
@@ -328,7 +325,7 @@ function SelectionDropdown({
     }
   });
 
-  useOnClickOutside(wrapperRef, (currentTarget, el) => {
+  useOnClickOutside(wrapperRef, (currentTarget) => {
     if (currentTarget?.closest('.selection')?.contains(wrapperRef.current)) return;
     hideDropdown();
   });
@@ -439,7 +436,8 @@ function EmptyData({ search }: { search?: string }) {
       <div className="text-black-40 text-sm break-words">
         {search ? (
           <>
-            Pencarian <span className="font-semibold">'{search.length > limitChar ? `${search.substring(0, limitChar)}...` : search}'</span> tidak
+            Pencarian{' '}
+            <span className="font-semibold">&quote;{search.length > limitChar ? `${search.substring(0, limitChar)}...` : search}&quote;</span> tidak
             ditemukan
           </>
         ) : (

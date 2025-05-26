@@ -9,7 +9,7 @@ export default function withAuthMiddleware<TProps extends object>(WrappedCompone
     };
 
     const redirectToDashboard = () => {
-      window.location.href = '/admin/dashboard';
+      window.location.href = '/example/dashboard';
     };
 
     // redirect to dashboard page when user already login and on login page

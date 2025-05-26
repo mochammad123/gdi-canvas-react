@@ -33,6 +33,10 @@ export default function SidebarSectionItem(props: ISidebarSectionItem) {
     const hasUrl = Boolean(item.url);
     const hasChildren = Boolean(item.children);
 
+    if (item.customUrl) {
+      navigate(item.customUrl);
+      return;
+    }
     // Navigasi jika ada URL
     if (hasUrl) {
       navigate(item.url || '/');

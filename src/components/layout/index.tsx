@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+import Portal from '@/components/ui/portal';
 import { toggleSidebar } from '@/redux/layoutSlice';
 import { RootState } from '@/redux/store';
-import Portal from '@/components/ui/portal';
-import Sidebar, { ISidebarMenu } from './sidebar';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './header';
+import Sidebar, { ISidebarMenu } from './sidebar';
 
 export default function Layout({ sidebar, children }: { sidebar: ISidebarMenu[]; children: React.ReactNode }) {
   const sidebarIsOpen = useSelector((state: RootState) => state.layout.isSidebarOpen);
 
   return (
-    <div>
+    <div className="size-full">
       <Header sidebar={sidebar} />
       {sidebarIsOpen && <Backdrop />}
       <Sidebar sidebarMenu={sidebar} />
@@ -21,7 +21,7 @@ export default function Layout({ sidebar, children }: { sidebar: ISidebarMenu[];
 
 const Content = React.memo(ContentMemoized);
 function ContentMemoized({ children }: { children: React.ReactNode }) {
-  return <div className="mt-[3.25rem]">{children}</div>;
+  return <div className="pt-[3.25rem] size-full">{children}</div>;
 }
 
 function Backdrop() {
