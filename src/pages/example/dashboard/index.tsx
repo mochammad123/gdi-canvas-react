@@ -1,81 +1,77 @@
-import ColorKnitto from '@/../tailwind/tailwind.colors';
-import { useMemo } from 'react';
-import ButtonSchema from './components/button-schema';
-import ColorSchema from './components/color-schema';
-import InputDateTimeSchema from './components/input-date-picker';
-import TableVirtual from './components/table-virtual';
-import Selection from './components/selection';
-import TyphographiSchema from './components/typographi-schema';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/typhography';
+
+interface NavLink {
+  label: string;
+  path: string;
+}
+
+interface PageSection {
+  title: string;
+  links: NavLink[];
+}
+
+const examplePageSections: PageSection[] = [
+  {
+    title: 'Utilities',
+    links: [
+      { label: 'Color Examples', path: '/example/utilities/color' },
+      { label: 'Typography Examples', path: '/example/utilities/typhography' },
+    ],
+  },
+  {
+    title: 'Komponen',
+    links: [
+      { label: 'Table Examples', path: '/example/komponen/table' },
+      { label: 'Button Examples', path: '/example/komponen/button' },
+      { label: 'Selection Examples', path: '/example/komponen/selection' },
+      { label: 'Input Date & Time Examples', path: '/example/komponen/input-date-and-time' },
+      { label: 'Pagination Examples', path: '/example/komponen/pagination' },
+      { label: 'Big Calendar Examples', path: '/example/komponen/big-calendar' },
+    ],
+  },
+  {
+    title: 'Template',
+    links: [
+      { label: 'Login Template', path: '/' },
+      { label: 'Login Cabang Template', path: '/login-cabang' },
+      { label: 'Login Chatbot Template', path: '/login-chatbot' },
+      { label: 'Master & Detail Template', path: '/example/master-and-detail' },
+      { label: 'Master & Detail History', path: '/example/master-and-detail/history' },
+      { label: 'Master & Detail History Detail', path: '/example/master-and-detail/history-detail' },
+    ],
+  },
+];
 
 export default function Dashboard() {
-  const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);
-
-  const splitArrays = useMemo(() => {
-    const result: string[][] = [];
-    const chunkSize = 5;
-
-    for (let i = 0; i < colorKnittos.length; i += chunkSize) {
-      const chunk = colorKnittos.slice(i, i + chunkSize);
-      chunk.map((chunk) => chunk);
-      result.push(chunk);
-    }
-
-    return result;
-  }, [colorKnittos]);
-
-  // const strings = [
-  //   'bg-knitto-blue-100',
-  //   'bg-knitto-blue-80',
-  //   'bg-knitto-blue-60',
-  //   'bg-knitto-blue-40',
-  //   'bg-knitto-blue-20',
-  //   'bg-navy-100',
-  //   'bg-navy-80',
-  //   'bg-navy-60',
-  //   'bg-navy-40',
-  //   'bg-navy-20',
-  //   'bg-steel-blue-100',
-  //   'bg-steel-blue-80',
-  //   'bg-steel-blue-60',
-  //   'bg-steel-blue-40',
-  //   'bg-steel-blue-20',
-  //   'bg-burnt-orange-100',
-  //   'bg-burnt-orange-80',
-  //   'bg-burnt-orange-60',
-  //   'bg-burnt-orange-40',
-  //   'bg-burnt-orange-20',
-  //   'bg-greyish-down',
-  //   'bg-greyish-semi-dark',
-  //   'bg-greyish-semi-dark-50',
-  //   'bg-greyish-semi-white',
-  //   'bg-greyish-bright-white',
-  //   'bg-black-100',
-  //   'bg-black-80',
-  //   'bg-black-60',
-  //   'bg-black-40',
-  //   'bg-black-20',
-  // ];
+  const navigate = useNavigate();
 
   return (
-    <div className="p-2 bg-knitto-blue-20 pb-96">
-      <section>
-        <ColorSchema arrayColors={splitArrays} />
-      </section>
-      <section>
-        <TyphographiSchema />
-      </section>
-      <section>
-        <ButtonSchema />
-      </section>
-      <section>
-        <InputDateTimeSchema />
-      </section>
-      <section>
-        <TableVirtual />
-      </section>
-      <section>
-        <Selection />
-      </section>
+    <div className="p-4 bg-knitto-blue-20 min-h-screen flex flex-col gap-8">
+      <Typography as="h1" className="text-2xl font-semibold text-navy-100">
+        Navigasi Halaman Contoh Komponen dan Layout
+      </Typography>
+      {examplePageSections.map((section) => (
+        <section key={section.title}>
+          <Typography as="h2" className="mb-4 text-xl font-bold text-navy-80">
+            {section.title}
+          </Typography>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {section.links.map((pageLink) => (
+              <Button
+                key={pageLink.path + pageLink.label}
+                onClick={() => navigate(pageLink.path)}
+                className="w-full h-auto py-3 text-left justify-start hover:bg-navy-100 hover:text-white"
+                variant="outline"
+                color="navy"
+              >
+                {pageLink.label}
+              </Button>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }

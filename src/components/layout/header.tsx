@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import HamburgerIcon from '@/components/ui/icon/hamburger';
 import { ISidebarMenu, ISidebarMenuItem } from './sidebar';
+import { useLocation } from 'react-router-dom';
 
 const parsedMenu = (menu: ISidebarMenuItem[]) => {
   let result: { label: string; url: string }[] = [];
@@ -21,8 +22,9 @@ const parsedMenu = (menu: ISidebarMenuItem[]) => {
 };
 
 function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
+  const location = useLocation();
   const { data: userLogin } = useUserLogin();
-  const splitPathUrl = window.location.pathname.split('/');
+  const splitPathUrl = location.pathname.split('/');
   const lastPath = splitPathUrl[splitPathUrl.length - 1];
 
   const allMenu = useMemo(() => {

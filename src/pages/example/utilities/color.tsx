@@ -19,11 +19,11 @@ export default function Color() {
   }, [colorKnittos]);
 
   return (
-    <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3 mb-10">
+    <div className="p-4 bg-knitto-blue-20 h-full flex flex-col gap-3 mb-10">
       <Typography as="h3">Color</Typography>
       <div className="h-2 w-72 bg-burnt-orange-100" />
 
-      <div className="grid grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {splitArrays.map((splitArrayChildrens, key) => {
           return (
             <div key={key} className="shadow p-2 rounded bg-white">

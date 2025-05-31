@@ -22,7 +22,7 @@ import TableExpandNested from './table-expand-nested';
 const SectionTableVirtual = () => {
   return (
     <DelayedRender delay={200}>
-      <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3 mt-10">
+      <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3">
         <Typography as="h3">Table Virtual</Typography>
         <div className="h-2 w-72 bg-burnt-orange-100" />
 

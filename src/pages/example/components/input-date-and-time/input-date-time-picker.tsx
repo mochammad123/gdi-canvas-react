@@ -1,8 +1,8 @@
+import ContentExampleCode from '@/components/content-example-code';
+import ToggleShowCode from '@/components/toggle-show-code';
 import InputDateTimePicker from '@/components/ui/inputs/input-date-time-picker';
 import { Typography } from '@/components/ui/typhography';
 import { useState } from 'react';
-import ContentExampleCode from '../content-example-code';
-import ToggleShowCode from '../toggle-show-code';
 
 const codeExample = `
 import InputDateTimePicker from "@/components/ui/inputs/input-date-time-picker";
