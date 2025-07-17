@@ -1,16 +1,15 @@
 import { LOCAL_STORAGE_KEY } from './variables/example';
 
-const env = import.meta.env.VITE_ENVIRONTMENT;
 export function setLocalStorage(key: string, value: string) {
-  localStorage.setItem(`${env}-${key}`, value);
+  localStorage.setItem(`${key}`, value);
 }
 
 export function getLocalStorage<TValue = string>(key: string): TValue {
-  return localStorage.getItem(`${env}-${key}`) as TValue;
+  return localStorage.getItem(`${key}`) as TValue;
 }
 
 export function removeLocalStorage(key: string) {
-  localStorage.removeItem(`${env}-${key}`);
+  localStorage.removeItem(`${key}`);
 }
 
 export function removeLocalStorageUserLogin() {

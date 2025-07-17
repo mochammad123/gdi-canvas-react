@@ -1,3 +1,9 @@
+interface Window {
+  __ENV__?: {
+    [key: string]: string;
+  };
+}
+
 interface IResponse<T = null> {
   message: string;
   result: T;

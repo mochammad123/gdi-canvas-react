@@ -3,8 +3,9 @@ import path from 'node:path';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import generateEnvPlugin from './generate-env-plugin';
 
-const manifestForPlugIn: any = {
+const manifestForPlugIn = {
   registerType: 'prompt',
   includeAssests: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
   manifest: {
@@ -44,7 +45,12 @@ const manifestForPlugIn: any = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [VitePWA({ ...manifestForPlugIn, registerType: 'autoUpdate', devOptions: { enabled: true, type: 'module' } }), react(), tsconfigPaths()],
+  plugins: [
+    generateEnvPlugin(),
+    VitePWA({ ...manifestForPlugIn, registerType: 'autoUpdate', devOptions: { enabled: true, type: 'module' } }), 
+    react(), 
+    tsconfigPaths()
+  ],
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src'),

@@ -61,6 +61,10 @@
 - [PNPM](https://pnpm.io/)
 - [Tailwind](https://tailwindcss.com/)
 
+**Versi minimum:**
+- Node.js: >= 20
+- pnpm: >= 9.15
+
 ### Penggunaan NPM github
 
 Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/knittotextile/knitto-desgin-system/pkgs/npm/react-ui) secara private, gunakan panduan berikut untuk cara install library [**`Working with the npm registry`**](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
@@ -70,4 +74,53 @@ Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/k
 
 - [Tabel Virtual](https://github.com/knittotextile/knitto-react-template/blob/feat/table-virtual/src/components/ui/table-virtual/readme.md)
 - [Big Calendar](https://github.com/knittotextile/knitto-react-template/blob/feat/big-calendar/src/components/ui/big-calendar/README.md)
+
+---
+
+# Penggunaan dan Pengisian `entrypoint.sh` untuk Environment Variable
+
+Untuk deployment (misal pada Docker), environment variable yang digunakan aplikasi akan digenerate ke file JS saat build. Proses ini dapat menggunakan script `entrypoint.sh` yang akan membuat file env JS sesuai dengan environment yang diberikan.
+
+Contoh isi `entrypoint.sh`:
+
+```sh
+#!/bin/sh
+
+cat <<EOF >/usr/share/nginx/html/generated-env.js
+window.__ENV__ = {
+  VITE_APP_NAME:"${VITE_APP_NAME}",
+  VITE_BASE_API_URL:"${VITE_BASE_API_URL}",
+  VITE_ENVIRONTMENT:"${VITE_ENVIRONTMENT}",
+  VITE_DOCUMENTATION_URL:"${VITE_DOCUMENTATION_URL}",
+};
+EOF
+
+exec "$@"
+```
+
+**Langkah Penggunaan:**
+
+1. Pastikan environment variable (`VITE_APP_NAME`, `VITE_BASE_API_URL`, dll) sudah di-set pada environment container/server Anda.
+2. Saat container dijalankan, script `entrypoint.sh` akan membuat file JS env di direktori web server (misal: `/usr/share/nginx/html/`).
+3. File JS ini akan di-load oleh aplikasi frontend secara otomatis.
+4. Nama file JS env yang dihasilkan saat build bisa berbeda-beda (acak), pastikan script dan konfigurasi build Anda konsisten dengan output plugin/env generator.
+
+**Catatan:**
+- File env JS akan digenerate secara otomatis saat proses build menggunakan plugin custom (lihat `generate-env-plugin.ts`).
+- Pastikan penamaan dan lokasi file sesuai dengan yang diharapkan aplikasi (lihat juga konfigurasi plugin dan Dockerfile).
+
+---
+
+# Cara Menjalankan Project (Development)
+
+Untuk menjalankan project pada mode development:
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Secara default, environment variable akan di-load dari file `.env` atau `.env.local` pada root project. Tidak perlu menggunakan `entrypoint.sh` pada mode development, cukup pastikan file env sudah terisi sesuai kebutuhan.
+
+Jika ingin menambah/mengubah variable, edit file `.env` lalu restart dev server.
 

@@ -6,6 +6,7 @@ import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
 import Label from '@/components/ui/label';
 import { Typography } from '@/components/ui/typhography';
 import FeedbackError from '@/components/ui/typhography/feedback-error-input';
+import { env } from '@/lib/variables/env';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -39,7 +40,7 @@ export default function LoginPage() {
         <FormProvider {...form}>
           <div className="w-[400px] mx-auto p-[48px] bg-white rounded-[8px]">
             <Typography as="h3" className="text-black-100">
-              Auth Login
+              {env.VITE_APP_NAME}
             </Typography>
             <div className="mt-[32px]">
               <FormWrapper errors={form.formState.errors} className="flex flex-col gap-y-[20px]" onSubmit={form.handleSubmit(onSave)}>
