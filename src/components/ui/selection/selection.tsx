@@ -1,10 +1,12 @@
 import { useOnClickOutside, useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { FixedSizeList as List } from 'react-window';
 import Checkbox from '../checkbox';
 import CaretIcon from '../icon/caret';
 import CloseIcon from '../icon/close';
 import Spinner from '../icon/spinner';
+import Input from '../inputs/input';
 import InputSearch from '../inputs/input-search';
 import { IDropdownItemProps, ISelectedOption, ISelectionDropdownProps, ISelectionInputProps, ISelectionOption, ISelectionProps } from './types';
 
@@ -110,7 +112,10 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
     onSelect,
     onClickSelectAll,
     required,
+    placeholderSearch,
+    onSaveAddItem,
   }) => {
+    const listRef = useRef<List>(null);
     const [state, dispatch] = useReducer(reducerFn, initialValues);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const hideDropdown = () => {
@@ -154,7 +159,7 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
       if (!wrapperRef.current) return;
       const activeItem = wrapperRef.current?.querySelectorAll(`.dropdown-item`);
       if (!activeItem) return;
-      activeItem?.[index]?.scrollIntoView({ block: 'end', behavior: 'instant' });
+      listRef.current?.scrollToItem(index, 'smart');
     };
 
     const onClickButtonClear = () => {
@@ -180,6 +185,7 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
         />
         {state.opened && (
           <SelectionDropdown
+            listRef={listRef}
             isLoading={isLoading}
             values={values}
             state={state}
@@ -191,6 +197,8 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
             onSelect={onSelectItem}
             onClickSelectAll={handleClickSelectAll}
             multiple={multiple}
+            placeholderSearch={placeholderSearch}
+            onSaveAddItem={onSaveAddItem}
           />
         )}
       </div>
@@ -233,7 +241,7 @@ function SelectionInput({
     return placeholder && !value ? placeholder : '';
   };
   return (
-    <div className="relative" onClick={onClickSelection} title={getValues()}>
+    <div className="relative bg-white" onClick={onClickSelection} title={getValues()}>
       <input className="hidden" required={required} value={multiple ? values?.toString() : value || ''} onChange={() => ''} />
       <div
         data-placeholder={getPlaceholder()}
@@ -264,7 +272,7 @@ function ButtonClear({ onClick }: { onClick: () => void }) {
       }}
     >
       <div className="hover:bg-gray-200 rounded-full z-50 w-5 h-5 flex justify-center items-center cursor-pointer">
-        <CloseIcon className="w-4 h-4" />
+        <CloseIcon className="size-3" />
       </div>
     </div>
   );
@@ -279,6 +287,9 @@ function ButtonCaret({ opened }: { opened: boolean }) {
 }
 
 const tolerance = 40;
+const minimumWrapperHeight = 35;
+const maximumWrapperHeight = 150;
+
 function SelectionDropdown({
   multiple,
   state,
@@ -291,15 +302,28 @@ function SelectionDropdown({
   values,
   onClickSelectAll,
   isLoading,
+  placeholderSearch,
+  listRef,
+  onSaveAddItem,
 }: ISelectionDropdownProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<'top' | 'bottom'>();
   const [search, setSearch] = useState<string>('');
   const filtered = useMemo(() => {
     return Object.keys(options).filter((key) => options[key].toString().toLowerCase().includes(search.toLowerCase()));
-  }, [search]);
+  }, [search, options]);
+  const [relativeHeight, setRelativeHeight] = useState(maximumWrapperHeight);
+  const [relativeWidth, setRelativeWidth] = useState(300);
+  useEffect(() => {
+    if (filtered.length < 7) {
+      setRelativeHeight(minimumWrapperHeight * filtered.length);
+      return;
+    }
+    setRelativeHeight(maximumWrapperHeight);
+  }, [filtered, relativeHeight]);
 
   useSensorKeyboard(['ArrowUp', 'ArrowDown', 'Tab', 'Enter', 'Escape'], (key, e) => {
+    console.log('key', e);
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       e?.preventDefault();
     }
@@ -310,12 +334,15 @@ function SelectionDropdown({
       case 'ArrowDown':
         onPressArrowDown(filtered);
         break;
-      case 'Enter':
+      case 'Enter': {
+        const isInputAddItem = (e?.target as HTMLInputElement).nodeName === 'INPUT';
+        if (isInputAddItem) return;
         onSelect({
           key: filtered[state.arrowIndex],
           value: options[filtered[state.arrowIndex]],
         });
         break;
+      }
       case 'Tab':
         hideDropdown();
         break;
@@ -326,7 +353,10 @@ function SelectionDropdown({
   });
 
   useOnClickOutside(wrapperRef, (currentTarget) => {
-    if (currentTarget?.closest('.selection')?.contains(wrapperRef.current)) return;
+    const isPartOfSelection = currentTarget?.classList.contains('dropdown-item') || currentTarget?.classList.contains('dropdown-checkbox-item');
+    if (currentTarget?.closest('.selection')?.contains(wrapperRef.current) || isPartOfSelection) return;
+    console.log('MASOOK', currentTarget);
+    console.log(currentTarget?.closest('.selection'));
     hideDropdown();
   });
 
@@ -335,6 +365,7 @@ function SelectionDropdown({
     const rect = wrapperRef.current?.getBoundingClientRect();
     const wrapperPositionY = rect.top;
     const wrapperHeight = rect.height;
+    setRelativeWidth(rect.width - 5);
 
     if (wrapperPositionY + wrapperHeight + tolerance > window.innerHeight) {
       setPosition('top');
@@ -343,26 +374,35 @@ function SelectionDropdown({
     setPosition('bottom');
   }, [wrapperRef.current]);
 
-  const selectionInputHeight = wrapperRef.current?.previousElementSibling?.getBoundingClientRect().height || 0;
-  const wrapperHeight = wrapperRef.current?.getBoundingClientRect().height || 0;
-  const top = position === 'top' ? { top: -(selectionInputHeight + wrapperHeight) + tolerance } : {};
+  // adjust height
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    const rect = wrapperRef.current?.getBoundingClientRect();
+    if (position !== 'top') {
+      wrapperRef.current.style.top = `${minimumWrapperHeight + 10}px`;
+      return;
+    }
+    console.log('huhuhu', rect.height);
+    wrapperRef.current.style.top = `${-rect.height}px`;
+  }, [relativeHeight, position]);
+
+  console.log('wiwiwi');
   return (
     <div
-      style={top}
       ref={wrapperRef}
-      className={clsx(['bg-white rounded-[4px] absolute shadow-md', 'left-0 right-0 overflow-auto max-h-[17.5rem] z-[999]'], {
+      className={clsx(['bg-white rounded-[4px] border-2 border-knitto-blue-100 absolute shadow-md', 'left-0 right-0 z-[999]'], {
         hidden: !position,
       })}
     >
       {enableSearch && (
-        <div className="bg-white px-3 pb-3 py-3.5 sticky top-0 translate-y-[-1px]">
+        <div className="bg-white px-3 pt-3.5 pb-[6px] sticky top-0">
           <InputSearch
             tabIndex={-1}
             value={search}
             onChangeValue={(value) => {
               setSearch(value);
             }}
-            placeholder="Cari"
+            placeholder={placeholderSearch}
             className=""
             classNameInput="!text-black-60"
             onKeyDown={(e) => {
@@ -386,27 +426,46 @@ function SelectionDropdown({
             <Spinner color="text-black-80" />
             <div className="text-black-40 text-sm">Sedang memuat...</div>
           </div>
-        ) : filtered?.length > 0 ? (
-          filtered.map((key, index) => (
-            <DropdownItem
-              values={values}
-              state={state}
-              index={index}
-              key={index}
-              item={{ key: key, value: options[key] }}
-              onClick={() => onSelect({ key, value: options[key] })}
-              multiple={multiple}
-            />
-          ))
         ) : (
-          <EmptyData search={search} />
+          <List
+            ref={listRef}
+            height={relativeHeight}
+            itemCount={filtered.length}
+            itemSize={minimumWrapperHeight}
+            width={relativeWidth}
+            itemData={filtered}
+          >
+            {({ data: filtered, index, style }) => {
+              return (
+                <DropdownItem
+                  style={style}
+                  values={values}
+                  state={state}
+                  index={index}
+                  key={index}
+                  item={{ key: filtered[index], value: options[filtered[index]] }}
+                  onClick={() => onSelect({ key: filtered[index], value: options[filtered[index]] })}
+                  multiple={multiple}
+                />
+              );
+            }}
+          </List>
         )}
+        {filtered?.length === 0 && <EmptyData search={search} />}
+        <ButtonAddItem
+          search={search}
+          onSaveAddItem={(value) => {
+            console.log('MASOOK');
+            onSaveAddItem?.(value);
+            setSearch('');
+          }}
+        />
       </div>
     </div>
   );
 }
 
-function DropdownItem({ state, index, item, values, onClick, multiple }: IDropdownItemProps) {
+function DropdownItem({ state, index, item, values, onClick, multiple, style }: IDropdownItemProps) {
   const isSelectedItems = values?.includes(item.key.toString());
   const getArrowIndexActive = () => {
     if (multiple) {
@@ -416,14 +475,22 @@ function DropdownItem({ state, index, item, values, onClick, multiple }: IDropdo
   };
   return (
     <div
-      className={clsx(['dropdown-item', 'hover:bg-navy-100 hover:text-white hover:cursor-pointer hover:font-medium', 'px-3 py-2'], {
-        'bg-black-40 font-medium text-white': getArrowIndexActive(),
-        'bg-navy-100 font-medium text-white': multiple ? isSelectedItems : index === state.activeIndex,
-        'flex items-center gap-x-2': multiple,
-      })}
+      style={style}
+      className={clsx(
+        [
+          'dropdown-item',
+          'font-source-sans-pro flex items-center text-black-100 hover:bg-navy-100 hover:text-white hover:cursor-pointer hover:font-medium',
+          'px-3',
+        ],
+        {
+          'bg-black-40 font-medium text-white': getArrowIndexActive(),
+          'bg-navy-100 font-medium text-white': multiple ? isSelectedItems : index === state.activeIndex,
+          'gap-x-2': multiple,
+        }
+      )}
       onMouseDown={() => onClick()}
     >
-      {multiple && <Checkbox checked={isSelectedItems} onChecked={() => ''} />}
+      {multiple && <Checkbox className="dropdown-checkbox-item" checked={isSelectedItems} onChecked={() => ''} />}
       {item.value}
     </div>
   );
@@ -437,13 +504,74 @@ function EmptyData({ search }: { search?: string }) {
         {search ? (
           <>
             Pencarian{' '}
-            <span className="font-semibold">&quote;{search.length > limitChar ? `${search.substring(0, limitChar)}...` : search}&quote;</span> tidak
-            ditemukan
+            <span className="font-semibold">
+              {"'"}
+              {search.length > limitChar ? `${search.substring(0, limitChar)}...` : search}
+              {"'"}
+            </span>{' '}
+            tidak ditemukan
           </>
         ) : (
           'Data tidak ditemukan'
         )}
       </div>
+    </div>
+  );
+}
+
+function ButtonAddItem({ search, onSaveAddItem }: Pick<ISelectionProps, 'onSaveAddItem'> & { search?: string }) {
+  const [isInput, setIsInput] = useState(false);
+  const [inputValue, setInputValue] = useState<string>('');
+  useEffect(() => {
+    if (!search) return;
+    setIsInput(false);
+    setInputValue('');
+  }, [search]);
+  return (
+    <div className="p-2">
+      {isInput ? (
+        <div>
+          <Input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Tambah Nama Gudang Baru"
+            className="h-8 focus:!border"
+            autoFocus
+            onKeyUp={(e) => {
+              if (e.key !== 'Enter') return;
+              if (!inputValue) return;
+              onSaveAddItem?.(inputValue);
+              setInputValue('');
+            }}
+          />
+        </div>
+      ) : (
+        <div
+          onClick={() => {
+            if (search) {
+              onSaveAddItem?.(search);
+              return;
+            }
+            setIsInput(true);
+          }}
+          className={clsx(
+            'h-8 font-source-sans-pro border hover:border-knitto-blue-100 cursor-pointer border-dashed border-black-40 flex items-center p-1 gap-x-2',
+            'text-black-40 hover:text-knitto-blue-100',
+            {
+              'text-knitto-blue-100': search,
+            }
+          )}
+        >
+          +{' '}
+          {search ? (
+            <span>
+              Tambahkan <i>&quot;{search}&quot;</i>
+            </span>
+          ) : (
+            'Tambah Nama Gudang Baru'
+          )}
+        </div>
+      )}
     </div>
   );
 }

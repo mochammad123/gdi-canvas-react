@@ -1,13 +1,19 @@
 import clsx from 'clsx';
 
-export default function Checkbox({ checked, onChecked }: { onChecked?: (checked: boolean) => void } & React.ComponentPropsWithoutRef<'input'>) {
+export default function Checkbox({
+  checked,
+  onChecked,
+  className,
+  ...props
+}: { onChecked?: (checked: boolean) => void } & React.ComponentPropsWithoutRef<'input'>) {
   return (
     <div className="w-4 h-4 relative">
       <input
         type="checkbox"
-        className="w-4 h-4 cursor-pointer absolute opacity-0  z-[100]"
+        className={clsx('w-4 h-4 cursor-pointer absolute opacity-0  z-[100]', className)}
         checked={checked}
         onChange={(e) => onChecked && onChecked(e.target.checked)}
+        {...props}
       />
       <div
         className={clsx('w-4 h-4 flex justify-center items-center border border-black-40 absolute', {

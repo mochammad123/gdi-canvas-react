@@ -1,22 +1,23 @@
-import { ReactNode } from 'react';
-import { Typography } from '@/components/ui/typhography';
+import DelayedRender from '@/components/delayed-render';
 import { ISelect } from '@/components/ui/select';
+import { Typography } from '@/components/ui/typhography';
+import { ReactNode } from 'react';
+import SelectionBigData from './selection-big-data';
+import SelectionButtonAdd from './selection-button-add';
+import SelectionCustomLabel from './selection-custom-label';
 import SelectionDefault from './selection-default';
-import SelectionMultiple from './selection-multiple';
-import SelectionLabel from './selection-label';
+import SelectionDisableSearch from './selection-disable-search';
+import SelectionDisabled from './selection-disabled';
+import SelectionDisabledOption from './selection-disabled-option';
 import SelectionHint from './selection-hint';
+import SelectionIgnoreUnknownValue from './selection-ignore-unknown-value';
+import SelectionLabel from './selection-label';
+import SelectionLoading from './selection-loading';
+import SelectionMultiple from './selection-multiple';
+import SelectionOptionIcon from './selection-option-icon';
 import SelectionPlaceholder from './selection-placeholder';
 import SelectionPrefixIcon from './selection-prefix-icon';
 import SelectionStatus from './selection-status';
-import SelectionDisabled from './selection-disabled';
-import SelectionCustomLabel from './selection-custom-label';
-import SelectionDisabledOption from './selection-disabled-option';
-import SelectionIgnoreUnknownValue from './selection-ignore-unknown-value';
-import SelectionDisableSearch from './selection-disable-search';
-import SelectionBigData from './selection-big-data';
-import SelectionLoading from './selection-loading';
-import SelectionOptionIcon from './selection-option-icon';
-import DelayedRender from '@/components/delayed-render';
 
 export default function Selection() {
   const options: ISelect['options'] = Array(50)
@@ -66,6 +67,9 @@ export default function Selection() {
             </Card>
             <Card title="Loading">
               <SelectionLoading options={options} />
+            </Card>
+            <Card title="Selection With Button Add">
+              <SelectionButtonAdd />
             </Card>
           </div>
 

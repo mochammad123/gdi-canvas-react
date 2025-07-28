@@ -23,6 +23,8 @@ export interface ISelectionProps {
   customDisplayValue?: (value: string | string[]) => string;
   onClear?: () => void;
   onClickSelectAll?: () => void;
+  placeholderSearch?: string;
+  onSaveAddItem?: (value: string) => void;
 }
 
 export interface ISelectionInputProps
@@ -32,13 +34,15 @@ export interface ISelectionInputProps
   state: typeof initialValues;
 }
 
-export interface ISelectionDropdownProps extends Pick<ISelectionProps, 'values' | 'isLoading' | 'multiple' | 'options' | 'enableSearch'> {
+export interface ISelectionDropdownProps
+  extends Pick<ISelectionProps, 'onSaveAddItem' | 'placeholderSearch' | 'values' | 'isLoading' | 'multiple' | 'options' | 'enableSearch'> {
   onSelect: (selectedOption: ISelectedOption) => void;
   hideDropdown: () => void;
   onPressArrowUp: () => void;
   onClickSelectAll?: () => void;
   state: typeof initialValues;
   onPressArrowDown: (filtered: string[]) => void;
+  listRef: React.RefObject<List>;
 }
 
 export interface IDropdownItemProps extends Pick<ISelectionProps, 'values' | 'multiple'> {
@@ -46,4 +50,5 @@ export interface IDropdownItemProps extends Pick<ISelectionProps, 'values' | 'mu
   item: ISelectedOption;
   state: typeof initialValues;
   onClick: () => void;
+  style: React.CSSProperties;
 }

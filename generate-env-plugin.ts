@@ -31,20 +31,18 @@ export default function generateEnvPlugin(): Plugin {
               tag: 'script',
               children: contentScript,
               injectTo: 'head',
-              attrs: { '/': '' },
-            }
-          ]
+            },
+          ],
         };
       }
-      // Use the generated file name
-      const fileName = generatedFileName;
+      const timestamp = Date.now();
       return {
         html,
         tags: [
           {
             tag: 'script',
             attrs: {
-              src: `/${fileName}`,
+              src: `generated-env.js?v=${timestamp}`,
             },
             injectTo: 'body',
           },

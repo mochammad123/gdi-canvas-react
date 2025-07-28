@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import { useSelectContext } from './service/select-context';
-import SelectMultipleIndicator from './components/select-multiple-indicator';
 import { useMemo } from 'react';
-import SelectInput from './components/select-input';
-import SelectResetToggle from './components/select-reset-toggle';
 import SelectDropdownIndicator from './components/select-dropdown-indicator';
+import SelectInput from './components/select-input';
+import SelectMultipleIndicator from './components/select-multiple-indicator';
+import SelectResetToggle from './components/select-reset-toggle';
+import { useSelectContext } from './service/select-context';
 
 const SelectBox = () => {
   const {
@@ -27,7 +27,7 @@ const SelectBox = () => {
   const selectionInputClass = useMemo(
     () =>
       clsx(
-        'selection-input relative flex items-center size-full border border-black-40 pl-1',
+        'selection-input relative flex items-center size-full border border-black-40 pl-1 rounded',
         'transform transition-all duration-200',
         isDropdownOpen && 'border-navy-100',
         error && 'border-red-500',
@@ -51,7 +51,7 @@ const SelectBox = () => {
         onChange={(e) => onSearchQuery?.(e.target.value)}
         value={displayValue}
         className={clsx(
-          'cursor-pointer pr-[3.2rem] border-none !h-full !font-source-sans-pro !rounded-none pl-1.5',
+          'cursor-pointer pr-[3.2rem] border-none !h-full !font-source-sans-pro rounded pl-1.5',
           disabled && '!bg-greyish-down',
           disableSearch && '!bg-white'
         )}
