@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useRef } from 'react';
+import { CSSProperties, memo, useState } from 'react';
 import clsx from 'clsx';
 
 import useResizableHeader from './hooks/use-resizable-header';
@@ -40,10 +40,10 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
   } = props;
 
   const { showHeaderFilter, headerFilterHeight, outerSize, scrollbarWidth, useColumnHiddenIndicator } = useUIContext();
-  const { filter, filterAdvance, checkBoxSelection } = useDataContext();
+  const { search, filter, filterAdvance, checkBoxSelection } = useDataContext();
   const { visibilityColumnsCardOptions, visibleColumns, headersHasChildren } = useHeaderContext();
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [searchValue, setSearchValue] = useState<string>(search?.activeSearch?.[keyName] || '');
 
   const { boxRef, handleMouseDown, resizableWidth, isTempResize } = useResizableHeader({
     keyName,
@@ -52,20 +52,9 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
     isFreezed,
   });
 
-  const handleEnterSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleApplySearch?.(keyName, inputRef.current?.value || '');
-    }
-  };
-
   const handleClickResetSearch = () => {
-    if (inputRef.current?.value.length) {
-      handleResetSearch?.(keyName);
-    }
-
-    if (inputRef.current) {
-      inputRef.current.value = '';
-    }
+    setSearchValue('');
+    handleResetSearch?.(keyName);
   };
 
   const wrapperStyle: CSSProperties = {
@@ -157,10 +146,12 @@ const TableVirtualHeaderItemDoubleRow = (props: ITableVirtualHeaderItem) => {
             <>
               <div className="!w-full relative group/input">
                 <TableVirtualInput
-                  ref={inputRef}
+                  name={'table-search-input-' + keyName}
                   placeholder=""
                   className="!h-[1.8rem] !bg-white !text-sm !w-full !border-gray-300 focus:!border-blue-950 pr-5"
-                  onKeyDown={handleEnterSearch}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleApplySearch?.(keyName, searchValue)}
                 />
 
                 <IcClose

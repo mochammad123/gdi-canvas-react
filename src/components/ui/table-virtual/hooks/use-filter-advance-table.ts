@@ -68,11 +68,11 @@ export default function useFilterAdvanceTable<TDataSource>(props: IAdvanceFilter
   }, []);
 
   const applyAdvanceFilter = useCallback(
-    (dataKey: keyof TDataSource | string, config_name: string, value: string) => {
+    (dataKey: keyof TDataSource | string, filterName: string, value: string) => {
       setActiveAdvanceFilters((prev) => {
         const newFilters = {
           ...prev,
-          [dataKey]: { config_name, value },
+          [dataKey]: { filterName, value },
         };
 
         onChangeAdvanceFilter?.(newFilters);

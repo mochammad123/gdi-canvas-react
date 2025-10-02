@@ -39,7 +39,7 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
   } = props;
   const { outerSize, scrollbarWidth } = useUIContext();
   const { headersHasChildren } = useHeaderContext();
-  const { filter, search, checkBoxSelection } = useDataContext();
+  const { filter, filterAdvance, search, checkBoxSelection } = useDataContext();
 
   const { boxRef, handleMouseDown, resizableWidth, isTempResize } = useResizableHeader({
     keyName,
@@ -110,16 +110,18 @@ const TableVirtualHeaderItem = (props: ITableVirtualHeaderItem) => {
             <span>{caption}</span>
             <div className="flex flex-row space-x-1.5 shrink-0 -mr-0">
               {actionButtons.map(({ condition, icon, onClick }, index) => {
+                const isFilterAdvanceButton = onClick === handleOpenAdvanceFilter;
                 const isFilterButton = onClick === handleOpenFilter;
                 const isSearchButton = onClick === handleOpenSearch;
                 const hasActiveFilter = filter?.activeFilters?.[keyName] !== undefined;
+                const hasActiveAdvanceFilter = filterAdvance?.activeAdvanceFilters?.[keyName] !== undefined;
                 const hasActiveSearch = search?.activeSearch?.[keyName] !== undefined;
 
                 return (
                   condition && (
                     <button key={index} className="shrink-0 cursor-pointer relative" onClick={(e) => onClick?.(e)}>
                       {icon}
-
+                      {isFilterAdvanceButton && hasActiveAdvanceFilter && <NodeActiveFilter className="!-top-[.3rem] !-right-[.10rem]" />}
                       {isFilterButton && hasActiveFilter && <NodeActiveFilter className="!-top-[.3rem] !-right-[.25rem]" />}
                       {isSearchButton && hasActiveSearch && <NodeActiveFilter className="!-top-[.3rem] !-right-[.25rem]" />}
                     </button>
