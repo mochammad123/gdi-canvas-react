@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
+    image: knitto-react-template:latest
+    container_name: knitto-frontend
+    environment:
+      - VITE_APP_NAME=Template-React-Knitto
+      - VITE_BASE_API_URL=http://127.0.0.1
+      - VITE_ENVIRONTMENT=staging
+      - VITE_DOCUMENTATION_URL=http://dokumentasi.co.id/knitto/ui
+    ports:
+      - "3000:80"
+    restart: unless-stopped

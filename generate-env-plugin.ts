@@ -5,7 +5,7 @@ export default function generateEnvPlugin(): Plugin {
   let isBuild = false;
   const env = dotenv.config().parsed || {};
   const contentScript = `window.__ENV__=${JSON.stringify(env)};`;
-  let generatedFileName = 'generated-env.js';
+  const generatedFileName = 'generated-env.js';
 
   return {
     name: 'generate-env',
@@ -13,9 +13,6 @@ export default function generateEnvPlugin(): Plugin {
       isBuild = command === 'build';
     },
     generateBundle() {
-      // Generate random file name for env js (8 chars, base36)
-      const randomStr = Math.random().toString(36).substring(2, 10);
-      generatedFileName = `${randomStr}.js`;
       this.emitFile({
         type: 'asset',
         fileName: generatedFileName,
@@ -35,14 +32,13 @@ export default function generateEnvPlugin(): Plugin {
           ],
         };
       }
-      const timestamp = Date.now();
       return {
         html,
         tags: [
           {
             tag: 'script',
             attrs: {
-              src: `generated-env.js?v=${timestamp}`,
+              src: generatedFileName,
             },
             injectTo: 'body',
           },
