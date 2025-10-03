@@ -103,7 +103,7 @@ exec "$@"
 1. Pastikan environment variable (`VITE_APP_NAME`, `VITE_BASE_API_URL`, dll) sudah di-set pada environment container/server Anda.
 2. Saat container dijalankan, script `entrypoint.sh` akan membuat file JS env di direktori web server (misal: `/usr/share/nginx/html/`).
 3. File JS ini akan di-load oleh aplikasi frontend secara otomatis.
-4. Nama file JS env yang dihasilkan saat build bisa berbeda-beda (acak), pastikan script dan konfigurasi build Anda konsisten dengan output plugin/env generator.
+4. Nama file JS env yang dihasilkan adalah `generated-env.js` (sudah fixed), sehingga konsisten antara plugin build dan script deployment.
 
 **Catatan:**
 - File env JS akan digenerate secara otomatis saat proses build menggunakan plugin custom (lihat `generate-env-plugin.ts`).
