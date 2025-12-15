@@ -1,4 +1,4 @@
-import { ITableVirtual } from '@/components/ui/table-virtual';
+import { IHeader } from '@/components/ui/knitto-table';
 import { useMemo } from 'react';
 
 export type IDummyDataResponse = {
@@ -58,15 +58,14 @@ const responseData = (filter: { id?: number | string; currentPage: number; curre
     }
   }
 
-  const header: ITableVirtual<IDummyDataResponse>['headers'] = [
+  const header: IHeader<IDummyDataResponse>[] = [
     { key: 'name', caption: 'Nama' },
     { key: 'category', caption: 'Kategori' },
     { key: 'chemical', caption: 'Chemical' },
     { key: 'active', caption: 'Status' },
-    { key: 'action', caption: '', fixedWidth: 32 },
+    { key: 'action', caption: '', width: 32, noStretch: true },
   ];
 
-  console.log('temp ', temp);
   return {
     header,
     data: temp[currentPage],

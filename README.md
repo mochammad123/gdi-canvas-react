@@ -72,7 +72,7 @@ Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/k
 # Dokumentasi Penggunaan
 
 
-- [Tabel Virtual](https://github.com/knittotextile/knitto-react-template/blob/feat/table-virtual/src/components/ui/table-virtual/readme.md)
+- [Knitto Table](https://github.com/knittotextile/knitto-react-template/blob/feat/virtual-table-base-tanstack/src/components/ui/knitto-table/README.md)
 - [Big Calendar](https://github.com/knittotextile/knitto-react-template/blob/feat/big-calendar/src/components/ui/big-calendar/README.md)
 
 ---

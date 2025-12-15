@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button';
 import InputDatePicker from '@/components/ui/inputs/input-date-picker';
 import Pagination from '@/components/ui/pagination';
-import TableVirtual from '@/components/ui/table-virtual/table-virtual';
 import { Typography } from '@/components/ui/typhography';
 import { useParams } from '@/lib/hooks/hooks';
 import { exportDataToExcel, generateColumnWidths } from '@/lib/utils/utils';
-import clsx from 'clsx';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IDummyDataResponse, useResponseDataQuery } from '../hooks/use-response-data-query';
+import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import ActionToggle from './components/action-toggle';
 
 type InitFilter = {
   startDate: string;
@@ -20,6 +20,15 @@ export default function TemplateMasterDetailHistoryPage() {
     startDate: '',
     endDate: '',
   });
+
+  const modifiedHeader = useMemo(() => {
+    return header.map((item) => ({
+      ...item,
+      ...(item.key === 'action' && {
+        renderCell: (rowData) => <ActionToggle onClick={(type) => console.log('ACTION ==> ', type, rowData)} />,
+      }),
+    })) as IHeader<IDummyDataResponse>[];
+  }, [header]);
 
   return (
     <div className="p-3">
@@ -56,40 +65,7 @@ export default function TemplateMasterDetailHistoryPage() {
       </div>
 
       <div className="h-[70vh] mb-2">
-        <TableVirtual
-          useAutoWidth
-          headers={header}
-          dataSource={data}
-          stickyHeaderHeight={40}
-          rowHeight={28}
-          renderActionCard={(data: unknown, _rowIndex) => {
-            const selectedData = data as IDummyDataResponse;
-            const actions = [
-              {
-                label: 'Edit',
-                onClick: () => console.log('EDIT ==> ' + JSON.stringify(selectedData)),
-              },
-              {
-                label: 'Hapus',
-                onClick: () => console.log('HAPUS ==> ' + JSON.stringify(selectedData)),
-              },
-            ];
-
-            return (
-              <div className={clsx('shadow-lg w-[3.813rem] flex flex-col space-y-1')}>
-                {actions.map(({ label, onClick }, idx) => (
-                  <button
-                    key={'table-action' + idx}
-                    className="global-report-content text-start hover:bg-blue-950 hover:text-white py-1 pl-2 cursor-pointer"
-                    onClick={onClick}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            );
-          }}
-        />
+        <KnittoTable headers={modifiedHeader} data={data} rowKey="id" />
       </div>
       <Pagination
         page={page}

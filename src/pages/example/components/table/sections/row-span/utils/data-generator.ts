@@ -1,0 +1,145 @@
+import { getRandomElement, getRandomNumber, SAMPLE_NAMES, SAMPLE_EMAILS, SAMPLE_JOB_TITLES } from '@/lib/variables/table-sample';
+import type { IEmployee, ISalesReport } from './types';
+
+export const generateEmployeeData = (): IEmployee[] => {
+  const departments = ['Engineering', 'Marketing', 'Sales', 'HR'];
+  const teams = ['Frontend', 'Backend', 'DevOps', 'Design', 'Content', 'Analytics', 'Support', 'Training'];
+
+  return Array.from({ length: 20 }, (_, index) => ({
+    id: index + 1,
+    department: departments[Math.floor(index / 5)],
+    team: teams[Math.floor(index / 2.5)],
+    name: getRandomElement(SAMPLE_NAMES),
+    position: getRandomElement(SAMPLE_JOB_TITLES),
+    email: getRandomElement(SAMPLE_EMAILS),
+    salary: getRandomNumber(50000, 150000),
+  }));
+};
+
+export const generateSalesReportData = (): ISalesReport[] => {
+  // NOTE: Data sudah di-sort berdasarkan region, country, dan salesRep untuk rowspan
+  return [
+    // North America region
+    {
+      id: 1,
+      region: 'North America',
+      country: 'USA',
+      salesRep: 'John Doe',
+      product: 'Laptop',
+      q1Sales: 25000,
+      q2Sales: 30000,
+      q3Sales: 28000,
+      q4Sales: 32000,
+      totalSales: 115000,
+    },
+    {
+      id: 2,
+      region: 'North America',
+      country: 'USA',
+      salesRep: 'John Doe',
+      product: 'Desktop',
+      q1Sales: 18000,
+      q2Sales: 22000,
+      q3Sales: 20000,
+      q4Sales: 25000,
+      totalSales: 85000,
+    },
+    {
+      id: 3,
+      region: 'North America',
+      country: 'USA',
+      salesRep: 'Jane Smith',
+      product: 'Laptop',
+      q1Sales: 22000,
+      q2Sales: 26000,
+      q3Sales: 24000,
+      q4Sales: 28000,
+      totalSales: 100000,
+    },
+    {
+      id: 4,
+      region: 'North America',
+      country: 'USA',
+      salesRep: 'Jane Smith',
+      product: 'Tablet',
+      q1Sales: 12000,
+      q2Sales: 15000,
+      q3Sales: 14000,
+      q4Sales: 16000,
+      totalSales: 57000,
+    },
+    {
+      id: 5,
+      region: 'North America',
+      country: 'Canada',
+      salesRep: 'Mike Johnson',
+      product: 'Laptop',
+      q1Sales: 15000,
+      q2Sales: 18000,
+      q3Sales: 16000,
+      q4Sales: 20000,
+      totalSales: 69000,
+    },
+    {
+      id: 6,
+      region: 'North America',
+      country: 'Canada',
+      salesRep: 'Mike Johnson',
+      product: 'Desktop',
+      q1Sales: 12000,
+      q2Sales: 15000,
+      q3Sales: 14000,
+      q4Sales: 17000,
+      totalSales: 58000,
+    },
+    // Europe region
+    {
+      id: 7,
+      region: 'Europe',
+      country: 'UK',
+      salesRep: 'Sarah Wilson',
+      product: 'Laptop',
+      q1Sales: 20000,
+      q2Sales: 24000,
+      q3Sales: 22000,
+      q4Sales: 26000,
+      totalSales: 92000,
+    },
+    {
+      id: 8,
+      region: 'Europe',
+      country: 'UK',
+      salesRep: 'Sarah Wilson',
+      product: 'Desktop',
+      q1Sales: 14000,
+      q2Sales: 17000,
+      q3Sales: 16000,
+      q4Sales: 19000,
+      totalSales: 66000,
+    },
+    {
+      id: 9,
+      region: 'Europe',
+      country: 'Germany',
+      salesRep: 'Klaus Mueller',
+      product: 'Laptop',
+      q1Sales: 23000,
+      q2Sales: 27000,
+      q3Sales: 25000,
+      q4Sales: 29000,
+      totalSales: 104000,
+    },
+    {
+      id: 10,
+      region: 'Europe',
+      country: 'Germany',
+      salesRep: 'Klaus Mueller',
+      product: 'Tablet',
+      q1Sales: 9000,
+      q2Sales: 12000,
+      q3Sales: 11000,
+      q4Sales: 13000,
+      totalSales: 45000,
+    },
+  ];
+};

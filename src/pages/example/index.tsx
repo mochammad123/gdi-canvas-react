@@ -7,8 +7,8 @@ import { Route, Routes } from 'react-router-dom';
 const DashboardPage = loadable(() => import('./dashboard'));
 const ColorPage = loadable(() => import('./utilities/color'));
 const TypographyPage = loadable(() => import('./utilities/typography'));
-const TablePage = loadable(() => import('./components/table'));
 const ButtonPage = loadable(() => import('./components/button'));
+const TablePage = loadable(() => import('./components/table'));
 const InputDateAndTimePage = loadable(() => import('./components/input-date-and-time'));
 const SelectionPage = loadable(() => import('./components/selection'));
 const PaginationPage = loadable(() => import('./components/pagination'));
@@ -43,12 +43,12 @@ export default function AdminRoutes() {
       {
         module: 'Komponen',
         menu: [
-          { label: 'Table', url: 'komponen/table', element: <TablePage /> },
           { label: 'Button', url: 'komponen/button', element: <ButtonPage /> },
           { label: 'Selection', url: 'komponen/selection', element: <SelectionPage /> },
           { label: 'Input Date & Time', url: 'komponen/input-date-and-time', element: <InputDateAndTimePage /> },
           { label: 'Pagination', url: 'komponen/pagination', element: <PaginationPage /> },
           { label: 'Big Calendar', url: 'komponen/big-calendar', element: <BigCalendarPage /> },
+          { label: 'Table', url: 'komponen/table', element: <TablePage /> },
         ],
       },
       {

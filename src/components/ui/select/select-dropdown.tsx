@@ -1,21 +1,33 @@
-import { memo, useEffect, useRef, useState } from 'react';
-import { FixedSizeList } from 'react-window';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import clsx from 'clsx';
 import { ISelectDropdown, ISelectOption } from './types';
 import { useSensorKeyboard } from './utils';
 import { useSelectContext } from './service/select-context';
 import useOnClickOutside from './hooks/use-click-outside';
 import SelectDropdownItem from './select-dropdown-item';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import SelectDropdownStatus from './components/select-dropdown-status';
 
 const SelectDropdown = (props: ISelectDropdown) => {
   const { isAnimatingIn, className, ...properties } = props;
   const { onSelectOption, onSelectOptionIcon, options, isLoading, onHideDropdown } = useSelectContext();
 
-  const listRef = useRef<FixedSizeList>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(-1);
+
+  const virtualizer = useVirtualizer({
+    count: options?.length || 0,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 32,
+    overscan: 5,
+  });
+
+  // Force virtualizer to recalculate when options change or component mounts
+  useLayoutEffect(() => {
+    if (parentRef.current && options?.length) {
+      virtualizer.measure();
+    }
+  }, [options?.length, virtualizer]);
 
   useOnClickOutside(dropdownRef, (currentTarget, _) => {
     if (currentTarget?.closest('.selection-box')?.contains(dropdownRef.current)) return;
@@ -46,12 +58,15 @@ const SelectDropdown = (props: ISelectDropdown) => {
     }
   });
 
-  //  SCROLL TO VIEW FOR VIRTUALIZATION
+  // SCROLL TO VIEW FOR VIRTUALIZATION
   useEffect(() => {
-    if (selectedOptionIndex !== null && listRef.current) {
-      listRef.current.scrollToItem(selectedOptionIndex, 'smart');
+    if (selectedOptionIndex !== -1 && selectedOptionIndex < (options?.length || 0)) {
+      virtualizer.scrollToIndex(selectedOptionIndex, {
+        align: 'auto',
+        behavior: 'smooth',
+      });
     }
-  }, [selectedOptionIndex]);
+  }, [selectedOptionIndex, options?.length, virtualizer]);
 
   const handleSelectOption = (option: ISelectOption) => {
     onSelectOption?.(option.value);
@@ -69,29 +84,43 @@ const SelectDropdown = (props: ISelectDropdown) => {
       )}
       {...properties}
     >
-      <div className="h-[11rem] overflow-auto">
-        <AutoSizer>
-          {({ width, height }) => {
-            return isLoading ? (
-              <SelectDropdownStatus style={{ height, width }} text="Sedang memuat..." />
-            ) : !options?.length ? (
-              <SelectDropdownStatus style={{ height, width }} text="Data tidak tersedia" />
-            ) : (
-              <FixedSizeList ref={listRef} height={height} width={width} itemCount={options?.length || 0} itemSize={32} overscanCount={5}>
-                {({ index, style }) => (
-                  <SelectDropdownItem
-                    style={style}
-                    key={'selection-dropdown-key-' + index}
-                    onSelect={() => handleSelectOption(options?.[index])}
-                    optionIndex={index}
-                    selectedIndex={selectedOptionIndex}
-                    {...options?.[index]}
-                  />
-                )}
-              </FixedSizeList>
-            );
-          }}
-        </AutoSizer>
+      <div className="h-[11rem] overflow-auto" ref={parentRef}>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-full text-black-40 p-10 text-sm">Sedang memuat...</div>
+        ) : !options?.length ? (
+          <div className="flex justify-center items-center h-full text-black-40 p-10 text-sm">Data tidak tersedia</div>
+        ) : (
+          <div
+            style={{
+              height: `${virtualizer.getTotalSize()}px`,
+              width: '100%',
+              position: 'relative',
+            }}
+          >
+            {virtualizer.getVirtualItems().map((virtualItem) => {
+              const option = options?.[virtualItem.index];
+              if (!option) return null;
+
+              return (
+                <SelectDropdownItem
+                  key={'selection-dropdown-key-' + virtualItem.index}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: `${virtualItem.size}px`,
+                    transform: `translateY(${virtualItem.start}px)`,
+                  }}
+                  onSelect={() => handleSelectOption(option)}
+                  optionIndex={virtualItem.index}
+                  selectedIndex={selectedOptionIndex}
+                  {...option}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

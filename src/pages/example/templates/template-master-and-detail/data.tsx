@@ -1,4 +1,4 @@
-import { ITableVirtual } from '@/components/ui/table-virtual';
+import { IHeader } from '@/components/ui/knitto-table';
 import { clsx } from 'clsx';
 
 type IDummyData = {
@@ -7,14 +7,14 @@ type IDummyData = {
   chemical: string;
   isActive: string;
 };
-export const headersMaster: ITableVirtual<IDummyData>['headers'] = [
+export const headersMaster: IHeader<IDummyData>[] = [
   { key: 'category', caption: 'Kategori' },
   { key: 'category', caption: 'Kategori' },
   { key: 'chemical', caption: 'Chemical' },
   {
     key: 'isActive',
     caption: 'Aktif',
-    render: (data) => (
+    renderCell: (data) => (
       <div className={clsx('w-max p-1 rounded text-xs text-white', data?.isActive ? 'bg-green-700/80' : 'bg-orange-700/70')}>
         {data?.isActive ? 'Active' : 'Inactive'}
       </div>

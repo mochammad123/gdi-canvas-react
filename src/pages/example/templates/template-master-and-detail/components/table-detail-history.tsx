@@ -1,7 +1,8 @@
 import Pagination from '@/components/ui/pagination';
-import { IDataHeader } from '@/components/ui/table-virtual';
-import TableVirtual from '@/components/ui/table-virtual/table-virtual';
 import { IDummyDataResponse } from '../../hooks/use-response-data-query';
+import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import { useMemo } from 'react';
+import ActionToggle from './action-toggle';
 
 export default function TableDetailHistory({
   header,
@@ -13,7 +14,7 @@ export default function TableDetailHistory({
   onNextPrev,
   setPerPage,
 }: {
-  header: IDataHeader<IDummyDataResponse>[];
+  header: IHeader<IDummyDataResponse>[];
   data: IDummyDataResponse[];
   totalData: number;
   perPage: number;
@@ -22,10 +23,18 @@ export default function TableDetailHistory({
   onNextPrev: (page: number) => void;
   setPerPage: (perPage: number | null) => void;
 }) {
+  const modifiedHeader = useMemo(() => {
+    return header.map((item) => ({
+      ...item,
+      ...(item.key === 'action' && {
+        renderCell: (rowData) => <ActionToggle onClick={(type) => console.log('ACTION ==> ', type, rowData)} />,
+      }),
+    })) as IHeader<IDummyDataResponse>[];
+  }, [header]);
   return (
     <>
       <div className="h-[40vh] mb-2">
-        <TableVirtual useAutoWidth headers={header} dataSource={data} stickyHeaderHeight={40} rowHeight={28} />
+        <KnittoTable headers={modifiedHeader} data={data} rowKey="id" />
       </div>
       <Pagination
         page={page}

@@ -42,7 +42,7 @@ export interface ISelectionDropdownProps
   onClickSelectAll?: () => void;
   state: typeof initialValues;
   onPressArrowDown: (filtered: string[]) => void;
-  listRef: React.RefObject<List>;
+  listRef: React.RefObject<HTMLDivElement>;
 }
 
 export interface IDropdownItemProps extends Pick<ISelectionProps, 'values' | 'multiple'> {

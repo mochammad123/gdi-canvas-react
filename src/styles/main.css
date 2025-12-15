@@ -69,6 +69,11 @@ body,
   -moz-osx-font-smoothing: grayscale !important;
 }
 
+th,
+td {
+  padding: 0;
+}
+
 .element-input__placeholder::before {
   content: attr(data-placeholder);
   @apply text-black-40 w-full absolute;

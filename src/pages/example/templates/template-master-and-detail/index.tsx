@@ -6,19 +6,19 @@ import Label from '@/components/ui/label';
 import Pagination from '@/components/ui/pagination';
 import RadioWithLabel from '@/components/ui/radio/radio-with-label';
 import { Select } from '@/components/ui/select';
-import { IDataHeader } from '@/components/ui/table-virtual';
-import TableVirtual from '@/components/ui/table-virtual/table-virtual';
 import { Typography } from '@/components/ui/typhography';
 import FeedbackError from '@/components/ui/typhography/feedback-error-input';
 import { useParams } from '@/lib/hooks/hooks';
 import { exportDataToExcel, generateColumnWidths } from '@/lib/utils/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, FormProvider, useForm, UseFormReturn } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { IDummyDataResponse, useResponseDataQuery } from '../hooks/use-response-data-query';
+import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import ActionToggle from './components/action-toggle';
 
 const formSchema = z.object({
   category: z.string().min(1, { message: 'Kategori wajib diisi' }),
@@ -169,7 +169,7 @@ function MasterData({
   page: number;
   perPage: number;
   data: IDummyDataResponse[];
-  header: IDataHeader<IDummyDataResponse>[];
+  header: IHeader<IDummyDataResponse>[];
   totalData: number;
   setPage: (page: number | null) => void;
   setPerPage: (page: number) => void;
@@ -178,6 +178,15 @@ function MasterData({
   onExport: () => void;
   onClickHistory: () => void;
 }) {
+  const modifiedHeader = useMemo(() => {
+    return header.map((item) => ({
+      ...item,
+      ...(item.key === 'action' && {
+        renderCell: (rowData) => <ActionToggle onClick={(type) => console.log('ACTION ==> ', type, rowData)} />,
+      }),
+    })) as IHeader<IDummyDataResponse>[];
+  }, [header]);
+
   return (
     <div className={clsx('px-3 pt-4 bg-white shadow-md h-[320px]', className)}>
       <div className="flex justify-between items-center mb-2">
@@ -192,41 +201,17 @@ function MasterData({
         </div>
       </div>
       <div className="h-[200px] mb-2">
-        <TableVirtual
-          useAutoWidth
-          headers={header}
-          dataSource={data}
-          stickyHeaderHeight={40}
-          rowHeight={28}
-          onClickRow={(data) => {
-            onClickRow(data.name as number);
-          }}
-          renderActionCard={(data: unknown, _rowIndex) => {
-            const selectedData = data as IDummyDataResponse;
-            const actions = [
-              {
-                label: 'Edit',
-                onClick: () => console.log('EDIT ==> ' + JSON.stringify(selectedData)),
-              },
-              {
-                label: 'Hapus',
-                onClick: () => console.log('HAPUS ==> ' + JSON.stringify(selectedData)),
-              },
-            ];
-
-            return (
-              <div className={clsx('shadow-lg w-[3.813rem] flex flex-col space-y-1')}>
-                {actions.map(({ label, onClick }, idx) => (
-                  <button
-                    key={'table-action' + idx}
-                    className="global-report-content text-start hover:bg-blue-950 hover:text-white py-1 pl-2 cursor-pointer"
-                    onClick={onClick}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            );
+        <KnittoTable
+          headers={modifiedHeader}
+          data={data}
+          rowKey="name"
+          onClickRow={({ id }) => onClickRow(id)}
+          classNameCell={(_, __, ___, opts) => {
+            return clsx({
+              '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
+              '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
+              '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
+            });
           }}
         />
       </div>
@@ -251,11 +236,20 @@ function DetailData({ className, selectedMasterDataId }: { className: string; se
     perPage: currentPerPage,
   } = useResponseDataQuery({ id: selectedMasterDataId || 0, page: page || 1, perPage: perPage || 100 });
 
+  const modifiedHeader = useMemo(() => {
+    return header.map((item) => ({
+      ...item,
+      ...(item.key === 'action' && {
+        renderCell: (rowData) => <ActionToggle onClick={(type) => console.log('ACTION ==> ', type, rowData)} />,
+      }),
+    })) as IHeader<IDummyDataResponse>[];
+  }, [header]);
+
   return (
     <div className={clsx('px-3 pt-4 bg-white shadow-md h-[400px] mt-1', className)}>
       <Typography as="global-strong">Detail Chemical</Typography>
       <div className="h-[300px] mt-2">
-        <TableVirtual useAutoWidth headers={header} dataSource={selectedMasterDataId ? data : []} stickyHeaderHeight={40} rowHeight={28} />
+        <KnittoTable headers={modifiedHeader} data={data} rowKey="id" />
       </div>
       <Pagination
         page={page}

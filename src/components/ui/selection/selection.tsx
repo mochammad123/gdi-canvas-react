@@ -1,7 +1,7 @@
 import { useOnClickOutside, useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
-import { forwardRef, useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import { FixedSizeList as List } from 'react-window';
+import { forwardRef, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import Checkbox from '../checkbox';
 import CaretIcon from '../icon/caret';
 import CloseIcon from '../icon/close';
@@ -115,7 +115,7 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
     placeholderSearch,
     onSaveAddItem,
   }) => {
-    const listRef = useRef<List>(null);
+    const listRef = useRef<HTMLDivElement>(null);
     const [state, dispatch] = useReducer(reducerFn, initialValues);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const hideDropdown = () => {
@@ -155,11 +155,9 @@ const Selection = forwardRef<HTMLInputElement, ISelectionProps>(
       onClickSelectAll();
     };
 
-    const scrollToActiveItem = (index: number) => {
-      if (!wrapperRef.current) return;
-      const activeItem = wrapperRef.current?.querySelectorAll(`.dropdown-item`);
-      if (!activeItem) return;
-      listRef.current?.scrollToItem(index, 'smart');
+    const scrollToActiveItem = (_index: number) => {
+      // Scroll will be handled by virtualizer in SelectionDropdown
+      // This function is kept for compatibility but actual scrolling is done via virtualizer
     };
 
     const onClickButtonClear = () => {
@@ -314,6 +312,14 @@ function SelectionDropdown({
   }, [search, options]);
   const [relativeHeight, setRelativeHeight] = useState(maximumWrapperHeight);
   const [relativeWidth, setRelativeWidth] = useState(300);
+
+  const virtualizer = useVirtualizer({
+    count: filtered.length,
+    getScrollElement: () => listRef.current,
+    estimateSize: () => minimumWrapperHeight,
+    overscan: 5,
+  });
+
   useEffect(() => {
     if (filtered.length < 7) {
       setRelativeHeight(minimumWrapperHeight * filtered.length);
@@ -321,6 +327,24 @@ function SelectionDropdown({
     }
     setRelativeHeight(maximumWrapperHeight);
   }, [filtered, relativeHeight]);
+
+  // Scroll to active item when arrowIndex changes
+  useEffect(() => {
+    if (state.arrowIndex >= 0 && state.arrowIndex < filtered.length) {
+      virtualizer.scrollToIndex(state.arrowIndex, {
+        align: 'auto',
+        behavior: 'smooth',
+      });
+    }
+  }, [state.arrowIndex, filtered.length, virtualizer]);
+
+  // Force virtualizer to recalculate when filtered options change
+  useLayoutEffect(() => {
+    if (listRef.current && filtered.length) {
+      virtualizer.measure();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtered.length, virtualizer]);
 
   useSensorKeyboard(['ArrowUp', 'ArrowDown', 'Tab', 'Enter', 'Escape'], (key, e) => {
     console.log('key', e);
@@ -355,7 +379,6 @@ function SelectionDropdown({
   useOnClickOutside(wrapperRef, (currentTarget) => {
     const isPartOfSelection = currentTarget?.classList.contains('dropdown-item') || currentTarget?.classList.contains('dropdown-checkbox-item');
     if (currentTarget?.closest('.selection')?.contains(wrapperRef.current) || isPartOfSelection) return;
-    console.log('MASOOK', currentTarget);
     console.log(currentTarget?.closest('.selection'));
     hideDropdown();
   });
@@ -372,7 +395,7 @@ function SelectionDropdown({
       return;
     }
     setPosition('bottom');
-  }, [wrapperRef.current]);
+  }, [relativeHeight]);
 
   // adjust height
   useEffect(() => {
@@ -382,11 +405,9 @@ function SelectionDropdown({
       wrapperRef.current.style.top = `${minimumWrapperHeight + 10}px`;
       return;
     }
-    console.log('huhuhu', rect.height);
     wrapperRef.current.style.top = `${-rect.height}px`;
   }, [relativeHeight, position]);
 
-  console.log('wiwiwi');
   return (
     <div
       ref={wrapperRef}
@@ -427,35 +448,51 @@ function SelectionDropdown({
             <div className="text-black-40 text-sm">Sedang memuat...</div>
           </div>
         ) : (
-          <List
+          <div
             ref={listRef}
-            height={relativeHeight}
-            itemCount={filtered.length}
-            itemSize={minimumWrapperHeight}
-            width={relativeWidth}
-            itemData={filtered}
-          >
-            {({ data: filtered, index, style }) => {
-              return (
-                <DropdownItem
-                  style={style}
-                  values={values}
-                  state={state}
-                  index={index}
-                  key={index}
-                  item={{ key: filtered[index], value: options[filtered[index]] }}
-                  onClick={() => onSelect({ key: filtered[index], value: options[filtered[index]] })}
-                  multiple={multiple}
-                />
-              );
+            style={{
+              height: `${relativeHeight}px`,
+              width: `${relativeWidth}px`,
+              overflow: 'auto',
             }}
-          </List>
+          >
+            <div
+              style={{
+                height: `${virtualizer.getTotalSize()}px`,
+                width: '100%',
+                position: 'relative',
+              }}
+            >
+              {virtualizer.getVirtualItems().map((virtualItem) => {
+                const index = virtualItem.index;
+                const item = { key: filtered[index], value: options[filtered[index]] };
+                return (
+                  <DropdownItem
+                    key={virtualItem.key}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualItem.size}px`,
+                      transform: `translateY(${virtualItem.start}px)`,
+                    }}
+                    values={values}
+                    state={state}
+                    index={index}
+                    item={item}
+                    onClick={() => onSelect({ key: filtered[index], value: options[filtered[index]] })}
+                    multiple={multiple}
+                  />
+                );
+              })}
+            </div>
+          </div>
         )}
         {filtered?.length === 0 && <EmptyData search={search} />}
         <ButtonAddItem
           search={search}
           onSaveAddItem={(value) => {
-            console.log('MASOOK');
             onSaveAddItem?.(value);
             setSearch('');
           }}
