@@ -5,7 +5,8 @@ export default function generateEnvPlugin(): Plugin {
   let isBuild = false;
   const env = dotenv.config().parsed || {};
   const contentScript = `window.__ENV__=${JSON.stringify(env)};`;
-  const generatedFileName = '/generated-env.js';
+  const generatedFileName = 'generated-env.js';
+  const srcFileName = '/generated-env.js';
 
   return {
     name: 'generate-env',
@@ -38,7 +39,7 @@ export default function generateEnvPlugin(): Plugin {
           {
             tag: 'script',
             attrs: {
-              src: generatedFileName,
+              src: srcFileName,
             },
             injectTo: 'body',
           },
