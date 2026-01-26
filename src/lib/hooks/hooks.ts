@@ -38,7 +38,7 @@ export function useModal<TModalName, TData = unknown>(initialOptions?: IuseModal
   const showModal = (modalName: TModalName, data?: TData) => {
     setName(modalName);
     setCurrentShow(true);
-    data && setData(data);
+    if (data) setData(data);
   };
 
   return {

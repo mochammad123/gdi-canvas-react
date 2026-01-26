@@ -37,7 +37,8 @@ function ServerFilter({ id }: { id: string }) {
         const result = await fetchCombinedData(payload);
         setData(result);
         if (next) setFilters(merged);
-      } catch (e) {
+      } catch (_error) {
+        console.error('Error fetching data', _error);
         setData([]);
       } finally {
         setLoading(false);

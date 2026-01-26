@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import clsx from 'clsx';
 import React, { HTMLInputTypeAttribute, ReactNode, useEffect, useRef } from 'react';
 import EyeIcon from '../icon/eye-icon';
@@ -31,7 +30,7 @@ const InputWithSuffix = React.forwardRef<HTMLInputElement, IInputWithSufixProps>
         eyeIconStroke.classList.toggle('hidden');
         return;
       }
-      onClickSuffix && onClickSuffix();
+      onClickSuffix?.();
     };
 
     if (!suffix && type !== 'password') {

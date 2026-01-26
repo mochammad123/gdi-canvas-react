@@ -24,7 +24,8 @@ export const parseFormat = (dateStr: string, format: string): string | null => {
 export const formatWithLocale = (date: dayjs.Dayjs, format: string, locale: LocaleSupport): string => {
   try {
     return date.locale(locale).format(format);
-  } catch (error) {
+  } catch (_error) {
+    console.error(_error);
     return date.locale('en').format(format);
   }
 };

@@ -24,12 +24,7 @@ const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
 ));
 TableFooter.displayName = 'TableFooter';
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement> & {
-    fieldSorted?: unknown;
-  }
->(({ className, fieldSorted, ...props }, ref) => {
+const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement> & {}>(({ className, ...props }, ref) => {
   return <tr ref={ref} className={clsx('border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted', className)} {...props} />;
 });
 TableRow.displayName = 'TableRow';
@@ -95,7 +90,7 @@ const TableCell = React.forwardRef<
   const onDblClick = (e: React.MouseEvent<HTMLTableCellElement>) => {
     const node = tdRef.current;
     if (!editable || !node) return;
-    onFocusEdit && onFocusEdit(e);
+    onFocusEdit?.(e);
     setTextContent(node.textContent || '');
     setClicked((c) => !c);
   };
@@ -150,11 +145,11 @@ const TableCell = React.forwardRef<
           onKeyUp={(e) => {
             if (!onUpdateContent || e.key !== 'Enter') return;
             setClicked(false);
-            onUpdateContent && onUpdateContent(e.currentTarget.value);
+            onUpdateContent?.(e.currentTarget.value);
           }}
           onBlur={(e) => {
             setClicked(false);
-            onUpdateContent && onUpdateContent(e.currentTarget.value);
+            onUpdateContent?.(e.currentTarget.value);
           }}
           value={textContent || ''}
           classNameInput="!bg-white !px-[.125rem] global-report-content !absolute left-0 right-0 top-0 rounded-none  border-none"

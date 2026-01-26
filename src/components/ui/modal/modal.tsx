@@ -1,7 +1,6 @@
 import { useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef } from 'react';
-import KNUI from '../knui';
 import Portal from '../portal';
 import { Typography } from '../typhography';
 import { IModalProps } from './types';
@@ -13,7 +12,6 @@ export default function Modal({
   size = 'default',
   title,
   children,
-  identity,
   centered,
   noBackdrop = false,
   className,
@@ -21,7 +19,6 @@ export default function Modal({
   enableResizeObserver = true,
   preventShortcut = false,
 }: IModalProps & {
-  identity?: string;
   className?: string;
   size?: string;
   title?: string | React.ReactNode;
@@ -71,7 +68,7 @@ export default function Modal({
   });
 
   const hideModal = () => {
-    onHide && onHide();
+    onHide?.();
     document.body.classList?.remove('modal-open');
   };
   if (!show) return null;

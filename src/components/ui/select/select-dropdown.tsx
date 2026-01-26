@@ -70,7 +70,9 @@ const SelectDropdown = (props: ISelectDropdown) => {
 
   const handleSelectOption = (option: ISelectOption) => {
     onSelectOption?.(option.value);
-    option?.icon && onSelectOptionIcon?.(option.icon);
+    if (option?.icon) {
+      onSelectOptionIcon?.(option.icon);
+    }
   };
 
   return (

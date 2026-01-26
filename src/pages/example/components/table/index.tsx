@@ -125,13 +125,10 @@ function Table() {
       <div className="p-4 bg-knitto-blue-20 flex flex-col gap-y-3">
         <div className="space-y-0">
           <Typography as="h3">Knitto Table</Typography>
-          <a href="https://imamknitto.github.io/virtual-table/" target="_blank" rel="noopener noreferrer" className="underline text-blue-900 text-xs">
-            more details
-          </a>
           <div className="h-2 w-72 bg-burnt-orange-100" />
         </div>
 
-        <div className="w-full flex flex-row gap-x-4 px-4">
+        <div className="w-full flex flex-row gap-x-4">
           <div
             style={{
               height: virtualizer.getTotalSize(),

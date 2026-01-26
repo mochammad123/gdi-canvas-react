@@ -96,7 +96,6 @@ export default function useFilterSearch<TDataSource>(props: ISearchTable<TDataSo
         source: Record<keyof TDataSource, string>,
         key: K
       ): Record<Exclude<keyof TDataSource, K>, string> {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [key]: _unused, ...rest } = source;
         return rest;
       }

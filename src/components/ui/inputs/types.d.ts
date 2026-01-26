@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { OnArgs } from 'react-calendar';
 
-export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface IInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  type?: React.HTMLInputTypeAttribute;
+}
 
 export interface IInputDebounceProps extends IInputProps {
   classNameInput?: string;

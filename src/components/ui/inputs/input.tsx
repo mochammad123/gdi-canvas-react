@@ -1,12 +1,16 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface IInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  type?: React.HTMLInputTypeAttribute;
+}
 
-export const Input = React.forwardRef<HTMLInputElement, IInputProps>(({ className, type, disabled, ...props }, ref) => {
+export const Input = React.forwardRef<HTMLInputElement, IInputProps>(({ className, disabled, type = 'text', ...props }, ref) => {
   return (
     <input
       ref={ref}
+      type={type}
+      disabled={disabled}
       className={clsx(
         'h-10 rounded-[4px] text-base py-[.625rem] px-[.5rem] placeholder-black-40',
         'flex w-full text-black-100 border border-black-40 global-paragraph',

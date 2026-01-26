@@ -266,7 +266,7 @@ function ButtonClear({ onClick }: { onClick: () => void }) {
       className="absolute right-[1.875rem] top-1/2 -translate-y-1/2"
       onClick={(e) => {
         e.stopPropagation();
-        onClick && onClick();
+        onClick?.();
       }}
     >
       <div className="hover:bg-gray-200 rounded-full z-50 w-5 h-5 flex justify-center items-center cursor-pointer">
@@ -343,7 +343,6 @@ function SelectionDropdown({
     if (listRef.current && filtered.length) {
       virtualizer.measure();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered.length, virtualizer]);
 
   useSensorKeyboard(['ArrowUp', 'ArrowDown', 'Tab', 'Enter', 'Escape'], (key, e) => {

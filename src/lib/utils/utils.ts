@@ -116,7 +116,8 @@ export function readUploadFileExcel(file: File) {
 export function isValidUrl(url: string) {
   try {
     return new URL(url);
-  } catch (e) {
+  } catch (_error) {
+    console.error('Error validating URL', _error);
     return false;
   }
 }

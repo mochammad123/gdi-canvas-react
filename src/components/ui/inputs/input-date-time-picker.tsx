@@ -48,7 +48,7 @@ const InputDateTimePicker = React.forwardRef<
   useOnClickOutside(wrapperRef, () => setShow(false));
 
   const handleOnChange = (dateTimeValue: string) => {
-    onChange && onChange(dateTimeValue);
+    onChange?.(dateTimeValue);
   };
 
   const handleChange = (value: Value) => {
@@ -212,7 +212,9 @@ const InputDateTimePicker = React.forwardRef<
                 defaultView={view}
                 {...calendarProps}
                 onActiveStartDateChange={(args) => {
-                  calendarProps?.onActiveStartDateChange && calendarProps?.onActiveStartDateChange(args);
+                  if (calendarProps?.onActiveStartDateChange) {
+                    calendarProps.onActiveStartDateChange(args);
+                  }
                   if (args.view === 'month') {
                     const calendarEl = wrapperRef.current?.querySelector('.react-calendar') as HTMLDivElement;
                     if (!calendarEl) return;
@@ -271,7 +273,9 @@ const InputDateTimePicker = React.forwardRef<
               className="px-10"
               onClick={() => {
                 setShow(false);
-                currentDateTime ? '' : handleOnChange(dateValue + 'T' + formattedTime);
+                if (!currentDateTime) {
+                  handleOnChange(`${dateValue}T${formattedTime}`);
+                }
               }}
             >
               Ok

@@ -38,7 +38,7 @@ const InputDatePicker = React.forwardRef<
     if (!value) return;
     const dateValue: string = dayjs(value as Date).format('YYYY-MM-DD');
     setShow(false);
-    onChange && onChange(dateValue);
+    onChange?.(dateValue);
   };
 
   useEffect(() => {
@@ -96,7 +96,9 @@ const InputDatePicker = React.forwardRef<
           defaultView={view}
           {...calendarProps}
           onActiveStartDateChange={(args) => {
-            calendarProps?.onActiveStartDateChange && calendarProps?.onActiveStartDateChange(args);
+            if (calendarProps?.onActiveStartDateChange) {
+              calendarProps.onActiveStartDateChange(args);
+            }
             if (args.view === 'month') {
               const calendarEl = wrapperRef.current?.querySelector('.react-calendar') as HTMLDivElement;
               if (!calendarEl) return;

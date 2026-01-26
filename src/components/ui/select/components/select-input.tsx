@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface IInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  type?: React.HTMLInputTypeAttribute;
+}
 
 export const SelectInput = React.forwardRef<HTMLInputElement, IInputProps>(({ className, disabled, ...props }, ref) => {
   return (

@@ -28,7 +28,7 @@ const TOAST_ICON = {
   info: <WarningIcon className="!size-2.5" />,
 };
 
-export default function Toast({ id, toastType, message, duration, onClose, transitionPosition = 'bottom-right', animationClosed }: IToast) {
+export default function Toast({ toastType, message, duration, onClose, transitionPosition = 'bottom-right', animationClosed }: IToast) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

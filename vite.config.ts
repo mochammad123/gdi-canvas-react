@@ -3,7 +3,7 @@ import path from 'node:path';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import generateEnvPlugin from './generate-env-plugin';
+import generateEnvPlugin from './config/generate-env-plugin';
 
 const manifestForPlugIn = {
   registerType: 'prompt',
@@ -47,8 +47,8 @@ const manifestForPlugIn = {
 export default defineConfig({
   plugins: [
     generateEnvPlugin(),
-    VitePWA({ ...manifestForPlugIn, registerType: 'autoUpdate', devOptions: { enabled: true, type: 'module' } }), 
-    react(), 
+    VitePWA({ ...manifestForPlugIn, registerType: 'autoUpdate', devOptions: { enabled: true, type: 'module' } }),
+    react(),
     tsconfigPaths()
   ],
   resolve: {

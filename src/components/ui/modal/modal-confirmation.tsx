@@ -54,7 +54,7 @@ export default function Confirmation({
                 className="px-3 flex justify-center items-center"
                 onClick={() => {
                   onConfirm(() => {
-                    onHide && onHide();
+                    onHide?.();
                   });
                 }}
               >

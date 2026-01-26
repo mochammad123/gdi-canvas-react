@@ -28,7 +28,7 @@ export default function LoginPage() {
 
   const onSave = (values: FormLoginSchema) => {
     window.location.href = 'example/dashboard';
-    values;
+    console.log(values);
   };
 
   return (
