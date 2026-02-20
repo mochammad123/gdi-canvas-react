@@ -9,7 +9,7 @@ import {
   useFreezeRightColumnsWidth,
   useGetDepth,
 } from './header-context';
-import { useColumnVirtualizer, useEnableColumnVirtualization } from './virtualizer-context';
+import { useColumnVirtualItems, useColumnVirtualizer, useContainerWidth, useEnableColumnVirtualization } from './virtualizer-context';
 
 // ==================== Types ====================
 export type IUIContext = {
@@ -110,8 +110,12 @@ export const UIContextProvider = <TData = unknown,>(props: IUIContextProviderPro
 
   const columnVirtualizer = useColumnVirtualizer();
   const enableColumnVirtualization = useEnableColumnVirtualization();
+  const columnVirtualItems = useColumnVirtualItems();
+  const containerWidth = useContainerWidth();
 
   // Calculate virtualized columns width
+  // Tambahkan columnVirtualItems dan containerWidth sebagai dependency
+  // agar selalu ter-update ketika kolom di-resize oleh useAutoStretchColumn
   const virtualizedColumnsWidth = useMemo(() => {
     if (enableColumnVirtualization && columnVirtualizer) {
       return columnVirtualizer.getTotalSize();
@@ -119,7 +123,7 @@ export const UIContextProvider = <TData = unknown,>(props: IUIContextProviderPro
 
     // For non-virtualized mode, calculate manually from columns
     return columns.reduce((sum, col) => sum + (col.width || 0), 0);
-  }, [enableColumnVirtualization, columnVirtualizer, columns]);
+  }, [enableColumnVirtualization, columnVirtualizer, columns, columnVirtualItems, containerWidth]);
 
   // Note: Hitung posisi left absolute dari kolom yang freeze di kiri.
   const freezeColLeftPositions = useMemo<number[]>(() => {

@@ -129,7 +129,7 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
       width: position.width,
       top: 0,
     };
-  }, [position.height, position.left, position.width, useDynamicRowHeight]);
+  }, [column?.noStretch, position.height, position.left, position.width, useDynamicRowHeight]);
 
   const cellContent = useMemo(() => {
     if (isCheckboxColumn) return <RowCheckbox checked={isRowChecked} />;

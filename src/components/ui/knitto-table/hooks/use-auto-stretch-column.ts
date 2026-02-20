@@ -1,62 +1,70 @@
 import type { Virtualizer } from '@tanstack/react-virtual';
 import { useEffect } from 'react';
-import { DEFAULT_SIZE, type IHeader } from '../lib';
+import { DEFAULT_SIZE, type IAdjustedHeader, type IHeader } from '../lib';
 
 interface IAutoStretchColumn {
   containerWidth: number;
   columns: IHeader<unknown>[];
   columnVirtualizer: Virtualizer<HTMLDivElement, Element> | null;
+  freezeLeftColumnsWidth?: number;
+  freezeRightColumnsWidth?: number;
+  updateColumn?: (key: string, update: Partial<IAdjustedHeader>) => void;
+  updateChildColumn?: (parentKey: string, childKey: string, update: Partial<IAdjustedHeader>) => void;
 }
 
 export function useAutoStretchColumn(props: IAutoStretchColumn) {
-  const { containerWidth, columns, columnVirtualizer } = props;
+  const {
+    containerWidth,
+    columns,
+    columnVirtualizer,
+    freezeLeftColumnsWidth = 0,
+    freezeRightColumnsWidth = 0,
+    updateColumn,
+    updateChildColumn,
+  } = props;
+
+  const availableWidth = containerWidth - freezeLeftColumnsWidth - freezeRightColumnsWidth;
 
   useEffect(() => {
-    if (containerWidth === 0 || !columnVirtualizer) return;
+    if (availableWidth <= 0) return;
 
-    // Get all visible columns that can be stretched
-    const visibleColumns = columns.filter((column) => column.visible && !column.noStretch);
+    const hasVirtualizer = !!columnVirtualizer;
+    const hasContextUpdaters = !!updateColumn;
 
-    // Calculate total width of all columns
-    const totalWidth = visibleColumns.reduce((sum, column) => {
-      // For nested columns, include all child widths
-      if (column.children?.length) {
-        return sum + column.children.reduce((childSum, child) => childSum + (child.width || DEFAULT_SIZE.COLUMN_WIDTH), 0);
-      }
-      return sum + (column.width || DEFAULT_SIZE.COLUMN_WIDTH);
-    }, 0);
+    if (!hasVirtualizer && !hasContextUpdaters) return;
 
-    // Calculate width of columns that can't be stretched
-    const totalNoStretchWidth = columns.reduce((sum, column) => {
-      if (column.noStretch) {
-        if (column.children?.length) {
-          return sum + column.children.reduce((childSum, child) => childSum + (child.width || DEFAULT_SIZE.COLUMN_WIDTH), 0);
-        }
-        return sum + (column.width! || DEFAULT_SIZE.COLUMN_WIDTH);
-      }
-      return sum;
-    }, 0);
+    // Get all visible columns that can be stretched (exclude columns with children)
+    const visibleColumns = columns.filter((column) => column.visible && !column.noStretch && !column.children?.length);
 
-    // Only stretch if total width is less than container width
-    if (totalWidth < containerWidth - totalNoStretchWidth) {
-      const scale = (containerWidth - totalNoStretchWidth) / totalWidth;
+    // Pakai default size kalau ga ada width
+    const getColumnWidth = (column: IHeader<unknown>): number => column.width ?? DEFAULT_SIZE.COLUMN_WIDTH;
 
-      visibleColumns.forEach((column) => {
+    // Total width kolom yang bisa di-stretch (tanpa children)
+    const totalWidth = visibleColumns.reduce((sum, column) => sum + getColumnWidth(column), 0);
+
+    // Total width kolom yang tidak di-stretch: punya children ATAU noStretch
+    const totalNonStretchWidth = columns
+      .filter((c) => c.visible && (c.children?.length || c.noStretch))
+      .reduce((sum, c) => sum + getColumnWidth(c), 0);
+
+    // Available width untuk stretch
+    const availableForStretch = availableWidth - totalNonStretchWidth;
+
+    // Only stretch if total width is less than available width
+    if (totalWidth >= availableForStretch || totalWidth <= 0) return;
+
+    const scale = availableForStretch / totalWidth;
+
+    visibleColumns.forEach((column) => {
+      const newWidth = getColumnWidth(column) * scale;
+      const finalWidth = Math.max(50, newWidth);
+
+      if (hasVirtualizer && columnVirtualizer) {
         const columnIndex = columns.indexOf(column);
-        const newWidth = column.width! * scale;
-
-        // Ensure minimum width
-        const finalWidth = Math.max(50, newWidth);
         columnVirtualizer.resizeItem(columnIndex, finalWidth);
-
-        // If column has children, maintain proportional widths
-        if (column.children?.length) {
-          const childScale = finalWidth / column.width!;
-          column.children.forEach((child) => {
-            child.width = child.width! * childScale;
-          });
-        }
-      });
-    }
-  }, [columns, containerWidth, columnVirtualizer]);
+      } else if (hasContextUpdaters && updateColumn) {
+        updateColumn(column.key, { width: finalWidth });
+      }
+    });
+  }, [availableWidth, columns, columnVirtualizer, updateColumn, updateChildColumn]);
 }

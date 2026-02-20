@@ -46,7 +46,9 @@
 [data-table-container] {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  /* overscroll-behavior-y: auto agar scroll chaining ke parent saat mencapai top/bottom tabel */
+  overscroll-behavior-y: auto;
+  overscroll-behavior-x: contain;
 }
 
 /* === Virtual Content Optimization === */

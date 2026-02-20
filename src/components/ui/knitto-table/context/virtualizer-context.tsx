@@ -4,7 +4,7 @@ import { useMemo, useCallback, useEffect } from 'react';
 import useFlattenedDataIncremental from '../hooks/use-flattened-data-incremental';
 import { useAutoStretchColumn } from '../hooks/use-auto-stretch-column';
 import { DEFAULT_SIZE } from '../lib';
-import { useColumns } from './header-context';
+import { useColumns, useFreezeLeftColumnsWidth, useFreezeRightColumnsWidth, useUpdateChildColumn, useUpdateColumn } from './header-context';
 import { useFilteredData } from './filter-context';
 import { useContainerDimensions } from '../hooks/use-container-dimensions';
 
@@ -62,6 +62,10 @@ export const VirtualizerContextProvider = <T,>(props: IVirtualizerContextProvide
   const { children, scrollElementRef, rowKey, enableColumnVirtualization = true, onRowVirtualizerReady } = props;
 
   const columns = useColumns();
+  const freezeLeftColumnsWidth = useFreezeLeftColumnsWidth();
+  const freezeRightColumnsWidth = useFreezeRightColumnsWidth();
+  const updateColumn = useUpdateColumn();
+  const updateChildColumn = useUpdateChildColumn();
   const filteredData = useFilteredData();
 
   // Find and observe container dimensions
@@ -101,6 +105,10 @@ export const VirtualizerContextProvider = <T,>(props: IVirtualizerContextProvide
     containerWidth,
     columns,
     columnVirtualizer: enableColumnVirtualization ? columnVirtualizer : null,
+    freezeLeftColumnsWidth,
+    freezeRightColumnsWidth,
+    updateColumn: enableColumnVirtualization ? undefined : updateColumn,
+    updateChildColumn: enableColumnVirtualization ? undefined : updateChildColumn,
   });
 
   // Virtual items
