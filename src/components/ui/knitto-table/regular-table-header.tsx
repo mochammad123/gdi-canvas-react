@@ -164,6 +164,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
           const hasChildren = header.children && header.children.length > 0;
           const isFreezeLeft = header.freeze === 'left';
           const isFreezeRight = header.freeze === 'right';
+          const disableResizeColumn = header.disableResizeColumn || false;
 
           const freezeLeftPosition = getFreezeLeftPosition(columns, columnIndex);
           const freezeRightPosition = getFreezeRightPosition(columns, columnIndex);
@@ -195,7 +196,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
             headContent = (
               <div className={baseClassName}>
                 {header.renderHeader()}
-                <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />
+                {!disableResizeColumn && <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />}
               </div>
             );
           } else {
@@ -213,6 +214,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                   caption={header.caption}
                   headerKey={header.key.toString()}
                   hideFilterSort={header?.hideFilter?.sort || false}
+                  hideHeaderAction={header?.hideHeaderAction || false}
                 />
 
                 {isFilterVisible && (
@@ -224,7 +226,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                   />
                 )}
 
-                <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />
+                {!disableResizeColumn && <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />}
               </div>
             );
           }
@@ -265,8 +267,10 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
 
           return header.children!.map((child, childIndex) => {
             const hideFilterSort = child?.hideFilter?.sort || false;
+            const hideHeaderAction = child?.hideHeaderAction || false;
             const isFreezeLeft = header.freeze === 'left';
             const isFreezeRight = header.freeze === 'right';
+            const disableResizeColumn = child?.disableResizeColumn || false;
 
             // Calculate child position within parent group
             let childOffset = 0;
@@ -290,7 +294,9 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
             const headContent = child.renderHeader ? (
               <div className={baseClassName}>
                 {child.renderHeader()}
-                <ResizeIndicator handleMouseDown={(e) => handleResizeChildColumn(e, header.key as string, child.key as string)} />
+                {!disableResizeColumn && (
+                  <ResizeIndicator handleMouseDown={(e) => handleResizeChildColumn(e, header.key as string, child.key as string)} />
+                )}
               </div>
             ) : (
               <div
@@ -305,7 +311,8 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                   isFilterVisible={isFilterVisible}
                   caption={child.caption}
                   headerKey={child.key.toString()}
-                  hideFilterSort={hideFilterSort}
+                  hideFilterSort={hideFilterSort || false}
+                  hideHeaderAction={hideHeaderAction || false}
                 />
 
                 {isFilterVisible && (
@@ -317,7 +324,9 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                   />
                 )}
 
-                <ResizeIndicator handleMouseDown={(e) => handleResizeChildColumn(e, header.key as string, child.key as string)} />
+                {!disableResizeColumn && (
+                  <ResizeIndicator handleMouseDown={(e) => handleResizeChildColumn(e, header.key as string, child.key as string)} />
+                )}
               </div>
             );
 
@@ -360,8 +369,10 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
             {columns.map((header, columnIndex) => {
               const isCheckboxHeader = header.key === 'row-selection';
               const hideFilterSort = header?.hideFilter?.sort || false;
+              const hideHeaderAction = header?.hideHeaderAction || false;
               const isFreezeRight = header.freeze === 'right';
               const isFreezeLeft = header.freeze === 'left';
+              const disableResizeColumn = header.disableResizeColumn || false;
 
               const freezeLeftPosition = getFreezeLeftPosition(columns, columnIndex);
               const freezeRightPosition = getFreezeRightPosition(columns, columnIndex);
@@ -386,7 +397,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                 headContent = (
                   <div className={baseClassName}>
                     {header.renderHeader()}
-                    <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />
+                    {!disableResizeColumn && <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />}
                   </div>
                 );
               } else {
@@ -403,6 +414,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                       caption={header.caption}
                       headerKey={header.key.toString()}
                       hideFilterSort={hideFilterSort}
+                      hideHeaderAction={hideHeaderAction}
                     />
 
                     {isFilterVisible && (
@@ -414,7 +426,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                       />
                     )}
 
-                    <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />
+                    {!disableResizeColumn && <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, columnIndex)} />}
                   </div>
                 );
               }

@@ -11,6 +11,7 @@ export { default as TableCell } from './table-cell';
 export { default as BodyCell } from './body/body-cell';
 export { default as RowCheckbox } from './body/row-checkbox';
 export { default as RowExpand } from './body/row-expand';
+export { default as RowReorder } from './body/row-reorder';
 export { default as RowExpandedContent } from './body/row-expanded-content';
 export { default as ExpandedRowWrapper } from './body/expanded-row-wrapper';
 

@@ -15,3 +15,4 @@ export { default as useRowSpanCalculator } from './use-rowspan-calculator';
 // Utility hooks
 export { useContainerDimensions } from './use-container-dimensions';
 export { useAutoStretchColumn } from './use-auto-stretch-column';
+export { useRowReorderDnd } from './use-row-reorder-dnd';

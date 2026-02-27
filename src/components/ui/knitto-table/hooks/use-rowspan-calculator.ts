@@ -38,7 +38,7 @@ export const useRowSpanCalculator = <TData>(data: TData[], columns: IHeader<unkn
       if (!column.enableRowSpan) return;
 
       // NOTE: Skip kolom khusus yang tidak boleh di-rowspan
-      const isSpecialColumn = column.key === 'row-selection' || column.key === 'expand' || column.key === 'action';
+      const isSpecialColumn = column.key === 'row-selection' || column.key === 'expand' || column.key === 'action' || column.key === 'row-reorder';
 
       if (isSpecialColumn) return;
 

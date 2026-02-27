@@ -17,9 +17,10 @@ const DEFAULT_ACTIONS = [
 interface IHeaderAction {
   headerKey: string;
   hideFilterSort: boolean;
+  hideHeaderAction: boolean;
 }
 
-function HeaderAction({ headerKey, hideFilterSort }: IHeaderAction) {
+function HeaderAction({ headerKey, hideFilterSort, hideHeaderAction }: IHeaderAction) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [actionCard, setActionCard] = useState({ show: false, pos: { x: 0, y: 0 } });
 
@@ -91,7 +92,7 @@ function HeaderAction({ headerKey, hideFilterSort }: IHeaderAction) {
 
   return (
     <div className="relative">
-      <Icons name="menu" className="!size-4 text-gray-500 cursor-pointer" onClick={handleOpenActionCard} />
+      {!hideHeaderAction && <Icons name="menu" className="!size-4 text-gray-500 cursor-pointer" onClick={handleOpenActionCard} />}
 
       {actionCard.show &&
         createPortal(

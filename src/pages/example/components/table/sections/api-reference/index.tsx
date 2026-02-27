@@ -313,6 +313,34 @@ function ApiReference() {
               </tr>
               <tr>
                 <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>onReorderRows</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>(fromIndex: number, toIndex: number) =&gt; void</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2">-</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">-</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  Callback saat urutan row berubah via drag-drop. Ketika disediakan, row menjadi draggable. Mendukung Regular Table dan Virtual Table.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>reorderOnlyFromToggle</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>boolean</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>false</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-center">-</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  Ketika true, drag hanya dari kolom row-reorder. Memerlukan kolom dengan key &apos;row-reorder&apos; di headers.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
                   <code>onRenderExpandedContent</code>
                 </td>
                 <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
@@ -577,6 +605,19 @@ function ApiReference() {
                   Enable rowspan merging untuk nilai duplikat berturut-turut. Hanya bekerja dengan{' '}
                   <code className="px-1 bg-gray-100 rounded">useRegularTable=true</code>. Data harus sudah di-sort berdasarkan kolom ini.
                 </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>disableResizeColumn</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>boolean</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 font-mono text-xs">
+                  <code>false</code>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-center">-</td>
+                <td className="border border-gray-300 px-4 py-2">Nonaktifkan resize kolom untuk kolom ini</td>
               </tr>
             </tbody>
           </table>

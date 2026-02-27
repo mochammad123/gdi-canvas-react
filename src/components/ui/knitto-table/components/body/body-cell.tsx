@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import clsx from 'clsx';
-import { RowCheckbox, RowExpand, TableCell } from '..';
+import { RowCheckbox, RowExpand, RowReorder, TableCell } from '..';
 import type { IAdjustedHeader } from '../../lib';
 import { useClassNameCell, useUseDynamicRowHeight } from '../../context/ui-context';
 
@@ -25,6 +25,10 @@ interface IBodyCell<TData> {
   freezeRightColumnsWidth?: number;
   rowIndex?: number;
   columnIndex?: number;
+  enableReorderFromColumnOnly?: boolean;
+  onReorderDragStart?: (e: React.DragEvent) => void;
+  onReorderDragEnd?: (e: React.DragEvent) => void;
+  onReorderRowsToParent?: boolean;
 }
 
 function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
@@ -44,6 +48,10 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
     freezeRightColumnsWidth = 0,
     rowIndex = 0,
     columnIndex = 0,
+    enableReorderFromColumnOnly = false,
+    onReorderDragStart,
+    onReorderDragEnd,
+    onReorderRowsToParent = false,
   } = bodyCellProps;
 
   const classNameCell = useClassNameCell();
@@ -51,6 +59,7 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
 
   const isCheckboxColumn = column?.key === 'row-selection';
   const isExpandColumn = column?.key === 'expand';
+  const isReorderColumn = column?.key === 'row-reorder';
 
   const cellValue = useMemo(() => String(rowData[column?.key as keyof typeof rowData] || ''), [rowData, column?.key]);
   const cellRender = column?.renderCell;
@@ -134,6 +143,17 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
   const cellContent = useMemo(() => {
     if (isCheckboxColumn) return <RowCheckbox checked={isRowChecked} />;
 
+    if (isReorderColumn && onReorderRowsToParent) {
+      if (enableReorderFromColumnOnly && onReorderDragStart && onReorderDragEnd) {
+        return (
+          <div draggable onDragStart={onReorderDragStart} onDragEnd={onReorderDragEnd} className="flex justify-center items-center w-full h-full">
+            <RowReorder />
+          </div>
+        );
+      }
+      return <RowReorder />;
+    }
+
     if (isExpandColumn) {
       if (!cellExpandToggle) {
         return <RowExpand isExpanded={isRowExpanded} />;
@@ -150,11 +170,11 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
 
   return (
     <TableCell
-      key={'table-cell-' + String(column.key)}
+      key={'table-cell-' + String(column?.key)}
       data-row-key={rowKey}
       data-row-index={rowIndex}
       data-cell-index={columnIndex}
-      data-col-key={String(column.key)}
+      data-col-key={String(column?.key)}
       className={classNames}
       style={cellStyle}
     >

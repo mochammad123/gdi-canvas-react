@@ -152,6 +152,7 @@ function HeaderCellNested(props: INestedHeaderCell) {
               headerKey={headData.key}
               caption={headData?.caption}
               hideFilterSort={headData?.hideFilter?.sort || false}
+              hideHeaderAction={headData?.hideHeaderAction || false}
             />
 
             {isFilterVisible && (

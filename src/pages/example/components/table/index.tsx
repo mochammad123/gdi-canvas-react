@@ -21,6 +21,7 @@ const DynamicRowHeight = lazy(() => import('./sections/dynamic-row-height'));
 const LargeDataset = lazy(() => import('./sections/large-datasets'));
 const RegularTable = lazy(() => import('./sections/regular-table'));
 const RowSpan = lazy(() => import('./sections/row-span'));
+const RowReorder = lazy(() => import('./sections/row-reorder'));
 const SelectedCellStyling = lazy(() => import('./sections/selected-cell-styling'));
 const ApiReference = lazy(() => import('./sections/api-reference'));
 
@@ -42,6 +43,7 @@ export const TABLE_CONTENTS = [
   { title: 'Large Dataset', href: 'large-dataset' },
   { title: 'Regular Table', href: 'regular-table' },
   { title: 'Row Span', href: 'row-span' },
+  { title: 'Row Reorder (Drag & Drop)', href: 'row-reorder' },
   { title: 'API Reference', href: 'api-reference' },
 ];
 
@@ -114,6 +116,9 @@ function Table() {
     </Suspense>,
     <Suspense key="row-span" fallback={<SectionFallback />}>
       <RowSpan id="row-span" />
+    </Suspense>,
+    <Suspense key="row-reorder" fallback={<SectionFallback />}>
+      <RowReorder id="row-reorder" />
     </Suspense>,
     <Suspense key="api-reference" fallback={<SectionFallback />}>
       <ApiReference />

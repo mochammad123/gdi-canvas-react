@@ -1,7 +1,7 @@
 import { forwardRef, memo, useMemo, type ReactNode } from 'react';
 import BodyCell from './components/body/body-cell';
 import RowExpandedContent from './components/body/row-expanded-content';
-import type { IAdjustedHeader } from './lib';
+import type { IAdjustedHeader, IKnittoTable } from './lib';
 import clsx from 'clsx';
 import {
   useColumns,
@@ -38,6 +38,7 @@ import {
   useCalcHeaderTotalHeight,
   useUseDynamicRowHeight,
 } from './context/ui-context';
+import { useRowReorderDnd } from './hooks';
 
 interface IVirtualTableBody<TData> {
   headerHeight: number;
@@ -48,10 +49,20 @@ interface IVirtualTableBody<TData> {
   onClickRowToParent?: (item: TData, rowIndex: number, columnIndex: number) => void;
   onDoubleClickRowToParent?: (item: TData, rowIndex: number, columnIndex: number) => void;
   onRightClickRowToParent?: (item: TData, position: { x: number; y: number }) => void;
+  onReorderRowsToParent?: IKnittoTable<TData>['onReorderRows'];
+  reorderOnlyFromToggle?: boolean;
 }
 
 const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, ref: React.Ref<HTMLDivElement>) => {
-  const { footerHeight, rowHeight, onClickRowToParent, onDoubleClickRowToParent, onRightClickRowToParent } = props;
+  const {
+    footerHeight,
+    rowHeight,
+    onClickRowToParent,
+    onDoubleClickRowToParent,
+    onRightClickRowToParent,
+    onReorderRowsToParent,
+    reorderOnlyFromToggle = false,
+  } = props;
 
   const freezeLeftColumns = useFreezeLeftColumns();
   const freezeRightColumns = useFreezeRightColumns();
@@ -161,6 +172,16 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
     onRightClickRowToParent?.(rowData as TData, { x: e.clientX, y: e.clientY });
   };
 
+  const { func: dndFunc, state: dndState } = useRowReorderDnd({
+    freezeLeftColumns,
+    columns,
+    freezeRightColumns,
+    flattenedData,
+    rowHeight,
+    onReorderRowsToParent,
+    reorderOnlyFromToggle,
+  });
+
   // NOTE: Menangani perubahan pada checkbox selection
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLElement | null;
@@ -182,6 +203,8 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
   const calcBodyHeight = (rowVirtualizer?.getTotalSize() ?? 0) + (useFooter ? footerHeight : 0);
 
   const renderFreezeLeftColumns = (rowKey: string, rowData: TData, isRowChecked: boolean, isRowExpanded: boolean, rowIndex: number) => {
+    const reorderProps = dndFunc.getReorderProps(rowIndex);
+
     return freezeLeftColumns.flatMap((column, freezeLeftIdx) => {
       const isRowHighlighted = rowKey === String(selectedRowKey);
       const isGroupColumn = column.key.startsWith('group-header-');
@@ -211,6 +234,7 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
                 width: child.width!,
                 height: rowHeight,
               }}
+              {...(child?.key === 'row-reorder' ? reorderProps : {})}
             />
           );
         });
@@ -234,12 +258,15 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
             width: column.width!,
             height: rowHeight,
           }}
+          {...(column?.key === 'row-reorder' ? reorderProps : {})}
         />,
       ];
     });
   };
 
   const renderFreezeRightColumns = (rowKey: string, rowData: TData, isRowChecked: boolean, isRowExpanded: boolean, rowIndex: number) => {
+    const reorderProps = dndFunc.getReorderProps(rowIndex);
+
     return freezeRightColumns.flatMap((column, freezeRightIdx) => {
       const isRowHighlighted = rowKey === String(selectedRowKey);
       const isGroupColumn = column.key.startsWith('group-header-');
@@ -271,6 +298,7 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
                 width: child.width!,
                 height: rowHeight,
               }}
+              {...(child?.key === 'row-reorder' ? reorderProps : {})}
             />
           );
         });
@@ -295,12 +323,14 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
             width: column.width!,
             height: rowHeight,
           }}
+          {...(column?.key === 'row-reorder' ? reorderProps : {})}
         />,
       ];
     });
   };
 
   const renderVirtualizedColumns = (rowKey: string, rowData: TData, isRowChecked: boolean, isRowExpanded: boolean, rowIndex: number) => {
+    const reorderProps = dndFunc.getReorderProps(rowIndex);
     // Flatten all columns (including grouped children) to calculate proper first/last indices
     const allFlattenedColumns: { header: IAdjustedHeader; isGroupChild: boolean; groupIndex?: number }[] = [];
 
@@ -355,13 +385,14 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
               position={{ left, width: childWidth, height: rowHeight }}
               freezeLeftColumnsWidth={freezeLeftColumnsWidth}
               freezeRightColumnsWidth={freezeRightColumnsWidth}
+              {...(child?.key === 'row-reorder' ? reorderProps : {})}
             />
           );
         });
       }
 
       // Find the index of this column in the flattened columns array
-      const flattenedIndex = allFlattenedColumns.findIndex((item) => item.header.key === header?.key && !item.isGroupChild);
+      const flattenedIndex = allFlattenedColumns.findIndex((item) => item.header?.key === header?.key && !item.isGroupChild);
       const isFirstIndex = flattenedIndex === 0;
       const isLastIndex = flattenedIndex === allFlattenedColumns.length - 1;
 
@@ -386,12 +417,14 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
           }}
           freezeLeftColumnsWidth={freezeLeftColumnsWidth}
           freezeRightColumnsWidth={freezeRightColumnsWidth}
+          {...(header?.key === 'row-reorder' ? reorderProps : {})}
         />,
       ];
     });
   };
 
   const renderRegularColumns = (rowKey: string, rowData: TData, isRowChecked: boolean, isRowExpanded: boolean, rowIndex: number) => {
+    const reorderProps = dndFunc.getReorderProps(rowIndex);
     let accumulatedLeft = freezeLeftColumnsWidth;
 
     return columns.flatMap((column, columnIndex) => {
@@ -423,6 +456,7 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
               rowIndex={rowIndex}
               columnIndex={childIdx}
               position={{ left, width: childWidth, height: rowHeight }}
+              {...(child?.key === 'row-reorder' ? reorderProps : {})}
             />
           );
 
@@ -452,6 +486,7 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
           rowIndex={rowIndex}
           columnIndex={columnIndex}
           position={{ left, width: columnWidth, height: rowHeight }}
+          {...(column?.key === 'row-reorder' ? reorderProps : {})}
         />,
       ];
     });
@@ -475,8 +510,21 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
           const isRowExpanded = expandedRowKeys.has(resolvedRowKey);
           const isRowChecked = selectAll ? !deselectedRowKeys.has(resolvedRowKey) : selectedRowKeys.has(resolvedRowKey);
 
+          const isRowType = rowItem.type === 'row';
+          const isDraggable = !!onReorderRowsToParent && isRowType && !dndState.useToggleOnlyToReorder;
+
           return (
-            <div key={row.key} data-index={row.index} ref={rowVirtualizer?.measureElement} className="group/row">
+            <div
+              key={row.key}
+              data-index={row.index}
+              ref={rowVirtualizer?.measureElement}
+              className={clsx('group/row', isDraggable && 'cursor-grab active:cursor-grabbing')}
+              draggable={isDraggable}
+              onDragStart={(e) => isDraggable && dndFunc.handleDragStart(e, row.index)}
+              onDragOver={onReorderRowsToParent ? dndFunc.handleDragOver : undefined}
+              onDragEnd={isDraggable ? dndFunc.handleDragEnd : undefined}
+              onDrop={onReorderRowsToParent ? (e) => dndFunc.handleDrop(e, row.index) : undefined}
+            >
               <div style={{ minHeight: rowHeight, width: calcTotalTableWidth }}>
                 <div className="relative h-full w-full flex group/row-cells">
                   <div className={clsx('sticky left-0 z-20', useDynamicRowHeight && 'flex')} style={{ width: freezeLeftColumnsWidth }}>

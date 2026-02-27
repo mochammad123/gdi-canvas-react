@@ -16,6 +16,8 @@ export type TPickKnittoTable<TData> = Pick<
   | 'onClickRow'
   | 'onDoubleClickRow'
   | 'onRightClickRow'
+  | 'onReorderRows'
+  | 'reorderOnlyFromToggle'
   | 'useFooter'
   | 'isLoading'
 >;
@@ -31,6 +33,8 @@ function VirtualTable<TData>(props: TPickKnittoTable<TData>) {
     onClickRow,
     onDoubleClickRow,
     onRightClickRow,
+    onReorderRows,
+    reorderOnlyFromToggle,
     useFooter,
   } = props;
 
@@ -50,6 +54,8 @@ function VirtualTable<TData>(props: TPickKnittoTable<TData>) {
         onClickRowToParent={onClickRow}
         onDoubleClickRowToParent={onDoubleClickRow}
         onRightClickRowToParent={onRightClickRow}
+        onReorderRowsToParent={onReorderRows}
+        reorderOnlyFromToggle={reorderOnlyFromToggle}
       />
 
       {!isLoading && <EmptyDataIndicator containerHeight={containerHeight} />}

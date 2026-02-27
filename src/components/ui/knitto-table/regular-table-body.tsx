@@ -5,10 +5,12 @@ import clsx from 'clsx';
 import NativeTableCell from './components/native-table-cell';
 import RowCheckbox from './components/body/row-checkbox';
 import RowExpand from './components/body/row-expand';
+import RowReorder from './components/body/row-reorder';
 import type { IHeader, IKnittoTable, IAdjustedHeader } from './lib';
-import { useFlattenColumns } from './context/header-context';
+import { useFlattenColumns, useColumns, useFreezeLeftColumns, useFreezeRightColumns } from './context/header-context';
 import { useFilteredData } from './context/filter-context';
 import { useRowSpanCalculator } from './hooks/use-rowspan-calculator';
+import { useRowReorderDnd } from './hooks';
 
 // Utility functions for freeze position calculations
 const getFreezeLeftPosition = (columns: IAdjustedHeader[], currentIndex: number) => {
@@ -57,6 +59,8 @@ interface IRegularTableBody<TData> {
   onClickRowToParent?: IKnittoTable<TData>['onClickRow'];
   onDoubleClickRowToParent?: IKnittoTable<TData>['onDoubleClickRow'];
   onRightClickRowToParent?: IKnittoTable<TData>['onRightClickRow'];
+  onReorderRowsToParent?: IKnittoTable<TData>['onReorderRows'];
+  reorderOnlyFromToggle?: boolean;
 }
 
 function RegularTableBody<TData>({
@@ -65,6 +69,8 @@ function RegularTableBody<TData>({
   onClickRowToParent,
   onDoubleClickRowToParent,
   onRightClickRowToParent,
+  onReorderRowsToParent,
+  reorderOnlyFromToggle = false,
 }: IRegularTableBody<TData>) {
   const flattenColumnsData = useFlattenColumns();
   const filteredData = useFilteredData() as TData[];
@@ -85,10 +91,6 @@ function RegularTableBody<TData>({
 
   // NOTE: Ambil semua leaf columns dari flattened columns data (handle grouped headers)
   const flattenedColumns = useMemo(() => flattenColumnsData.map((item) => item.col), [flattenColumnsData]);
-
-  // NOTE: Hitung rowspan untuk kolom yang punya flag enableRowSpan
-  // Return Map dengan info cell mana yang harus di-render dan cell mana yang di-skip (merged)
-  const rowSpanMap = useRowSpanCalculator(filteredData, flattenedColumns);
 
   const getRowKey = useCallback(
     (item: TData, index: number): string => {
@@ -116,6 +118,33 @@ function RegularTableBody<TData>({
     },
     [rowKeysMap, filteredData, getRowKey]
   );
+
+  const freezeLeftColumns = useFreezeLeftColumns();
+  const freezeRightColumns = useFreezeRightColumns();
+  const columns = useColumns();
+
+  const flattenedData = useMemo(
+    () =>
+      filteredData.map((item) => ({
+        type: 'row' as const,
+        item,
+      })),
+    [filteredData]
+  );
+
+  const { func: dndFunc, state: dndState } = useRowReorderDnd({
+    freezeLeftColumns,
+    columns,
+    freezeRightColumns,
+    flattenedData,
+    rowHeight,
+    onReorderRowsToParent,
+    reorderOnlyFromToggle,
+  });
+
+  // NOTE: Hitung rowspan untuk kolom yang punya flag enableRowSpan
+  // Return Map dengan info cell mana yang harus di-render dan cell mana yang di-skip (merged)
+  const rowSpanMap = useRowSpanCalculator(filteredData, flattenedColumns);
 
   const handleClickRow = useCallback(
     (item: TData, rowIndex: number, columnIndex: number) => {
@@ -219,6 +248,7 @@ function RegularTableBody<TData>({
     const cellKey = `${String(column.key)}-${rowIndex}`;
     const isCheckboxColumn = column.key === 'row-selection';
     const isExpandColumn = column.key === 'expand';
+    const isReorderColumn = column.key === 'row-reorder';
     const isRowChecked = selectAll ? !deselectedRowKeys.has(key) : selectedRowKeys.has(key);
     const isRowExpanded = expandedRowKeys.has(key);
     const customClassNameCell = classNameCell ? classNameCell(item, rowIndex, columnIndex) : '';
@@ -255,6 +285,24 @@ function RegularTableBody<TData>({
           <RowCheckbox checked={isRowChecked} />
         </div>
       );
+    } else if (isReorderColumn && onReorderRowsToParent) {
+      const reorderProps = dndFunc.getReorderProps(rowIndex);
+      cellContent = (
+        <div className={classNameCellContent}>
+          {reorderProps.enableReorderFromColumnOnly && reorderProps.onReorderDragStart && reorderProps.onReorderDragEnd ? (
+            <div
+              draggable
+              onDragStart={reorderProps.onReorderDragStart}
+              onDragEnd={reorderProps.onReorderDragEnd}
+              className="flex justify-center items-center w-full h-full"
+            >
+              <RowReorder />
+            </div>
+          ) : (
+            <RowReorder />
+          )}
+        </div>
+      );
     } else if (isExpandColumn) {
       cellContent = (
         <div className={classNameCellContent} onClick={() => handleExpandToggle(item, rowIndex)}>
@@ -276,9 +324,9 @@ function RegularTableBody<TData>({
         columnWidth={column.width || 160}
         columnHeight={rowHeight}
         rowSpan={rowSpanData?.rowSpan || 1} // NOTE: Set rowSpan dari hasil kalkulasi (default: 1)
-        onClick={() => !isCheckboxColumn && !isExpandColumn && handleClickRow(item, rowIndex, columnIndex)}
-        onDoubleClick={() => !isCheckboxColumn && !isExpandColumn && handleDoubleClickRow(item, rowIndex, columnIndex)}
-        onContextMenu={(e) => !isCheckboxColumn && !isExpandColumn && handleRightClickRow(item, e)}
+        onClick={() => !isCheckboxColumn && !isExpandColumn && !isReorderColumn && handleClickRow(item, rowIndex, columnIndex)}
+        onDoubleClick={() => !isCheckboxColumn && !isExpandColumn && !isReorderColumn && handleDoubleClickRow(item, rowIndex, columnIndex)}
+        onContextMenu={(e) => !isCheckboxColumn && !isExpandColumn && !isReorderColumn && handleRightClickRow(item, e)}
         data-has-rowspan={hasRowSpan || undefined} // NOTE: Data attribute untuk tracking rowspan cells
         data-rowspan-start={rowSpanData?.spanStartRow}
         data-rowspan-end={rowSpanData?.spanEndRow}
@@ -303,7 +351,19 @@ function RegularTableBody<TData>({
 
         return (
           <Fragment key={'regular-table-row-' + key}>
-            <tr data-row-index={rowIndex} className="group/regular-table-row">
+            <tr
+              data-row-index={rowIndex}
+              data-index={rowIndex}
+              className={clsx(
+                'group/regular-table-row',
+                !!onReorderRowsToParent && !dndState.useToggleOnlyToReorder && 'cursor-grab active:cursor-grabbing'
+              )}
+              draggable={!!onReorderRowsToParent && !dndState.useToggleOnlyToReorder}
+              onDragStart={!dndState.useToggleOnlyToReorder && onReorderRowsToParent ? (e) => dndFunc.handleDragStart(e, rowIndex) : undefined}
+              onDragOver={onReorderRowsToParent ? dndFunc.handleDragOver : undefined}
+              onDragEnd={!dndState.useToggleOnlyToReorder && onReorderRowsToParent ? dndFunc.handleDragEnd : undefined}
+              onDrop={onReorderRowsToParent ? (e) => dndFunc.handleDrop(e, rowIndex) : undefined}
+            >
               {flattenedColumns.map((column, columnIndex) => renderCell(item, column as IHeader<TData>, rowIndex, columnIndex))}
             </tr>
 

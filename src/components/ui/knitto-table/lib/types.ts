@@ -377,6 +377,42 @@ export interface IKnittoTable<TData> {
   onRightClickRow?: (item: TData, position: { x: number; y: number }) => void;
 
   /**
+   * Callback when row order changes via drag-drop.
+   * When provided, rows become draggable for reordering.
+   * Indices refer to displayed (filtered) data.
+   *
+   * @example
+   * ```tsx
+   * onReorderRows={(fromIndex, toIndex) => {
+   *   setData((prev) => {
+   *     const next = [...prev];
+   *     [next[fromIndex], next[toIndex]] = [next[toIndex], next[fromIndex]];
+   *     return next;
+   *   });
+   * }}
+   * ```
+   */
+  onReorderRows?: (fromIndex: number, toIndex: number) => void;
+
+  /**
+   * When true, reorder can only be initiated from the row-reorder column (key: 'row-reorder').
+   * When false, the entire row is draggable (default behavior).
+   * Requires a column with key 'row-reorder' in headers.
+   *
+   * @default false
+   * @example
+   * ```tsx
+   * reorderOnlyFromToggle={true}
+   * headers={[
+   *   { key: 'row-reorder', caption: '', width: 40 },
+   *   { key: 'id', caption: 'ID', width: 80 },
+   *   ...
+   * ]}
+   * ```
+   */
+  reorderOnlyFromToggle?: boolean;
+
+  /**
    * Custom render function for expanded row content.
    * Replaces deprecated `renderExpandedRow`.
    *
@@ -506,10 +542,11 @@ export interface IHeader<TData> {
    * // Special keys
    * key: 'expand'
    * key: 'row-selection'
+   * key: 'row-reorder'
    * key: 'action'
    * ```
    */
-  key: keyof TData | 'expand' | 'action' | 'row-selection' | string;
+  key: keyof TData | 'expand' | 'action' | 'row-selection' | 'row-reorder' | string;
 
   /**
    * Display text for the column header.
@@ -706,6 +743,16 @@ export interface IHeader<TData> {
    * ```
    */
   enableRowSpan?: boolean;
+  /**
+   * Disable column resizing.
+   *
+   * @default false
+   * @example
+   * ```tsx
+   * disableResizeColumn={true}
+   * ```
+   */
+  disableResizeColumn?: boolean;
 }
 
 /**

@@ -16,9 +16,10 @@ interface IHeaderCaption {
   caption: string;
   headerKey: string;
   hideFilterSort: boolean;
+  hideHeaderAction: boolean;
 }
 
-function HeaderCaption({ isSingleHeader, isFilterVisible, caption, headerKey, hideFilterSort }: IHeaderCaption) {
+function HeaderCaption({ isSingleHeader, isFilterVisible, caption, headerKey, hideFilterSort, hideHeaderAction }: IHeaderCaption) {
   const sort = useSort();
 
   if (isSingleHeader) return caption;
@@ -43,7 +44,7 @@ function HeaderCaption({ isSingleHeader, isFilterVisible, caption, headerKey, hi
         )}
       </span>
 
-      <HeaderAction headerKey={headerKey} hideFilterSort={hideFilterSort} />
+      <HeaderAction headerKey={headerKey} hideFilterSort={hideFilterSort} hideHeaderAction={hideHeaderAction} />
     </div>
   );
 }

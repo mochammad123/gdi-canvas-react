@@ -8,7 +8,17 @@ import RegularTableFooter from './regular-table-footer';
 
 type TPickKnittoTable<TData> = Pick<
   IKnittoTable<TData>,
-  'rowKey' | 'headerHeight' | 'rowHeight' | 'onClickRow' | 'onDoubleClickRow' | 'onRightClickRow' | 'useFooter' | 'footerHeight' | 'isLoading'
+  | 'rowKey'
+  | 'headerHeight'
+  | 'rowHeight'
+  | 'onClickRow'
+  | 'onDoubleClickRow'
+  | 'onRightClickRow'
+  | 'onReorderRows'
+  | 'reorderOnlyFromToggle'
+  | 'useFooter'
+  | 'footerHeight'
+  | 'isLoading'
 >;
 
 export interface IRegularTableProps<TData> extends TPickKnittoTable<TData> {
@@ -26,6 +36,8 @@ function RegularTable<TData>(props: IRegularTableProps<TData>) {
     onClickRow,
     onDoubleClickRow,
     onRightClickRow,
+    onReorderRows,
+    reorderOnlyFromToggle,
     useFooter,
   } = props;
 
@@ -41,6 +53,8 @@ function RegularTable<TData>(props: IRegularTableProps<TData>) {
           onClickRowToParent={onClickRow}
           onDoubleClickRowToParent={onDoubleClickRow}
           onRightClickRowToParent={onRightClickRow}
+          onReorderRowsToParent={onReorderRows}
+          reorderOnlyFromToggle={reorderOnlyFromToggle}
         />
         {useFooter && <RegularTableFooter footerHeight={footerHeight} />}
       </table>

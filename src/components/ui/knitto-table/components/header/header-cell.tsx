@@ -51,6 +51,8 @@ function HeaderCell(props: IHeaderCell) {
   const isShowNormalCell = !isCheckboxHeader && !isExpandHeader && !isActionHeader && !isGroupHeader;
   const renderHeader = headData?.renderHeader;
   const hideFilter = headData?.hideFilter;
+  const hideHeaderAction = headData?.hideHeaderAction;
+  const disableResizeColumn = headData?.disableResizeColumn;
 
   const handleResizeColumn = useCallback(
     (e: React.MouseEvent, index: number, freezeType?: 'left' | 'right') => {
@@ -149,6 +151,7 @@ function HeaderCell(props: IHeaderCell) {
             headerKey={headData?.key}
             caption={headData?.caption}
             hideFilterSort={hideFilter?.sort || false}
+            hideHeaderAction={hideHeaderAction || false}
           />
 
           {isFilterVisible && (
@@ -160,7 +163,7 @@ function HeaderCell(props: IHeaderCell) {
             />
           )}
 
-          <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, headVirtualIndex, freezeType)} />
+          {!disableResizeColumn && <ResizeIndicator handleMouseDown={(e) => handleResizeColumn(e, headVirtualIndex, freezeType)} />}
         </>
       )}
 
