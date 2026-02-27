@@ -34,7 +34,7 @@ const examplePageSections: PageSection[] = [
   {
     title: 'Template',
     links: [
-      { label: 'Login Template', path: '/' },
+      { label: 'Login Template', path: '/login' },
       { label: 'Login Cabang Template', path: '/login-cabang' },
       { label: 'Login Chatbot Template', path: '/login-chatbot' },
       { label: 'Master & Detail Template', path: '/example/master-and-detail' },

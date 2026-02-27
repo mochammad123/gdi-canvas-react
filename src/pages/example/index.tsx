@@ -54,7 +54,7 @@ export default function AdminRoutes() {
       {
         module: 'Template',
         menu: [
-          { label: 'Login', customUrl: '/', element: null },
+          { label: 'Login', customUrl: '/login', element: null },
           { label: 'Login Cabang', customUrl: '/login-cabang', element: null },
           { label: 'Login Chatbot', customUrl: '/login-chatbot', element: null },
           {
