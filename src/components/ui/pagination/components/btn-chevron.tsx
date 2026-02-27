@@ -6,11 +6,13 @@ export default function BtnChevron({
   onClick,
   rotate,
   disabled,
+  ...props
 }: {
   onClick: () => void;
   disabled?: boolean;
   rotate: 'left' | 'right' | 'top' | 'bottom';
-}) {
+} & React.ComponentPropsWithoutRef<'button'>) {
+  const { color: _omitColor, ...buttonProps } = props;
   return (
     <Button
       variant="text"
@@ -19,6 +21,7 @@ export default function BtnChevron({
       })}
       onClick={onClick}
       disabled={disabled}
+      {...buttonProps}
     >
       <ChevronIcon rotate={rotate} color="#9A9A9A" />
     </Button>

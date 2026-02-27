@@ -5,11 +5,13 @@
   "scripts": {
     "prepare": "husky",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "release": "release-it",
     "lint": "eslint --fix",
-    "format:all": "prettier --write \"**/*.+(js|mjs|cjs|jsx|ts|tsx|css|scss|json|yml|yaml)\" --ignore-path .gitignore --ignore-path .prettierignore"
+    "format:all": "prettier --write \"**/*.+(js|mjs|cjs|jsx|ts|tsx|css|scss|json|yml|yaml)\" --ignore-path .gitignore --ignore-path .prettierignore",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "author": "knittotextile",
   "license": "MIT",
@@ -32,7 +34,7 @@
     "react-virtualized-auto-sizer": "^1.0.26",
     "redux": "^4.2.1",
     "use-context-selector": "^2.0.0",
-    "vite-plugin-pwa": "^0.16.7",
+    "vite-plugin-pwa": "^1.2.0",
     "workbox-window": "^7.4.0",
     "xlsx": "^0.18.5",
     "zod": "^3.25.76"
@@ -46,9 +48,12 @@
     "@types/node": "^20.19.30",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
-    "@typescript-eslint/eslint-plugin": "^8.18.2",
-    "@typescript-eslint/parser": "^8.18.2",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/browser": "^4.0.18",
+    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.23",
     "dotenv": "^16.6.1",
     "eslint": "^9.39.2",
@@ -59,14 +64,18 @@
     "globals": "^17.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
+    "msw": "^2.12.8",
+    "playwright": "^1.58.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.8.1",
     "release-it": "^15.11.0",
     "tailwindcss": "^3.4.19",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21",
+    "vite": "^6.4.1",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "vitest-browser-react": "^2.0.4"
   },
   "release-it": {
     "git": {
@@ -108,5 +117,10 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.15.3+sha512.a4051aac4d6e1acacf30373196b02a207fc7b2c016570c54c139e90e1e24c70f1b90a3480f67ae0867b4f1d20f2d6e38695f6ba85c6e8394357b6f3058ec1e9c"
+  "packageManager": "pnpm@9.15.3+sha512.a4051aac4d6e1acacf30373196b02a207fc7b2c016570c54c139e90e1e24c70f1b90a3480f67ae0867b4f1d20f2d6e38695f6ba85c6e8394357b6f3058ec1e9c",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

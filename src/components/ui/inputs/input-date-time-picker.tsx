@@ -3,13 +3,16 @@ import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { Value, View } from 'react-calendar/dist/cjs/shared/types';
 import CalendarIcon from '../icon/calendar';
 import InputWithSuffix from './input-with-suffix';
 import { ICustomCalendarProps, IInputProps, Time } from './types';
 import { Card } from '../card';
 import { Button } from '../button';
 import CloseIcon from '../icon/close';
+import 'react-calendar/dist/Calendar.css';
+
+type Value = Parameters<NonNullable<CalendarProps['onChange']>>[0];
+type View = NonNullable<CalendarProps['defaultView']>;
 
 const timeData = {
   hour: Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')),
@@ -201,7 +204,9 @@ const InputDateTimePicker = React.forwardRef<
       />
       {isVisible && (
         <Card
-          className={`flex flex-col absolute z-[999] card-date-time transition-all duration-300 ease-in-out animate-fadeIn ${isAnimating ? (show ? 'animate-dropdownIn' : 'animate-dropdownOut') : ''}`}
+          className={`flex flex-col absolute z-[999] card-date-time transition-all duration-300 ease-in-out animate-fadeIn ${
+            isAnimating ? (show ? 'animate-dropdownIn' : 'animate-dropdownOut') : ''
+          }`}
         >
           <div className="flex rounded-b-none">
             <div className="mx-3 bg-white">
@@ -243,7 +248,9 @@ const InputDateTimePicker = React.forwardRef<
                           <li
                             key={value}
                             data-value={value}
-                            className={`rounded-md py-[.2rem] text-[.84rem] cursor-pointer ${selectedTime[unit as keyof Time] === value ? 'bg-navy-100 text-white hover:navy-100' : 'hover:bg-gray-200'}`}
+                            className={`rounded-md py-[.2rem] text-[.84rem] cursor-pointer ${
+                              selectedTime[unit as keyof Time] === value ? 'bg-navy-100 text-white hover:navy-100' : 'hover:bg-gray-200'
+                            }`}
                             onClick={() => handleTimeChange(unit as keyof Time, value)}
                           >
                             {value}

@@ -27,3 +27,6 @@ build/index.html
 
 dev-dist
 .env
+**/__screenshots__/
+
+coverage/*

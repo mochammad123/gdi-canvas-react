@@ -52,6 +52,7 @@ export default function Toast({ toastType, message, duration, onClose, transitio
 
   return (
     <div
+      data-testid={`toast-${toastType}`}
       className={clsx(
         'rounded-md p-3 transition-all duration-500 transform',
         {

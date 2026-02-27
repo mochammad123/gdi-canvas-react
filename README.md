@@ -40,6 +40,7 @@
 |  |  ├─ slice                     # Kumpulan slice untuk redux
 |  |  └─ store.ts                  # Definisi redux
 |  ├─ styles                       # Kumpulan style dan font yang di custome (folder)
+|  ├─ test                         # Kumpulan file test (folder)
 |  └─ types                        # Kumpulan types atau interface (folder)
 |
 └─ plugins                         # Kumpulan plugins atau style yang khusus untuk design system knitto
@@ -62,6 +63,7 @@
 - [Tailwind](https://tailwindcss.com/)
 
 **Versi minimum:**
+
 - Node.js: >= 20
 - pnpm: >= 9.15
 
@@ -70,7 +72,6 @@
 Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/knittotextile/knitto-desgin-system/pkgs/npm/react-ui) secara private, gunakan panduan berikut untuk cara install library [**`Working with the npm registry`**](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
 
 # Dokumentasi Penggunaan
-
 
 - [Knitto Table](https://github.com/knittotextile/knitto-react-template/blob/feat/virtual-table-base-tanstack/src/components/ui/knitto-table/README.md)
 - [Big Calendar](https://github.com/knittotextile/knitto-react-template/blob/feat/big-calendar/src/components/ui/big-calendar/README.md)
@@ -106,6 +107,7 @@ exec "$@"
 4. Nama file JS env yang dihasilkan adalah `generated-env.js` (sudah fixed), sehingga konsisten antara plugin build dan script deployment.
 
 **Catatan:**
+
 - File env JS akan digenerate secara otomatis saat proses build menggunakan plugin custom (lihat `generate-env-plugin.ts`).
 - Pastikan penamaan dan lokasi file sesuai dengan yang diharapkan aplikasi (lihat juga konfigurasi plugin dan Dockerfile).
 
@@ -123,4 +125,3 @@ pnpm dev
 Secara default, environment variable akan di-load dari file `.env` atau `.env.local` pada root project. Tidak perlu menggunakan `entrypoint.sh` pada mode development, cukup pastikan file env sudah terisi sesuai kebutuhan.
 
 Jika ingin menambah/mengubah variable, edit file `.env` lalu restart dev server.
-

@@ -1,11 +1,12 @@
-import { formatRupiah } from '@/lib/utils/utils';
+import { formatRupiah } from '../../../lib/utils/utils';
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from '../button';
 import InputWithSuffix from '../inputs/input-with-suffix';
 import { IInputWithSufixProps } from '../inputs/types';
 import { Typography } from '../typhography';
 import BtnChevron from './components/btn-chevron';
+import usePaginationRange from './hooks';
 
 const positionList = {
   left: 'justify-start',
@@ -31,25 +32,19 @@ export default function Pagination({
   totalData: number;
   position?: 'left' | 'center' | 'right';
 }) {
+  const {
+    state: { page: currentPage, perPage: currentPerPage },
+    setters: { setPage, setPerPage },
+    getters: { getFrom, getTo },
+  } = usePaginationRange({ page: page || 1, perPage: perPage || 10, totalData: totalData || 0 });
+
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState(page);
-  const [currentPerPage, setCurrentPerPage] = useState(perPage);
-  const onUpdatePerPage = (value: number | null) => setCurrentPerPage(value);
 
-  const getFrom = () => {
-    if (page === 1) return 1;
-    return (page || 1) * (perPage || 1) - (perPage || 1);
-  };
-
-  const getTo = () => {
-    const value = (perPage || 1) * (page || 1);
-    if (value > totalData) return totalData;
-    return value;
-  };
+  const onUpdatePerPage = (value: number | null) => setPerPage(value);
 
   useEffect(() => {
     if (!page) return;
-    setCurrentPage(page);
+    setPage(page);
   }, [page]);
 
   const totalPage = Math.ceil(totalData / (perPage || 1));
@@ -59,25 +54,26 @@ export default function Pagination({
   return (
     <div className={clsx('flex gap-x-[10px] items-center w-full', positionList[position])} ref={wrapperRef}>
       <div className="flex items-center gap-x-[10px]">
-        <BtnChevron disabled={disabledBtnPrev} rotate="left" onClick={() => onPrev && onPrev(-1)} />
+        <BtnChevron disabled={disabledBtnPrev} rotate="left" onClick={() => onPrev && onPrev(-1)} aria-label="Previous" />
         <Typography as="global-paragraph">Halaman</Typography>
       </div>
 
       <InputNumberRange
+        disabledRange
         value={currentPage || ''}
         onArrowUp={(value) => {
           if (value >= totalPage) {
-            setCurrentPage(totalPage);
+            setPage(totalPage);
             return;
           }
-          setCurrentPage(value);
+          setPage(value);
         }}
         onArrowDown={(value) => {
           if (value <= 0) {
-            setCurrentPage(1);
+            setPage(1);
             return;
           }
-          setCurrentPage(value);
+          setPage(value);
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -90,13 +86,14 @@ export default function Pagination({
           if (value > totalPage) {
             value = totalPage;
           }
-          setCurrentPage(value || null);
+          setPage(value || null);
         }}
+        aria-label="Page"
       />
 
       <Typography as="global-paragraph">dari</Typography>
       <Typography as="global-paragraph">{formatRupiah(totalPage, true)}</Typography>
-      <BtnChevron rotate="right" onClick={() => onNext && onNext(1)} disabled={disabledBtnNext} />
+      <BtnChevron rotate="right" onClick={() => onNext && onNext(1)} disabled={disabledBtnNext} aria-label="Next" />
 
       <Separator />
 
@@ -112,8 +109,9 @@ export default function Pagination({
           if (value >= totalData) {
             value = totalData;
           }
-          setCurrentPerPage(value || null);
+          setPerPage(value || null);
         }}
+        aria-label="Per Page"
       />
 
       <Button className="h-[32px] !px-[16px] !py-[5.5px] w-[98px] shrink-0 flex justify-center" onClick={() => onApplyPerPage(currentPerPage || 1)}>
@@ -133,7 +131,7 @@ function Separator() {
 
 function DataFromTo({ from, to, total }: { from: number; to: number; total: number }) {
   return (
-    <div className="flex items-center gap-x-1 min-w-[200px]">
+    <div className="flex items-center gap-x-1 min-w-[200px]" aria-label="Range tampilan data">
       <Typography as="global-paragraph" className="text-center">
         {formatRupiah(from, true)}
       </Typography>

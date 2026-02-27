@@ -22,6 +22,8 @@ const Sidebar = ({ sidebarMenu, hideSearch, className, ...props }: ISidebar) => 
   return (
     <SidebarProvier value={{ activeMenu, setActiveMenu }}>
       <div
+        data-testid="sidebar"
+        data-open={sidebarIsOpen}
         className={clsx(
           'w-[15.625rem] pt-[.625rem] bg-white shadow-md overflow-auto scrollbar',
           'fixed top-[3.25rem] bottom-0 z-[999] transition-all duration-300',

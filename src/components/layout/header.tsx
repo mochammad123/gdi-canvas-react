@@ -58,7 +58,7 @@ function TitleHeader({ menuName }: { menuName: string }) {
   const dispatch = useDispatch();
   return (
     <div className="flex items-center gap-x-6">
-      <div className="w-6 h-6 flex justify-center cursor-pointer items-center" onClick={() => dispatch(toggleSidebar())}>
+      <div className="w-6 h-6 flex justify-center cursor-pointer items-center" onClick={() => dispatch(toggleSidebar())} data-testid="toggle-sidebar">
         <HamburgerIcon />
       </div>
       <div className="flex gap-x-2 items-center">

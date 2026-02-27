@@ -76,7 +76,7 @@ const Button = ({
         </div>
       )}
       {badge && badge > 0 ? (
-        <div
+        <span
           className={clsx(
             'size-5 rounded-full absolute -right-2.5 -top-2.5 border border-white bg-burnt-orange-100',
             'global-report-title flex justify-center',
@@ -84,9 +84,10 @@ const Button = ({
               'bg-steel-blue-100': color === 'burnt-orange',
             }
           )}
+          aria-label={`button-span-badge`}
         >
           {badge > 9 ? '+9' : badge}
-        </div>
+        </span>
       ) : null}
     </button>
   );

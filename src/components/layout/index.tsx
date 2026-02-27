@@ -28,7 +28,7 @@ function Backdrop() {
   const dispatch = useDispatch();
   return (
     <Portal>
-      <div className="fixed z-[99] inset-0 bg-black/35" onClick={() => dispatch(toggleSidebar())}></div>
+      <div className="fixed z-[99] inset-0 bg-black/35" onClick={() => dispatch(toggleSidebar())} data-testid="backdrop"></div>
     </Portal>
   );
 }

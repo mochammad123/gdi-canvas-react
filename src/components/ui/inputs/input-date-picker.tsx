@@ -4,11 +4,14 @@ import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { Value, View } from 'react-calendar/dist/cjs/shared/types';
 import CalendarIcon from '../icon/calendar';
 import CloseIcon from '../icon/close';
 import InputWithSuffix from './input-with-suffix';
 import { ICustomCalendarProps, IInputProps } from './types';
+import 'react-calendar/dist/Calendar.css';
+
+type Value = Parameters<NonNullable<CalendarProps['onChange']>>[0];
+type View = NonNullable<CalendarProps['defaultView']>;
 
 const InputDatePicker = React.forwardRef<
   HTMLInputElement,
