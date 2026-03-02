@@ -7,12 +7,11 @@ import './styles/main.css';
 import ToastProvider from './components/ui/toast';
 import { env } from './lib/variables/env';
 
-const useMockApi = import.meta.env.DEV && env.VITE_USE_MOCK_API === 'true';
+const useMockApi = env.VITE_ENVIRONTMENT === 'DEVELOPMENT' && env.VITE_USE_MOCK_API === 'true';
 
 if (useMockApi) {
-  const { server } = await import('@/test/mocks/browser');
-  await server.start({
-    onUnhandledRequest: 'error',
+  import('@/test/mocks/browser').then(({ server }) => {
+    server.start({ onUnhandledRequest: 'error' });
   });
 }
 
