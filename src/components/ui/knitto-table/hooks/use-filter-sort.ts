@@ -52,7 +52,7 @@ export default function useFilterSort<TDataSource>(props: ISortTable<TDataSource
         const newSortBy = prevKey === key ? (sortBy === 'asc' ? 'desc' : sortBy === 'desc' ? 'unset' : 'asc') : 'asc';
 
         setSortBy(newSortBy);
-        onChangeSort?.(key, newSortBy);
+        if (useServerSort) onChangeSort?.(key, newSortBy);
 
         return newSortBy === 'unset' ? null : key;
       });
@@ -64,7 +64,7 @@ export default function useFilterSort<TDataSource>(props: ISortTable<TDataSource
     (key: string, sortBy: TSortOrder) => {
       setSortKey(sortBy === 'unset' ? null : key);
       setSortBy(sortBy);
-      onChangeSort?.(key, sortBy);
+      if (useServerSort) onChangeSort?.(key, sortBy);
     },
     [onChangeSort]
   );

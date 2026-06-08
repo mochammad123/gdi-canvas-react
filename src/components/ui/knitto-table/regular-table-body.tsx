@@ -306,7 +306,7 @@ function RegularTableBody<TData>({
     } else if (isExpandColumn) {
       cellContent = (
         <div className={classNameCellContent} onClick={() => handleExpandToggle(item, rowIndex)}>
-          {column.renderExpandToggle?.(item, isRowExpanded) || <RowExpand isExpanded={isRowExpanded} />}
+          {column.renderExpandToggle?.(item, isRowExpanded) || <RowExpand rowIndex={rowIndex} columnIndex={columnIndex} isExpanded={isRowExpanded} />}
         </div>
       );
     } else if (column.renderCell) {
@@ -354,6 +354,7 @@ function RegularTableBody<TData>({
             <tr
               data-row-index={rowIndex}
               data-index={rowIndex}
+              data-testid={`kn-table-regular-row-${rowIndex}`}
               className={clsx(
                 'group/regular-table-row',
                 !!onReorderRowsToParent && !dndState.useToggleOnlyToReorder && 'cursor-grab active:cursor-grabbing'

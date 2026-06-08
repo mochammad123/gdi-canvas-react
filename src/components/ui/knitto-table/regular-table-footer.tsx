@@ -81,7 +81,7 @@ function RegularTableFooter<TData>({ footerHeight }: IRegularTableFooter) {
   };
 
   return (
-    <tfoot className="sticky-footer">
+    <tfoot data-testid="kn-regular-table-footer" className="sticky-footer">
       <tr className="group/regular-table-footer">{flattenColumns.map((column, columnIndex) => renderFooterCell(column.col, columnIndex))}</tr>
     </tfoot>
   );

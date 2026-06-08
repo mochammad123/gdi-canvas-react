@@ -37,6 +37,7 @@ function HeaderCaption({ isSingleHeader, isFilterVisible, caption, headerKey, hi
         {!hideFilterSort && (
           <Icons
             name="sort"
+            data-testid={`kn-table-header-sort-action-${headerKey}-${headerKey === sort.sortKey ? sort.sortBy : 'unset'}`}
             className="cursor-pointer"
             sort={headerKey === sort.sortKey ? sort.sortBy : 'unset'}
             onClick={() => sort.onChangeSort(headerKey.toString())}

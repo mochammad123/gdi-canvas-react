@@ -9,7 +9,6 @@ export { default as useFilterSearch } from './use-filter-search';
 export { default as useFilterSort } from './use-filter-sort';
 
 // Data processing hooks
-export { default as useFlattenedData } from './use-flattened-data';
 export { default as useRowSpanCalculator } from './use-rowspan-calculator';
 
 // Utility hooks

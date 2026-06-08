@@ -130,9 +130,15 @@ function FilterSelection(props: IFilterSelection) {
   return (
     <div className="relative">
       <div className="relative">
-        {selectedOptions.length > 0 && <div className="absolute top-0 -right-1 size-2 rounded-full bg-blue-950 z-10" />}
+        {selectedOptions.length > 0 && (
+          <div
+            data-testid={`kn-table-header-filter-selection-action-indicator-${headerKey}`}
+            className="absolute top-0 -right-1 size-2 rounded-full bg-blue-950 z-10"
+          />
+        )}
         <Icons
           name="filterMultiple"
+          data-testid={`kn-table-header-filter-selection-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-3.5 text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer',
             filterCard.show ? '!text-gray-900 dark:!text-gray-200' : 'text-gray-500 dark:text-gray-700'
@@ -160,7 +166,7 @@ function FilterSelection(props: IFilterSelection) {
               onCheckboxChange={onCheckboxChange}
             />
 
-            <FilterAction onApply={handleApplyFilter} onReset={handleResetFilter} />
+            <FilterAction headerKey={headerKey} onApply={handleApplyFilter} onReset={handleResetFilter} />
           </FilterCard>,
           document.body
         )}
@@ -184,6 +190,7 @@ const SelectionList = (props: ISelectionList) => {
 
             return (
               <div
+                data-testid={`kn-table-header-filter-selection-option-${headerKey}-${optionLabel}`}
                 key={virtualRow.key}
                 style={{
                   position: 'absolute',
@@ -195,6 +202,7 @@ const SelectionList = (props: ISelectionList) => {
                 }}
               >
                 <Checkbox
+                  data-testid={`kn-table-header-filter-selection-option-checkbox-${headerKey}-${optionLabel}`}
                   id={`filter-selection-checkbox-${headerKey}-${virtualRow.index}`}
                   label={optionLabel}
                   checked={isCheked(optionLabel)}

@@ -45,7 +45,7 @@ function RegularTable<TData>(props: IRegularTableProps<TData>) {
 
   return (
     <>
-      <table className="w-max" style={{ tableLayout: 'fixed' }}>
+      <table className="w-max" style={{ tableLayout: 'fixed' }} data-testid="kn-table-regular">
         <RegularTableHeader headerHeight={headerHeight} />
         <RegularTableBody
           rowKey={rowKey}

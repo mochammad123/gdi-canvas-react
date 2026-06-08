@@ -48,6 +48,11 @@ function FilterAdvance(props: IFilterAdvance) {
   const [filterValue, setFilterValue] = useState<IFilterValue>(initialFilterValue || DEFAULT_FILTER_VALUE);
 
   useEffect(() => {
+    if (!initialFilterValue) return;
+    setFilterValue(initialFilterValue);
+  }, [initialFilterValue]);
+
+  useEffect(() => {
     if (isResetFilter) setFilterValue(DEFAULT_FILTER_VALUE);
   }, [isResetFilter]);
 
@@ -112,10 +117,14 @@ function FilterAdvance(props: IFilterAdvance) {
     <div className="relative">
       <div className="relative">
         {filterValue.config_name !== 'None' && filterValue.value.length > 0 && (
-          <div className="absolute top-0 -right-1 size-2 rounded-full bg-blue-950 z-10" />
+          <div
+            data-testid={`kn-table-header-filter-advance-action-indicator-${headerKey}`}
+            className="absolute top-0 -right-1 size-2 rounded-full bg-blue-950 z-10"
+          />
         )}
         <Icons
           name="filterAdvance"
+          data-testid={`kn-table-header-filter-advance-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer',
             filterCard.show ? '!text-gray-600 dark:!text-gray-200' : 'text-gray-400 dark:text-gray-700'
@@ -129,11 +138,12 @@ function FilterAdvance(props: IFilterAdvance) {
           <FilterCard ref={filterRef} className="fixed" style={{ top: filterCard.position.top, left: filterCard.position.left }}>
             <div className="p-1.5 w-full flex flex-col items-start space-y-1">
               <span className="text-xs text-gray-800 dark:text-gray-200">Filter dengan</span>
-              <Dropdown options={CONFIG_OPTIONS} value={filterValue.config_name} onSelect={handleConfigChange} />
+              <Dropdown headerKey={headerKey} options={CONFIG_OPTIONS} value={filterValue.config_name} onSelect={handleConfigChange} />
 
               {filterValue.config_name !== 'None' && (
                 <InputSearch
                   id={`filter-advance-value-${headerKey}`}
+                  data-testid={`kn-table-header-filter-advance-input-value-${headerKey}`}
                   disabled={filterValue.config_name === 'None'}
                   value={filterValue.value}
                   onChange={(e) => setFilterValue((prev) => ({ ...prev, value: e.target.value }))}
@@ -141,7 +151,7 @@ function FilterAdvance(props: IFilterAdvance) {
               )}
             </div>
 
-            <FilterAction onApply={handleApplyFilter} onReset={handleResetFilter} />
+            <FilterAction headerKey={headerKey} onApply={handleApplyFilter} onReset={handleResetFilter} />
           </FilterCard>,
           document.body
         )}

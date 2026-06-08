@@ -78,7 +78,7 @@ export default function useFilterSelection<TDataSource>(props: IFilterTable<TDat
           newFilters[dataKey as keyof TDataSource] = filterValues;
         }
 
-        onChangeFilter?.(newFilters);
+        if (useServerFilter) onChangeFilter?.(newFilters);
         if (useSessionFilter) setToSessionStorage(newFilters);
 
         return newFilters;
@@ -94,7 +94,7 @@ export default function useFilterSelection<TDataSource>(props: IFilterTable<TDat
       setActiveFilters((prev) => {
         const newFilters = { ...prev };
         delete newFilters[dataKey as keyof TDataSource];
-        onChangeFilter?.(newFilters);
+        if (useServerFilter) onChangeFilter?.(newFilters);
         if (useSessionFilter) setToSessionStorage(newFilters);
         return newFilters;
       });

@@ -141,26 +141,26 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
   }, [column?.noStretch, position.height, position.left, position.width, useDynamicRowHeight]);
 
   const cellContent = useMemo(() => {
-    if (isCheckboxColumn) return <RowCheckbox checked={isRowChecked} />;
+    if (isCheckboxColumn) return <RowCheckbox checked={isRowChecked} rowIndex={rowIndex} columnIndex={columnIndex} />;
 
     if (isReorderColumn && onReorderRowsToParent) {
       if (enableReorderFromColumnOnly && onReorderDragStart && onReorderDragEnd) {
         return (
           <div draggable onDragStart={onReorderDragStart} onDragEnd={onReorderDragEnd} className="flex justify-center items-center w-full h-full">
-            <RowReorder />
+            <RowReorder data-testid={`kn-table-body-row-reorder-${rowIndex}-${columnIndex}`} />
           </div>
         );
       }
-      return <RowReorder />;
+      return <RowReorder data-testid={`kn-table-body-row-reorder-${rowIndex}-${columnIndex}`} />;
     }
 
     if (isExpandColumn) {
       if (!cellExpandToggle) {
-        return <RowExpand isExpanded={isRowExpanded} />;
+        return <RowExpand isExpanded={isRowExpanded} rowIndex={rowIndex} columnIndex={columnIndex} />;
       }
       const customExpand = cellExpandToggle(rowData, isRowExpanded);
       if (typeof customExpand === 'undefined' || customExpand === null) {
-        return <RowExpand isExpanded={isRowExpanded} />;
+        return <RowExpand isExpanded={isRowExpanded} rowIndex={rowIndex} columnIndex={columnIndex} />;
       }
       return customExpand;
     }
@@ -171,6 +171,7 @@ function BodyCell<TData>(bodyCellProps: IBodyCell<TData>) {
   return (
     <TableCell
       key={'table-cell-' + String(column?.key)}
+      data-testid={`kn-table-body-cell-${rowIndex}-${columnIndex}`}
       data-row-key={rowKey}
       data-row-index={rowIndex}
       data-cell-index={columnIndex}

@@ -74,7 +74,10 @@ function ServerFilter({ id }: { id: string }) {
             sort: (key, order) => refetch({ sort: { key, order } }),
             search: (search) => refetch({ search }),
             selection: (selection) => refetch({ selection }),
-            advance: (advance) => refetch({ advance }),
+            advance: (advance) => {
+              console.log('advance', advance);
+              refetch({ advance });
+            },
           }}
         />
       </div>

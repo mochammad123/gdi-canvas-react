@@ -517,6 +517,7 @@ const VirtualTableBody = forwardRef(<TData,>(props: IVirtualTableBody<TData>, re
             <div
               key={row.key}
               data-index={row.index}
+              data-testid={`kn-table-virtual-row-${row.index}`}
               ref={rowVirtualizer?.measureElement}
               className={clsx('group/row', isDraggable && 'cursor-grab active:cursor-grabbing')}
               draggable={isDraggable}

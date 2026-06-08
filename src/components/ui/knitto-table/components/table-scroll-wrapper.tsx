@@ -24,6 +24,7 @@ const TableScrollWrapper = ({
   return (
     <div
       ref={handleScrollElementRef}
+      data-testid="kn-table-scroll-wrapper"
       data-table-container
       className={clsx('w-full h-full overflow-auto relative border border-[#8E8F93]', isLoading && 'pointer-events-none', classNameOuterTable)}
       style={{

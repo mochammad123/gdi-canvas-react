@@ -63,6 +63,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
     return (
       <InputSearch
         className="bg-white !h-6"
+        data-testid={`kn-table-header-filter-search-input-${headerKey}`}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onClickEnter={() => onSearchChange(search)}
@@ -77,6 +78,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
         <Icons
           name="search"
           onClick={handleOpenCard}
+          data-testid={`kn-table-header-filter-search-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-3.5 text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer',
             showCard.show ? '!text-gray-900 dark:!text-gray-200' : 'text-gray-500 dark:text-gray-700'
@@ -90,6 +92,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
             <div className="p-1">
               <InputSearch
                 id={'filter-search-' + headerKey}
+                data-testid={`kn-table-filter-search-input-${headerKey}`}
                 className="!w-full bg-white"
                 onKeyDown={handleEnterSearch}
                 onRemoveSearch={handleResetSearch}
@@ -97,7 +100,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <FilterAction onReset={handleResetSearch} onApply={handleApplySearch} />
+            <FilterAction headerKey={headerKey} onReset={handleResetSearch} onApply={handleApplySearch} />
           </FilterCard>,
           document.body
         )}

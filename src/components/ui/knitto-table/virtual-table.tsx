@@ -42,7 +42,7 @@ function VirtualTable<TData>(props: TPickKnittoTable<TData>) {
 
   return (
     <>
-      <VirtualTableHeader />
+      <VirtualTableHeader data-testid="kn-table-virtual" />
       {useFooter && <VirtualTableFooter footerHeight={footerHeight} />}
 
       <VirtualTableBody

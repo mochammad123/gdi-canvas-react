@@ -160,7 +160,7 @@ const VirtualTableFooter = ({ footerHeight }: IVirtualTableFooter) => {
   };
 
   return (
-    <div className="sticky z-30" style={{ height: footerHeight, top: containerHeight - footerHeight }}>
+    <div data-testid="kn-virtual-table-footer" className="sticky z-30" style={{ height: footerHeight, top: containerHeight - footerHeight }}>
       <div className="relative flex" style={{ width: calcTotalTableWidth }}>
         <div className="sticky left-0 z-40" style={{ width: freezeLeftColumnsWidth }}>
           {renderFreezeLeftFooters()}

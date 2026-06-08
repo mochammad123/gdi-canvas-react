@@ -14,6 +14,7 @@ function EmptyDataIndicator({ containerHeight, forRegularTable = false }: IEmpty
 
   return (
     <div
+      data-testid="kn-table-empty-data"
       className="sticky left-0 flex justify-center items-center"
       style={{
         height: containerHeight - calcHeaderTotalHeight,

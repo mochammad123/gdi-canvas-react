@@ -79,7 +79,7 @@ export default function useFilterSearch<TDataSource>(props: ISearchTable<TDataSo
           newSearch[dataKey as keyof TDataSource] = searchValue;
         }
 
-        onChangeSearch?.(newSearch);
+        if (useServerSearch) onChangeSearch?.(newSearch);
         if (useSessionFilter) setToSessionStorage(newSearch);
 
         return newSearch;
@@ -103,7 +103,7 @@ export default function useFilterSearch<TDataSource>(props: ISearchTable<TDataSo
       const newActiveSearch = removeKeyImmutable(activeSearch, dataKey as keyof TDataSource);
 
       seActiveSearch(newActiveSearch as Record<keyof TDataSource, string>);
-      onChangeSearch?.(newActiveSearch as Record<keyof TDataSource, string>);
+      if (useServerSearch) onChangeSearch?.(newActiveSearch as Record<keyof TDataSource, string>);
       if (useSessionFilter) setToSessionStorage(newActiveSearch as Record<keyof TDataSource, string>);
 
       setIsSearchCardOpen({ show: false, key: '' });

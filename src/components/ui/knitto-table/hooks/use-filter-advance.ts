@@ -89,7 +89,7 @@ export default function useFilterAdvance<TDataSource>(props: IAdvanceFilterTable
           [dataKey]: { config_name, value },
         };
 
-        onChangeAdvanceFilter?.(newFilters);
+        if (useServerAdvanceFilter) onChangeAdvanceFilter?.(newFilters);
         if (useSessionFilter) setToSessionStorage(newFilters);
 
         return newFilters;
@@ -105,7 +105,7 @@ export default function useFilterAdvance<TDataSource>(props: IAdvanceFilterTable
         const newFilters = { ...prev };
         delete newFilters[dataKey as keyof TDataSource];
 
-        onChangeAdvanceFilter?.(newFilters);
+        if (useServerAdvanceFilter) onChangeAdvanceFilter?.(newFilters);
         if (useSessionFilter) setToSessionStorage(newFilters);
 
         return newFilters;
