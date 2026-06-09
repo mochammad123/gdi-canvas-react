@@ -63,7 +63,7 @@ function ActionToggle({ onClick }: { onClick: (type: 'edit' | 'delete') => void 
           'btn-action-toggle',
           'cursor-pointer w-5 bg-transparent py-0.5 rounded flex justify-center items-center',
           'hover:bg-gray-300 transition-colors duration-150',
-          position && '!bg-gray-300'
+          position && 'bg-gray-300!'
         )}
         onClick={handleToggle}
       >

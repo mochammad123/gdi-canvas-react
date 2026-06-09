@@ -260,9 +260,9 @@ export interface IKnittoTable<TData> {
    * ```tsx
    * classNameCell={(data, rowIndex, columnIndex, opts) => {
    *   return clsx({
-   *     '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
-   *     '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
-   *     '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
+   *     'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
+   *     'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
+   *     'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
    *   });
    * }}
    */
@@ -476,14 +476,7 @@ export interface IVirtualTableRef {
    *
    * @example
    * ```tsx
-   * import { type IVirtualTableRef } from 'knitto-table';
-   *
-   * const tableRef = useRef<IVirtualTableRef>(null);
-   *
-   * const scrollToIndex = () => {
-   *   if (!tableRef.current) return;
-   *
-   *   tableRef.current.virtualizer?.scrollToIndex(index, { align: 'start', behavior: 'smooth' });
+   * import { type IVirtualTableRef } from 'knitto-table'; * * const tableRef = useRef<IVirtualTableRef>(null); * * const scrollToIndex = () => { * if (!tableRef.current) return; * * tableRef.current.virtualizer?.scrollToIndex(index, { align: 'start', behavior: 'smooth' });
    * }
    *
    *
@@ -498,14 +491,7 @@ export interface IVirtualTableRef {
    * @type {HTMLDivElement | null}
    *
    * ```tsx
-   * import { type IVirtualTableRef } from 'knitto-table';
-   *
-   * const tableRef = useRef<IVirtualTableRef>(null);
-   *
-   * const scrollToTop = () => {
-   *   if (!tableRef.current) return;
-   *
-   *   tableRef.current.scrollElement?.scrollTo({ top: 0, behavior: 'smooth' });
+   * import { type IVirtualTableRef } from 'knitto-table'; * * const tableRef = useRef<IVirtualTableRef>(null); * * const scrollToTop = () => { * if (!tableRef.current) return; * * tableRef.current.scrollElement?.scrollTo({ top: 0, behavior: 'smooth' });
    * }
    *
    *

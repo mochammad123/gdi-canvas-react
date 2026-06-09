@@ -174,7 +174,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
             'border-b border-r border-[#D2D2D4]': true,
             'h-full content-center': true,
             'bg-[#EFF0F6] dark:bg-black': true,
-            'text-start !text-xs font-semibold': true,
+            'text-start text-xs! font-semibold': true,
           });
 
           // NOTE: Kalau punya children, colSpan = jumlah leaf children. Kalau tidak, colSpan = 1
@@ -288,7 +288,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
               'border-r border-b border-[#D2D2D4]': true,
               'h-full content-center': true,
               'bg-[#EFF0F6] dark:bg-black': true,
-              '!text-xs font-semibold': true,
+              'text-xs! font-semibold': true,
             });
 
             const headContent = child.renderHeader ? (
@@ -382,7 +382,7 @@ function RegularTableHeader({ headerHeight }: IRegularTableHeader) {
                 'border-r border-[#D2D2D4]': true,
                 'h-full border-b border-[#D2D2D4] content-center': true,
                 'bg-[#EFF0F6] dark:bg-black': true,
-                '!text-xs font-semibold': true,
+                'text-xs! font-semibold': true,
               });
 
               let headContent;

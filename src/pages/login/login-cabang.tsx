@@ -98,7 +98,7 @@ export default function TemplateLogin() {
                   }}
                 />
 
-                <Button type="submit" className="mt-[28px] h-[41px] w-full flex justify-center items-center !p-0">
+                <Button type="submit" className="mt-[28px] h-[41px] w-full flex justify-center items-center p-0!">
                   LOGIN
                 </Button>
               </FormWrapper>

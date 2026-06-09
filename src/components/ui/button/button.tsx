@@ -59,7 +59,7 @@ const Button = ({
         {
           rounded,
           'flex justify-end items-center': loading,
-          '!bg-[#B7BECB] !text-[#8E8F93] border-none hover:!opacity-100': disabled,
+          'bg-[#B7BECB]! text-[#8E8F93]! border-none hover:opacity-100!': disabled,
         },
         className
       )}

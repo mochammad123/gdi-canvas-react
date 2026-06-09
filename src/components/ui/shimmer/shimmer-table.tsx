@@ -20,5 +20,5 @@ export default function ShimmerTableRow({ cells = 4, classNameCell }: { classNam
 export function ShimmerTableRows({ rows = 7, cells = 2 }: { rows?: number; cells?: number }) {
   return Array(rows)
     .fill(1)
-    .map((_, key) => <ShimmerTableRow classNameCell="!py-3.5" cells={cells} key={key} />);
+    .map((_, key) => <ShimmerTableRow classNameCell="py-3.5!" cells={cells} key={key} />);
 }

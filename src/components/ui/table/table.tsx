@@ -152,7 +152,7 @@ const TableCell = React.forwardRef<
             onUpdateContent?.(e.currentTarget.value);
           }}
           value={textContent || ''}
-          classNameInput="!bg-white !px-[.125rem] global-report-content !absolute left-0 right-0 top-0 rounded-none  border-none"
+          classNameInput="bg-white! px-[.125rem]! global-report-content absolute! left-0 right-0 top-0 rounded-none border-none"
         />
       ) : (
         children

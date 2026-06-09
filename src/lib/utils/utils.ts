@@ -72,7 +72,7 @@ export function exportDataToExcel<TData>(
 
   // set the column width (conditional)
   if (columnWidths && columnWidths.length > 0) {
-    worksheet['!cols'] = columnWidths;
+    worksheet['cols!'] = columnWidths;
   }
 
   XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);

@@ -55,7 +55,7 @@ function RegularTableFooter<TData>({ footerHeight }: IRegularTableFooter) {
 
     const classNameCellContent = clsx('truncate', {
       'border-r': !isLastIndex,
-      '!border-l': isFreezeRight,
+      'border-l!': isFreezeRight,
       'transition-colors duration-150 size-full content-center px-1.5 text-xs border-b': true,
       'border-[#D2D2D4] bg-[#EFF0F6] dark:bg-black': true,
     });

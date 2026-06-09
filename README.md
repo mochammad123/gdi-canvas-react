@@ -64,8 +64,19 @@
 
 **Versi minimum:**
 
-- Node.js: >= 20
-- pnpm: >= 9.15
+- Node.js: >= 24
+- pnpm: >= 10.34.1
+- Tailwind CSS: v4
+
+### Setup toolchain
+
+```sh
+corepack enable
+corepack use pnpm@10.34.1
+pnpm install
+```
+
+Gunakan file `.nvmrc` jika memakai nvm: `nvm use`
 
 ### Penggunaan NPM github
 
@@ -118,6 +129,8 @@ exec "$@"
 Untuk menjalankan project pada mode development:
 
 ```sh
+corepack enable
+corepack use pnpm@10.34.1
 pnpm install
 pnpm dev
 ```
@@ -125,3 +138,22 @@ pnpm dev
 Secara default, environment variable akan di-load dari file `.env` atau `.env.local` pada root project. Tidak perlu menggunakan `entrypoint.sh` pada mode development, cukup pastikan file env sudah terisi sesuai kebutuhan.
 
 Jika ingin menambah/mengubah variable, edit file `.env` lalu restart dev server.
+
+---
+
+# Docker
+
+Build image (membutuhkan `GITHUB_TOKEN` untuk registry `@knittotextile`):
+
+```sh
+docker build -t template . --build-arg GITHUB_TOKEN=your_github_token
+```
+
+Atau dengan Docker Compose:
+
+```sh
+export GITHUB_TOKEN=your_github_token
+docker compose up --build -d
+```
+
+Aplikasi akan tersedia di `http://localhost:3000`.

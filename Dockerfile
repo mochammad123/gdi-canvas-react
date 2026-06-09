@@ -1,20 +1,21 @@
-FROM node:20-slim AS base
+FROM node:24-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN corepack prepare pnpm@9.15.3 --activate
-COPY . /app
-WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@10.34.1 --activate
 
 FROM base AS build
 WORKDIR /build
+ARG GITHUB_TOKEN
 COPY . .
-RUN --mount=type=secret,id=github_token \
-    echo "//npm.pkg.github.com/:_authToken=$(cat /run/secrets/github_token)" > .npmrc
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN test -n "$GITHUB_TOKEN" || (echo "ERROR: GITHUB_TOKEN build-arg is required for @knittotextile packages" && exit 1) && \
+  printf '%s\n' \
+    '@knittotextile:registry=https://npm.pkg.github.com' \
+    "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" \
+    > .npmrc && \
+  pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM nginx:stable-alpine
+FROM nginx:1.28-alpine
 WORKDIR /app
 COPY --from=build /build/dist /usr/share/nginx/html
 COPY --from=build /build/config/nginx.conf /etc/nginx/conf.d/default.conf

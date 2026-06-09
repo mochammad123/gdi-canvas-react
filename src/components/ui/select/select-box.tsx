@@ -32,7 +32,7 @@ const SelectBox = () => {
         isDropdownOpen && 'border-navy-100',
         error && 'border-red-500',
         warning && 'border-burnt-orange-100',
-        disabled ? 'cursor-default bg-greyish-down !border-greyish-down' : 'cursor-pointer bg-white'
+        disabled ? 'cursor-default bg-greyish-down border-greyish-down!' : 'cursor-pointer bg-white'
       ),
     [isDropdownOpen, error, warning, disabled]
   );
@@ -51,9 +51,9 @@ const SelectBox = () => {
         onChange={(e) => onSearchQuery?.(e.target.value)}
         value={displayValue}
         className={clsx(
-          'cursor-pointer pr-[3.2rem] border-none !h-full !font-source-sans-pro rounded pl-1.5',
-          disabled && '!bg-greyish-down',
-          disableSearch && '!bg-white'
+          'cursor-pointer pr-[3.2rem] border-none h-full! font-source-sans-pro! rounded pl-1.5',
+          disabled && 'bg-greyish-down!',
+          disableSearch && 'bg-white!'
         )}
       />
 

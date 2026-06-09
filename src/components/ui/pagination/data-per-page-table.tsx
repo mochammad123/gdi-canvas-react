@@ -36,8 +36,8 @@ function ButtonItem({ page, activePage, onClick }: { page: number; activePage: n
       variant="text"
       onClick={() => onClick(page)}
       className={clsx('w-[2.3125rem] h-[2.3125rem] flex justify-center items-center global-button', {
-        '!bg-knitto-blue-40': activePage === page,
-        'hover:bg-knitto-blue-40 hover:!opacity-100': 'on-hover',
+        'bg-knitto-blue-40!': activePage === page,
+        'hover:bg-knitto-blue-40 hover:opacity-100!': 'on-hover',
       })}
     >
       {page}

@@ -22,10 +22,10 @@ const SelectDropdownItem = (props: ISelectDropdownItem) => {
       style={style}
       className={clsx(
         'dropdown-item h-8 flex items-center cursor-pointer text-black-80 pl-1',
-        'hover:!bg-knitto-blue-60',
-        isSelected && '!bg-knitto-blue-60',
-        optionIndex === selectedIndex && '!bg-knitto-blue-60',
-        disabled && '!cursor-default !text-greyish-down hover:!bg-transparent',
+        'hover:bg-knitto-blue-60!',
+        isSelected && 'bg-knitto-blue-60!',
+        optionIndex === selectedIndex && 'bg-knitto-blue-60!',
+        disabled && 'cursor-default! text-greyish-down! hover:bg-transparent!',
         multiple && 'gap-1.5'
       )}
     >

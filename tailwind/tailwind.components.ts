@@ -1,5 +1,4 @@
 import plugin from 'tailwindcss/plugin';
-import tailwindAnimation from './tailwind.animation';
 
 export default plugin(({ addComponents, addUtilities }) => {
   const modalComponent = [
@@ -28,9 +27,6 @@ export default plugin(({ addComponents, addUtilities }) => {
             backgroundColor: 'white',
             animation: `scale-up 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000)`,
             borderRadius: '.25rem',
-            '@keyframes scale-up': {
-              ...tailwindAnimation.keyframes['scale-up'],
-            },
           },
         },
       },
@@ -41,7 +37,7 @@ export default plugin(({ addComponents, addUtilities }) => {
         bottom: '0',
         left: '0',
         zIndex: '999',
-        '@apply bg-black/55': '',
+        backgroundColor: 'rgb(0 0 0 / 0.55)',
       },
       '.modal-open': {
         overflow: 'hidden',
@@ -123,7 +119,7 @@ export default plugin(({ addComponents, addUtilities }) => {
       },
     },
   ];
-  const formUtility = [
+  const formComponent = [
     {
       '.form-validated input:invalid, .form-validated input:invalid ~ .input-div': {
         borderColor: '#ef4444',
@@ -146,6 +142,6 @@ export default plugin(({ addComponents, addUtilities }) => {
     },
   ];
 
-  addUtilities([...formUtility, ...textUtility]);
-  addComponents([...modalComponent, ...tableComponent]);
+  addUtilities(textUtility);
+  addComponents([...modalComponent, ...tableComponent, ...formComponent]);
 });

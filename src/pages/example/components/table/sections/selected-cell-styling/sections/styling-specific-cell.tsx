@@ -38,10 +38,10 @@ function BasicStyling({ users, headers }: IBasicStylingProps) {
           rowKey="id"
           classNameCell={(_data, _rowIndex, columnIndex, opts) => {
             return clsx({
-              '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
-              '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
-              '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
-              '!bg-red-500 !text-white': columnIndex === selectedCell && opts?.isRowHighlighted,
+              'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
+              'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
+              'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
+              'bg-red-500! text-white!': columnIndex === selectedCell && opts?.isRowHighlighted,
             });
           }}
           onClickRow={(_data, _rowIndex, columnIndex) => setSelectedCell(columnIndex)}
@@ -81,10 +81,10 @@ const MyTable = () => {
       filterHeight={32}
       classNameCell={(_data, _rowIndex, columnIndex, opts) => {
         return clsx({
-          '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
-          '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
-          '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
-          '!bg-red-500 !text-white': columnIndex === selectedCell && opts?.isRowHighlighted,
+          'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
+          'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
+          'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
+          'bg-red-500! text-white!': columnIndex === selectedCell && opts?.isRowHighlighted,
         });
       }}
       onClickRow={(_data, _rowIndex, columnIndex) => setSelectedCell(columnIndex)}

@@ -11,7 +11,7 @@ const TableCell = forwardRef((props: ITableCell, ref: React.Ref<HTMLDivElement>)
   return (
     <div
       ref={ref}
-      className={clsx('border-b border-[#D2D2D4] px-1.5 text-xs content-center global-report-content !text-[12px]', className)}
+      className={clsx('border-b border-[#D2D2D4] px-1.5 text-xs content-center global-report-content text-[12px]!', className)}
       {...rest}
     >
       {cellValue || children}

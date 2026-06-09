@@ -269,7 +269,7 @@ function RegularTableBody<TData>({
 
     // classname
     const classNameCellContent = clsx(useDynamicRowHeight ? 'break-words' : 'truncate', {
-      '!border-l': isFreezeRight,
+      'border-l!': isFreezeRight,
       'bg-white dark:bg-black/50 backdrop-blur-2xl': (isFreezeLeft || isFreezeRight) && !isCellHighlighted,
       'bg-[#ECEEFF] dark:bg-blue-900': isCellHighlighted,
       'group-hover/regular-table-row:bg-[#ECEEFF] dark:group-hover/regular-table-row:bg-blue-900': !rowSpanMap.size,

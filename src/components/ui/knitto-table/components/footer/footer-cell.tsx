@@ -21,20 +21,20 @@ function FooterCell(footerCellProps: IFooterCell) {
 
   const classNames = useMemo(() => {
     if (freezeMode === 'left') {
-      return clsx('bg-gray-50 border-t border-r truncate !px-0', {
-        '!hidden': !isVisible,
+      return clsx('bg-gray-50 border-t border-r truncate px-0!', {
+        'hidden!': !isVisible,
       });
     }
 
     if (freezeMode === 'right') {
-      return clsx('bg-gray-50 border-t border-l nth-[1]:!border-l truncate !px-0', {
-        '!hidden': !isVisible,
+      return clsx('bg-gray-50 border-t border-l nth-[1]:border-l! truncate px-0!', {
+        'hidden!': !isVisible,
       });
     }
 
-    return clsx('bg-gray-50 table-cell truncate border-t border-r nth-last-[1]:!border-r-transparent !px-0', {
-      '!border-r-transparent': isLastIndex && freezeRightColumnsWidth > 0,
-      '!hidden': !isVisible,
+    return clsx('bg-gray-50 table-cell truncate border-t border-r nth-last-[1]:border-r-transparent! px-0!', {
+      'border-r-transparent!': isLastIndex && freezeRightColumnsWidth > 0,
+      'hidden!': !isVisible,
     });
   }, [freezeMode, isVisible, isLastIndex, freezeRightColumnsWidth]);
 

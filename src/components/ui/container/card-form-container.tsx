@@ -8,7 +8,7 @@ export default function CardFormContainer({ title, children, className }: { titl
     <Card
       className={clsx(
         'bg-white shadow-md w-[22.25rem] px-4 pb-[1.125rem] pt-[.625rem] flex flex-col gap-y-[.625rem]',
-        'max-h-[calc(100vh-4.75rem)] overflow-auto !border-none',
+        'max-h-[calc(100vh-4.75rem)] overflow-auto border-none!',
         className
       )}
     >

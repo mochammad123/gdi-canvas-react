@@ -204,9 +204,7 @@ const InputDateTimePicker = React.forwardRef<
       />
       {isVisible && (
         <Card
-          className={`flex flex-col absolute z-[999] card-date-time transition-all duration-300 ease-in-out animate-fadeIn ${
-            isAnimating ? (show ? 'animate-dropdownIn' : 'animate-dropdownOut') : ''
-          }`}
+          className={`flex flex-col absolute z-[999] card-date-time transition-all duration-300 ease-in-out animate-fadeIn ${isAnimating ? (show ? 'animate-dropdownIn' : 'animate-dropdownOut') : ''}`}
         >
           <div className="flex rounded-b-none">
             <div className="mx-3 bg-white">
@@ -248,9 +246,7 @@ const InputDateTimePicker = React.forwardRef<
                           <li
                             key={value}
                             data-value={value}
-                            className={`rounded-md py-[.2rem] text-[.84rem] cursor-pointer ${
-                              selectedTime[unit as keyof Time] === value ? 'bg-navy-100 text-white hover:navy-100' : 'hover:bg-gray-200'
-                            }`}
+                            className={`rounded-md py-[.2rem] text-[.84rem] cursor-pointer ${selectedTime[unit as keyof Time] === value ? 'bg-navy-100 text-white hover:navy-100' : 'hover:bg-gray-200'}`}
                             onClick={() => handleTimeChange(unit as keyof Time, value)}
                           >
                             {value}

@@ -12,7 +12,7 @@ export default function CardDataTableContainer({
   className?: string;
 }) {
   return (
-    <Card className={clsx(['bg-white !border-none min-h-[calc(100vh-3.25rem)] shadow-md py-[.625rem]', 'shadow-lg'], className)}>
+    <Card className={clsx(['bg-white border-none! min-h-[calc(100vh-3.25rem)] shadow-md py-[.625rem]', 'shadow-lg'], className)}>
       {title && (
         <Typography as="global-strong" className="py-[.4063rem] px-4">
           {title}

@@ -36,7 +36,7 @@ export default function SelectionDisableSearch({ options }: { options: ISelect['
         prefixIcon={Icon}
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
         options={options.map((item, index) => ({
           ...item,
           label: (
@@ -79,7 +79,7 @@ export default function SelectionDisableSearch({ options }: { options: ISelect['
       prefixIcon={Icon}
       onChangeSingleOption={(value) => setValue(value as string)}
       onResetSelection={() => setValue(null)}
-      className="!w-[20rem]"
+      className="w-[20rem]!"
       options={options.map((item, index) => ({
         ...item,
         label: (

@@ -9,7 +9,7 @@ export default function SelectResetToggle({ onReset }: { onReset: () => void }) 
         onReset();
       }}
     >
-      <IcClose className="!w-5 text-knitto-black-80" />
+      <IcClose className="w-5! text-knitto-black-80" />
     </button>
   );
 }

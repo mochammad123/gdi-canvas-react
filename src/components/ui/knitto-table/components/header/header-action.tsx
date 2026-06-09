@@ -92,7 +92,7 @@ function HeaderAction({ headerKey, hideFilterSort, hideHeaderAction }: IHeaderAc
 
   return (
     <div className="relative">
-      {!hideHeaderAction && <Icons name="menu" className="!size-4 text-gray-500 cursor-pointer" onClick={handleOpenActionCard} />}
+      {!hideHeaderAction && <Icons name="menu" className="size-4! text-gray-500 cursor-pointer" onClick={handleOpenActionCard} />}
 
       {actionCard.show &&
         createPortal(

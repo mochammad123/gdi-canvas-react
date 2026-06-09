@@ -25,11 +25,7 @@ export const getCustomEmployeeHeaders = (): IHeader<Employee>[] => [
       <div className="flex justify-center items-center w-full h-full">
         <button
           data-action="expand"
-          className={`px-1 py-1 rounded text-xs font-medium transition-colors ${
-            isExpanded
-              ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-800'
-              : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800'
-          }`}
+          className={`px-1 py-1 rounded text-xs font-medium transition-colors ${isExpanded ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-800' : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800'}`}
           type="button"
           aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
         >
@@ -90,13 +86,7 @@ export const getTeamHeaders = (): IHeader<Team>[] => [
     width: 120,
     renderCell: (item) => (
       <span
-        className={`px-2 py-1 rounded text-xs ${
-          item.status === 'Active'
-            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-            : item.status === 'Inactive'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
-              : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
-        }`}
+        className={`px-2 py-1 rounded text-xs ${item.status === 'Active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : item.status === 'Inactive' ? 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'}`}
       >
         {item.status}
       </span>

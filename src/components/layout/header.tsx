@@ -62,7 +62,7 @@ function TitleHeader({ menuName }: { menuName: string }) {
         <HamburgerIcon />
       </div>
       <div className="flex gap-x-2 items-center">
-        <div className="subtitle-2 !text-white ">{menuName || ''}</div>
+        <div className="subtitle-2 text-white! ">{menuName || ''}</div>
       </div>
     </div>
   );

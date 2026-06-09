@@ -114,7 +114,7 @@ export default function Pagination({
         aria-label="Per Page"
       />
 
-      <Button className="h-[32px] !px-[16px] !py-[5.5px] w-[98px] shrink-0 flex justify-center" onClick={() => onApplyPerPage(currentPerPage || 1)}>
+      <Button className="h-[32px] px-[16px]! py-[5.5px]! w-[98px] shrink-0 flex justify-center" onClick={() => onApplyPerPage(currentPerPage || 1)}>
         Terapkan
       </Button>
 
@@ -160,8 +160,8 @@ function InputNumberRange({
   return (
     <InputWithSuffix
       type="number"
-      classNameInput={clsx('rounded-none !w-[56px] h-[37px] !border-black-20 peer', className, {
-        '!pr-4 ': !disabledRange,
+      classNameInput={clsx('rounded-none w-[56px]! h-[37px] border-black-20! peer', className, {
+        'pr-4! ': !disabledRange,
       })}
       suffix={
         disabledRange ? null : (
@@ -175,7 +175,7 @@ function InputNumberRange({
           />
         )
       }
-      classNamePosition="!top-[22px] opacity-0 peer-focus:opacity-100 group-hover:opacity-100"
+      classNamePosition="top-[22px]! opacity-0 peer-focus:opacity-100 group-hover:opacity-100"
       className="text-center rounded-none group"
       onKeyUp={(e) => {
         const target = e.target as HTMLInputElement;

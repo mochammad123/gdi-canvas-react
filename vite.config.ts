@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
@@ -11,9 +12,9 @@ const manifestForPlugIn = {
   registerType: 'prompt',
   includeAssests: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
   manifest: {
-    name: 'Template Vite Preact Typescript Knitto v0.1.0',
-    short_name: 'template-vite-preact-typescript',
-    description: 'Template Vite Preact Typescript Knitto using Vite+PreactJS',
+    name: 'Template React Typescript Knitto v0.1.0',
+    short_name: 'template-react-typescript-knitto',
+    description: 'Template React Typescript Knitto using Vite and React',
     icons: [
       {
         src: '/android-chrome-192x192.png',
@@ -47,6 +48,7 @@ const manifestForPlugIn = {
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     generateEnvPlugin(),
     VitePWA({ ...manifestForPlugIn, registerType: 'autoUpdate', devOptions: { enabled: true, type: 'module' } }),
     react(),
@@ -56,6 +58,10 @@ export default defineConfig({
     alias: {
       '@': path.join(__dirname, 'src'),
     },
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit'],
   },
   test: {
     globals: true,

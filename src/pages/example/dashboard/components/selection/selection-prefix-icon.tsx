@@ -36,7 +36,7 @@ export default function SelectionPrefixIcon({ options }: { options: ISelect['opt
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
         prefixIcon={Icon}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
       />
 
       <ContentExampleCode show={show} code={code} />

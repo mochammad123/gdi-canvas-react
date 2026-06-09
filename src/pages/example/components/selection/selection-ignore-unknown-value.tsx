@@ -44,7 +44,7 @@ export default function SelectionIgnoreUnknownValue({ options }: { options: ISel
         prefixIcon={Icon}
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
         options={options.map((item, index) => ({
           ...item,
           label: (
@@ -87,7 +87,7 @@ export default function SelectionIgnoreUnknownValue({ options }: { options: ISel
       prefixIcon={Icon}
       onChangeSingleOption={(value) => setValue(value as string)}
       onResetSelection={() => setValue(null)}
-      className="!w-[20rem]"
+      className="w-[20rem]!"
       options={options.map((item, index) => ({
         ...item,
         label: (

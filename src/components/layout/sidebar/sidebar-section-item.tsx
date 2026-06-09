@@ -67,7 +67,7 @@ export default function SidebarSectionItem(props: ISidebarSectionItem) {
       <div
         onClick={handleClickMenu}
         className={clsx('p-[.625rem] relative flex items-center justify-between cursor-pointer hover:bg-navy-80 hover:text-white', {
-          '!pr-6': item.children,
+          'pr-6!': item.children,
           'bg-navy-100 text-white': isExactActive,
           'bg-navy-20': !isExactActive && isActiveMenu,
         })}

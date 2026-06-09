@@ -22,10 +22,10 @@ const ICON_BACKGROUND = {
 };
 
 const TOAST_ICON = {
-  success: <CheckIcon className="!size-2.5" />,
-  error: <CloseIcon className="!size-2.5" />,
-  warning: <WarningIcon className="!size-2.5" />,
-  info: <WarningIcon className="!size-2.5" />,
+  success: <CheckIcon className="size-2.5!" />,
+  error: <CloseIcon className="size-2.5!" />,
+  warning: <WarningIcon className="size-2.5!" />,
+  info: <WarningIcon className="size-2.5!" />,
 };
 
 export default function Toast({ toastType, message, duration, onClose, transitionPosition = 'bottom-right', animationClosed }: IToast) {
@@ -79,7 +79,7 @@ export default function Toast({ toastType, message, duration, onClose, transitio
 
         <Button
           size="sm"
-          className="text-navy-100 shadow-none !p-0 !m-0"
+          className="text-navy-100 shadow-none p-0! m-0!"
           variant="text"
           LeftIcon={() => <CloseIcon color="white" />}
           onClick={onClose}

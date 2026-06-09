@@ -185,7 +185,7 @@ function HeaderCellNested(props: INestedHeaderCell) {
   return (
     <div
       key={'table-head-group-node-' + headData.key}
-      className={clsx('relative border-[#D2D2D4] !px-0 flex flex-col h-full', {
+      className={clsx('relative border-[#D2D2D4] px-0! flex flex-col h-full', {
         'group/outer': !headData.children,
         'border-r': freezeType !== 'right',
         'border-l': freezeType === 'right' && !headData.children,

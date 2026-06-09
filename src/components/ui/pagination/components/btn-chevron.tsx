@@ -16,7 +16,7 @@ export default function BtnChevron({
   return (
     <Button
       variant="text"
-      className={clsx('border-none !p-0 size-[16px] flex justify-center items-center shadow-none !bg-transparent cursor-pointer', {
+      className={clsx('border-none p-0! size-[16px] flex justify-center items-center shadow-none bg-transparent! cursor-pointer', {
         'opacity-50': disabled,
       })}
       onClick={onClick}

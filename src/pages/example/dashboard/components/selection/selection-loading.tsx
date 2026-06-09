@@ -25,7 +25,7 @@ export default function SelectionLoading({ options }: { options: ISelect['option
         value={value}
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
       />
       <ContentExampleCode show={show} code={code} />
     </>

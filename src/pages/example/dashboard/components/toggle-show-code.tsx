@@ -5,7 +5,7 @@ export default function ToggleShowCode({ show, setShow, className }: { show: boo
     <button
       className={clsx(
         'w-max inline-flex items-center bg-gray-400 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1',
-        show && '!bg-blue-900',
+        show && 'bg-blue-900!',
         className
       )}
       onClick={() => setShow(!show)}

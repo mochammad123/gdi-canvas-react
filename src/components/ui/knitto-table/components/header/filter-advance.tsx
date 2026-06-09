@@ -127,7 +127,7 @@ function FilterAdvance(props: IFilterAdvance) {
           data-testid={`kn-table-header-filter-advance-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer',
-            filterCard.show ? '!text-gray-600 dark:!text-gray-200' : 'text-gray-400 dark:text-gray-700'
+            filterCard.show ? 'text-gray-600! dark:text-gray-200!' : 'text-gray-400 dark:text-gray-700'
           )}
           onClick={handleOpenFilterCard}
         />

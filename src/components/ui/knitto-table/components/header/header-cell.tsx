@@ -111,9 +111,9 @@ function HeaderCell(props: IHeaderCell) {
         'flex size-full relative',
         {
           'group/outer': !isGroupHeader,
-          '!px-0 flex flex-col': isGroupHeader,
+          'px-0! flex flex-col': isGroupHeader,
           'flex-row justify-between items-center': isSingleHeader && !isGroupHeader,
-          'flex-col justify-between items-start !px-0': !isSingleHeader && !isGroupHeader,
+          'flex-col justify-between items-start px-0!': !isSingleHeader && !isGroupHeader,
         },
         cellClassName
       )}

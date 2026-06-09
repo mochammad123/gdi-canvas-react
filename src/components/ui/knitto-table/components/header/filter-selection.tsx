@@ -141,7 +141,7 @@ function FilterSelection(props: IFilterSelection) {
           data-testid={`kn-table-header-filter-selection-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-3.5 text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer',
-            filterCard.show ? '!text-gray-900 dark:!text-gray-200' : 'text-gray-500 dark:text-gray-700'
+            filterCard.show ? 'text-gray-900! dark:text-gray-200!' : 'text-gray-500 dark:text-gray-700'
           )}
           onClick={handleOpenFilterCard}
         />
@@ -178,7 +178,7 @@ const SelectionList = (props: ISelectionList) => {
   const { options, headerKey, rowVirtualizer, isCheked, isEmptyOptions, onCheckboxChange, scrollRef } = props;
 
   return (
-    <div ref={scrollRef} className={clsx('relative overflow-auto h-40 my-1.5 mx-1.5 filter-scrollbar', isEmptyOptions && '!h-16')}>
+    <div ref={scrollRef} className={clsx('relative overflow-auto h-40 my-1.5 mx-1.5 filter-scrollbar', isEmptyOptions && 'h-16!')}>
       {isEmptyOptions ? (
         <div className="size-full flex justify-center items-center">
           <span className="text-gray-400 text-xs font-normal">No data available!</span>

@@ -49,7 +49,7 @@ const InputSearch = forwardRef<HTMLInputElement, ITableVirtualInput>(
     }, []);
 
     return (
-      <div className="!w-full relative group/input">
+      <div className="w-full! relative group/input">
         <input
           ref={ref}
           type="text"
@@ -69,7 +69,7 @@ const InputSearch = forwardRef<HTMLInputElement, ITableVirtualInput>(
           <IcClose
             onClick={onRemoveSearch}
             className={clsx(
-              '!w-4 absolute right-1 top-1/2 -translate-y-1/2 text-gray-600 cursor-pointer',
+              'w-4! absolute right-1 top-1/2 -translate-y-1/2 text-gray-600 cursor-pointer',
               'opacity-0 group-hover/input:opacity-100 transition-opacity duration-200 hover:text-red-600'
             )}
           />

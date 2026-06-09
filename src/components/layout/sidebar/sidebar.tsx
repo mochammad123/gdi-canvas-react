@@ -39,7 +39,7 @@ const Sidebar = ({ sidebarMenu, hideSearch, className, ...props }: ISidebar) => 
           <div className="mb-[.625rem]">
             <InputSearch
               className="w-full"
-              classNameInput="global-paragraph focus:!bg-white border-none !outline-none "
+              classNameInput="global-paragraph focus:bg-white! border-none outline-none! "
               placeholder="Cari menu"
               suffix={<SearchIcon />}
               value={search}

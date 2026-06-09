@@ -39,9 +39,9 @@ function BasicStyling({ users, headers }: IBasicStylingProps) {
           rowKey="id"
           classNameCell={(_, __, ___, opts) => {
             return clsx({
-              '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
-              '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
-              '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
+              'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
+              'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
+              'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
             });
           }}
           onClickRow={(row) => console.log(row)}
@@ -77,9 +77,9 @@ const MyTable = () => {
       filterHeight={32}
       classNameCell={(_, __, ___, opts) => {
         return clsx({
-          '!border-l !border-l-blue-950': opts?.isFirstIndex && opts?.isRowHighlighted,
-          '!border-r !border-r-blue-950': opts?.isLastIndex && opts?.isRowHighlighted,
-          '!border-y !border-y-blue-950 bg-[#ECEEFF]': opts?.isRowHighlighted,
+          'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
+          'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
+          'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
         });
       }}
       onClickRow={(row) => console.log(row)}

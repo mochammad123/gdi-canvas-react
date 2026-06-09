@@ -63,16 +63,14 @@ const MyTable = () => {
     },
     { key: 'name', caption: 'Name', width: 200,
      renderHeader: () => (
-        <div className="flex items-center justify-center w-full h-full bg-gradient-to-r
-          from-cyan-500 to-blue-600 text-white font-bold">
+        <div className="flex items-center justify-center w-full h-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold">
           <span className="text-xs">📧 Email</span>
         </div>
       ),
     },
     { key: 'email', caption: 'Email', width: 250,
       renderHeader: () => (
-        <div className="flex items-center justify-center w-full h-full bg-gradient-to-r
-          from-cyan-500 to-blue-600 text-white font-bold">
+        <div className="flex items-center justify-center w-full h-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold">
           <span className="text-xs">📧 Email</span>
         </div>
       )

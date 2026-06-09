@@ -15,6 +15,10 @@
   },
   "author": "knittotextile",
   "license": "MIT",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10.34.1"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@knittotextile/react-ui": "^1.0.0",
@@ -41,11 +45,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@prefresh/vite": "^2.4.11",
     "@release-it/conventional-changelog": "^5.1.1",
+    "@tailwindcss/vite": "^4.1.18",
     "@types/js-cookie": "^3.0.6",
     "@types/loadable__component": "^5.13.10",
-    "@types/node": "^20.19.30",
+    "@types/node": "^24.10.1",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
@@ -54,7 +58,6 @@
     "@vitest/browser": "^4.0.18",
     "@vitest/browser-playwright": "^4.0.18",
     "@vitest/coverage-v8": "^4.0.18",
-    "autoprefixer": "^10.4.23",
     "dotenv": "^16.6.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^9.1.2",
@@ -66,10 +69,9 @@
     "lint-staged": "^15.5.2",
     "msw": "^2.12.8",
     "playwright": "^1.58.0",
-    "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "release-it": "^15.11.0",
-    "tailwindcss": "^3.4.19",
+    "tailwindcss": "^4.1.18",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vite": "^6.4.1",
@@ -117,7 +119,7 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.15.3+sha512.a4051aac4d6e1acacf30373196b02a207fc7b2c016570c54c139e90e1e24c70f1b90a3480f67ae0867b4f1d20f2d6e38695f6ba85c6e8394357b6f3058ec1e9c",
+  "packageManager": "pnpm@10.34.1+sha512.b58fbde6dca66a929538021581f648b4570b6ca19b18e7cbd7f2c07a7b24454155388dacdf08f2af3678e88a6d1fe04f9d609df24bf51735a060ea041b374ab7",
   "msw": {
     "workerDirectory": [
       "public"

@@ -28,7 +28,7 @@ function HeaderCaption({ isSingleHeader, isFilterVisible, caption, headerKey, hi
     <div
       className={clsx('flex-1 flex w-full justify-between items-center px-1.5 cursor-pointer', {
         'border-b border-[#D2D2D4]': isFilterVisible,
-        '!cursor-default': hideFilterSort,
+        'cursor-default!': hideFilterSort,
       })}
       onClick={() => !hideFilterSort && sort.onChangeSort(headerKey.toString())}
     >

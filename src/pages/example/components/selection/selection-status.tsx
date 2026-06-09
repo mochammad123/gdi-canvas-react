@@ -14,7 +14,7 @@ export default function SelectionStatus({ options }: { options: ISelect['options
   return (
     <div className="flex flex-col space-y-5">
       <div className="space-y-3">
-        <Typography as="global-report-title" className="!text-lg">
+        <Typography as="global-report-title" className="text-lg!">
           Error
         </Typography>
         <div className="flex justify-between items-start">
@@ -34,14 +34,14 @@ export default function SelectionStatus({ options }: { options: ISelect['options
           value={value}
           onChangeSingleOption={(value) => setValue(value as string)}
           onResetSelection={() => setValue(null)}
-          className="!w-[20rem]"
+          className="w-[20rem]!"
         />
 
         <ContentExampleCode show={show.error} code={code} />
       </div>
 
       <div className="space-y-3">
-        <Typography as="global-report-title" className="!text-lg">
+        <Typography as="global-report-title" className="text-lg!">
           Warning
         </Typography>
         <div className="flex justify-between items-start">
@@ -62,7 +62,7 @@ export default function SelectionStatus({ options }: { options: ISelect['options
           value={value}
           onChangeSingleOption={(value) => setValue(value as string)}
           onResetSelection={() => setValue(null)}
-          className="!w-[20rem]"
+          className="w-[20rem]!"
         />
 
         <ContentExampleCode show={show.warning} code={code} />

@@ -8,7 +8,7 @@ const CODE_EXAMPLE = {
   number1: `
     <InputDateRangePicker
       value={value}
-      classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+      classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
       onChange={({ startDate, endDate }) => {
         setValue({ startDate, endDate })
       }}
@@ -16,7 +16,7 @@ const CODE_EXAMPLE = {
   `,
   number2: `
     <InputDateRangePicker
-      classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+      classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
       label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
       placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
       error={{ startDate: 'Tanggal Mulai harus diisi', endDate: 'Tanggal Selesai harus diisi' }}
@@ -29,7 +29,7 @@ const CODE_EXAMPLE = {
   number3: `
     <InputDateRangePicker
       keepCalendarOnBottom
-      classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+      classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
       label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
       placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
       value={value}
@@ -41,7 +41,7 @@ const CODE_EXAMPLE = {
   number4: `
     <InputDateRangePicker
       mode="single"
-      classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+      classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
       label={{ startDate: 'Tanggal Mulai dan Akhir' }}
       placeholder={{ startDate: 'Pilih Tanggal Mulai dan Akhir' }}
       value={value}
@@ -52,7 +52,7 @@ const CODE_EXAMPLE = {
   `,
   number5: `
     <InputDateRangePicker
-      classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+      classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
       label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
       placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
       onChange={({ startDate, endDate }) => {
@@ -89,7 +89,7 @@ function InputDateRangePickerSchema() {
         {/* Number 1 */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <Typography as="global-report-title" className="!text-black-100">
+            <Typography as="global-report-title" className="text-black-100!">
               1. Standard Date Range Picker
             </Typography>
             <ToggleShowCode show={show.number1} setShow={() => handleShowCode('number1', !show.number1)} />
@@ -97,7 +97,7 @@ function InputDateRangePickerSchema() {
 
           <div className="w-[25rem] mx-auto">
             <InputDateRangePicker
-              classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+              classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
               onChange={(value) => setValue((prev) => ({ ...prev, number1: value }))}
               value={value.number1}
             />
@@ -109,7 +109,7 @@ function InputDateRangePickerSchema() {
         {/* Number 2 */}
         <div className="space-y-2 pt-6">
           <div className="flex justify-between items-center">
-            <Typography as="global-report-title" className="!text-black-100">
+            <Typography as="global-report-title" className="text-black-100!">
               2. With Label, Placeholder, and Errors
             </Typography>
             <ToggleShowCode show={show.number2} setShow={() => handleShowCode('number2', !show.number2)} />
@@ -117,7 +117,7 @@ function InputDateRangePickerSchema() {
 
           <div className="w-[25rem] mx-auto">
             <InputDateRangePicker
-              classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+              classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
               label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
               placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
               error={{ startDate: 'Tanggal Mulai harus diisi', endDate: 'Tanggal Selesai harus diisi' }}
@@ -132,7 +132,7 @@ function InputDateRangePickerSchema() {
         {/* Number 3 */}
         <div className="space-y-2 pt-6">
           <div className="flex justify-between items-center">
-            <Typography as="global-report-title" className="!text-black-100">
+            <Typography as="global-report-title" className="text-black-100!">
               3. Calendar position always at bottom
             </Typography>
             <ToggleShowCode show={show.number3} setShow={() => handleShowCode('number3', !show.number3)} />
@@ -141,7 +141,7 @@ function InputDateRangePickerSchema() {
           <div className="w-[25rem] mx-auto">
             <InputDateRangePicker
               keepCalendarOnBottom
-              classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+              classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
               label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
               placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
               onChange={(value) => setValue((prev) => ({ ...prev, number3: value }))}
@@ -155,7 +155,7 @@ function InputDateRangePickerSchema() {
         {/* Number 4 */}
         <div className="space-y-2 pt-6">
           <div className="flex justify-between items-center">
-            <Typography as="global-report-title" className="!text-black-100">
+            <Typography as="global-report-title" className="text-black-100!">
               4. Toggle mode single
             </Typography>
             <ToggleShowCode show={show.number4} setShow={() => handleShowCode('number4', !show.number4)} />
@@ -164,7 +164,7 @@ function InputDateRangePickerSchema() {
           <div className="w-[25rem] mx-auto">
             <InputDateRangePicker
               mode="single"
-              classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+              classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
               label={{ startDate: 'Tanggal Mulai dan Akhir' }}
               placeholder={{ startDate: 'Pilih Tanggal Mulai dan Akhir' }}
               onChange={(value) => setValue((prev) => ({ ...prev, number4: value }))}
@@ -178,7 +178,7 @@ function InputDateRangePickerSchema() {
         {/* Number 5 */}
         <div className="space-y-2 pt-6">
           <div className="flex justify-between items-center">
-            <Typography as="global-report-title" className="!text-black-100">
+            <Typography as="global-report-title" className="text-black-100!">
               5. With min and max date
             </Typography>
             <ToggleShowCode show={show.number5} setShow={() => handleShowCode('number5', !show.number5)} />
@@ -186,7 +186,7 @@ function InputDateRangePickerSchema() {
 
           <div className="w-[25rem] mx-auto">
             <InputDateRangePicker
-              classNames={{ toggle: 'h-8', toggleText: '!text-sm' }}
+              classNames={{ toggle: 'h-8', toggleText: 'text-sm!' }}
               label={{ startDate: 'Tanggal Mulai', endDate: 'Tanggal Selesai' }}
               placeholder={{ startDate: 'Pilih Tanggal Mulai', endDate: 'Pilih Tanggal Selesai' }}
               onChange={(value) => setValue((prev) => ({ ...prev, number5: value }))}

@@ -143,7 +143,7 @@ function ListYear({ from, to, active, onSelect }: { from: number; to: number; ac
     selectedValue: active,
   });
   return (
-    <ul className="flex flex-col gap-y-1 w-full  overflow-y-scroll h-[300px] scrollbar pb-[16.7rem]" ref={wrapperRef}>
+    <ul className="flex flex-col gap-y-1 w-full overflow-y-scroll h-[300px] scrollbar pb-[16.7rem]" ref={wrapperRef}>
       {listYear.map((year, key) => {
         const activeYear = +year === active;
         return (

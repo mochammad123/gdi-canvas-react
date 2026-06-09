@@ -23,7 +23,7 @@ function RowExpand({ isExpanded = false, rowIndex, columnIndex }: IRowExpand) {
           aria-label="expand-icon"
           data-testid={`kn-table-body-row-expand-icon-${rowIndex}-${columnIndex}`}
           name="chevron"
-          className={clsx('!size-5', isExpanded ? 'rotate-0' : '-rotate-90')}
+          className={clsx('size-5!', isExpanded ? 'rotate-0' : '-rotate-90')}
         />
       </button>
     </div>

@@ -160,13 +160,13 @@ const DateRangeFieldToggle = (props: IDateRangeFieldToggle) => {
           classNames?.toggle
         )}
       >
-        <Typography as="global-paragraph" className={clsx('line-clamp-1', !value && '!text-black-40', classNames?.toggleText)}>
+        <Typography as="global-paragraph" className={clsx('line-clamp-1', !value && 'text-black-40!', classNames?.toggleText)}>
           {value || placeholder}
         </Typography>
         <CalendarIcon />
       </div>
       {error && (
-        <Typography as="global-hint" className="text-red-500 !font-normal">
+        <Typography as="global-hint" className="text-red-500 font-normal!">
           {error}
         </Typography>
       )}
@@ -274,7 +274,7 @@ const DateRangeCalendar = forwardRef<HTMLDivElement, IDateRangeCalendar & React.
             )}
             onClick={() => onClick()}
           >
-            <Typography as="global-paragraph" className="!text-sm">
+            <Typography as="global-paragraph" className="text-sm!">
               {value}
             </Typography>
           </div>
@@ -315,7 +315,7 @@ const DateRangeCalendar = forwardRef<HTMLDivElement, IDateRangeCalendar & React.
           selectRange={activeDate === null}
           returnValue={activeDate === null ? 'range' : activeDate}
           locale="id-ID"
-          className="!w-full"
+          className="w-full!"
           onChange={handleDateChange}
           value={dateRangeValue}
           minDate={minDate ? dayjs(minDate, 'YYYY-MM-DD').toDate() : undefined}
@@ -323,10 +323,10 @@ const DateRangeCalendar = forwardRef<HTMLDivElement, IDateRangeCalendar & React.
         />
 
         <div className="h-[2.938rem] bg-white border-t border-black-40 flex justify-between items-center">
-          <Button type="button" variant="text" className="!p-0 border-none shadow-none" onClick={handleClickNow}>
+          <Button type="button" variant="text" className="p-0! border-none shadow-none" onClick={handleClickNow}>
             Now
           </Button>
-          <Button type="button" rounded className="!px-5" disabled={!dateRangeValue[0] || !dateRangeValue[1]} onClick={handleClickOk}>
+          <Button type="button" rounded className="px-5!" disabled={!dateRangeValue[0] || !dateRangeValue[1]} onClick={handleClickOk}>
             Ok
           </Button>
         </div>

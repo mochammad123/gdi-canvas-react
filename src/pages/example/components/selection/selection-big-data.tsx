@@ -33,7 +33,7 @@ const SelectionBigData = () => {
         value={value}
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
       />
 
       <ContentExampleCode show={show} code={code} />
@@ -65,7 +65,7 @@ const SelectionBigData = () => {
       value={value}
       onChangeSingleOption={(value) => setValue(value as string)}
       onResetSelection={() => setValue(null)}
-      className="!w-[20rem]"
+      className="w-[20rem]!"
     />
   );
 };

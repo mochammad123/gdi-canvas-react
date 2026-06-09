@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { renderWithProviders } from '@/test/test-utils';
 import type { IHeader } from '../../lib';
 import KnittoTable from '../../knitto-table';
@@ -10,7 +10,14 @@ const defaultData: User[] = [
   { id: 2, name: 'Jane Smith' },
 ];
 
-const waitForTableRender = () => new Promise((r) => setTimeout(r, 500));
+beforeAll(async () => {
+  await Promise.all([import('../../virtual-table'), import('../../regular-table')]);
+});
+
+const waitForTableRender = async (screen: Awaited<ReturnType<typeof renderTable>>) => {
+  await expect.element(screen.getByTestId('kn-table-virtual')).toBeInTheDocument();
+  await expect.element(screen.getByText('John Doe')).toBeInTheDocument();
+};
 
 const renderTable = (headers: IHeader<User>[], props = {}) =>
   renderWithProviders(
@@ -27,7 +34,7 @@ describe('HeaderCell', () => {
         { key: 'name', caption: 'Name', width: 200, filterSelectionOptions: ['John Doe'] },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByText('ID')).toBeInTheDocument();
       await expect.element(screen.getByText('Name')).toBeInTheDocument();
@@ -42,7 +49,7 @@ describe('HeaderCell', () => {
         { key: 'name', caption: 'Name', width: 200 },
       ];
       const screen = await renderTable(headers, { headerMode: 'double' });
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       const sortBtn = screen.getByTestId('kn-table-header-sort-action-id-unset');
       await expect.element(sortBtn).toBeInTheDocument();
@@ -57,7 +64,7 @@ describe('HeaderCell', () => {
         { key: 'name', caption: 'Name', width: 200 },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       const headerCheckbox = screen.getByTestId('kn-table-row-checkbox-input-undefined-undefined');
       await expect.element(headerCheckbox).toBeInTheDocument();
@@ -77,7 +84,7 @@ describe('HeaderCell', () => {
         },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       const customHeader = screen.getByTestId('custom-header');
       await expect.element(customHeader).toBeInTheDocument();
@@ -99,7 +106,7 @@ describe('HeaderCell', () => {
         },
       ];
       const screen = await renderTable(headers, { headerMode: 'double' });
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByText('User Info')).toBeInTheDocument();
       await expect.element(screen.getByText('ID')).toBeInTheDocument();
@@ -115,7 +122,7 @@ describe('HeaderCell', () => {
         { key: 'name', caption: 'Name', width: 200 },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByText('ID')).toBeInTheDocument();
       await expect.element(screen.getByText('Name')).toBeInTheDocument();
@@ -128,7 +135,7 @@ describe('HeaderCell', () => {
         { key: 'action', caption: 'Action', width: 80 },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByTestId('kn-table-virtual')).toBeInTheDocument();
       await expect.element(screen.getByText('ID')).toBeInTheDocument();
@@ -148,7 +155,7 @@ describe('HeaderCell', () => {
         },
       ];
       const screen = await renderTable(headers);
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByTestId('kn-table-header-filter-search-input-id')).toBeInTheDocument();
       await expect.element(screen.getByText('Name')).toBeInTheDocument();
@@ -162,7 +169,7 @@ describe('HeaderCell', () => {
         { key: 'name', caption: 'Name', width: 200 },
       ];
       const screen = await renderTable(headers, { headerMode: 'single' });
-      await waitForTableRender();
+      await waitForTableRender(screen);
 
       await expect.element(screen.getByText('ID')).toBeInTheDocument();
       await expect.element(screen.getByText('Name')).toBeInTheDocument();

@@ -27,15 +27,15 @@ export default function Confirmation({
       <Modal
         preventShortcut
         preventOutsideClick
-        size="!w-[350px]"
+        size="w-[350px]!"
         onHide={onHide}
         show={show}
         centered
         noBackdrop
-        className="!z-[1001]"
+        className="z-[1001]!"
         enableResizeObserver={false}
       >
-        <Modal.Content className="!py-8">
+        <Modal.Content className="py-8!">
           {children ? (
             children
           ) : (
@@ -46,7 +46,7 @@ export default function Confirmation({
           )}
           {!hideButton && (
             <div className="mt-4 flex gap-x-3 justify-center">
-              <Button variant="outline" onClick={onHide} disabled={isLoading} className="shrink-0 !w-1/2">
+              <Button variant="outline" onClick={onHide} disabled={isLoading} className="shrink-0 w-1/2!">
                 {buttonCancelText}
               </Button>
               <Button
@@ -66,7 +66,7 @@ export default function Confirmation({
       </Modal>
       {show && (
         <Portal>
-          <Backdrop className="!z-[1000]" />
+          <Backdrop className="z-[1000]!" />
         </Portal>
       )}
     </>

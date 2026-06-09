@@ -424,7 +424,7 @@ function SelectionDropdown({
             }}
             placeholder={placeholderSearch}
             className=""
-            classNameInput="!text-black-60"
+            classNameInput="text-black-60!"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();
@@ -442,7 +442,7 @@ function SelectionDropdown({
 
       <div>
         {isLoading ? (
-          <div className="h-[6.25rem]  flex justify-center items-center flex-col">
+          <div className="h-[6.25rem] flex justify-center items-center flex-col">
             <Spinner color="text-black-80" />
             <div className="text-black-40 text-sm">Sedang memuat...</div>
           </div>
@@ -571,7 +571,7 @@ function ButtonAddItem({ search, onSaveAddItem }: Pick<ISelectionProps, 'onSaveA
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Tambah Nama Gudang Baru"
-            className="h-8 focus:!border"
+            className="h-8 focus:border!"
             autoFocus
             onKeyUp={(e) => {
               if (e.key !== 'Enter') return;

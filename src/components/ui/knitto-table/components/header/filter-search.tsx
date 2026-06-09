@@ -62,7 +62,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
   if (mode === 'direct-search') {
     return (
       <InputSearch
-        className="bg-white !h-6"
+        className="bg-white h-6!"
         data-testid={`kn-table-header-filter-search-input-${headerKey}`}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -81,7 +81,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
           data-testid={`kn-table-header-filter-search-action-${headerKey}`}
           className={clsx(
             'shrink-0 w-3.5 text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer',
-            showCard.show ? '!text-gray-900 dark:!text-gray-200' : 'text-gray-500 dark:text-gray-700'
+            showCard.show ? 'text-gray-900! dark:text-gray-200!' : 'text-gray-500 dark:text-gray-700'
           )}
         />
       </div>
@@ -93,7 +93,7 @@ function FilterSearch(props: IVirtualFilterSearchProps) {
               <InputSearch
                 id={'filter-search-' + headerKey}
                 data-testid={`kn-table-filter-search-input-${headerKey}`}
-                className="!w-full bg-white"
+                className="w-full! bg-white"
                 onKeyDown={handleEnterSearch}
                 onRemoveSearch={handleResetSearch}
                 value={search}

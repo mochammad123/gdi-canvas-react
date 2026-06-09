@@ -5,7 +5,7 @@ export default function SelectCheckbox({ checked, onChecked }: { onChecked?: (ch
     <div className="w-4 h-4 relative">
       <input
         type="checkbox"
-        className="w-4 h-4 cursor-pointer absolute opacity-0  z-[100]"
+        className="w-4 h-4 cursor-pointer absolute opacity-0 z-[100]"
         checked={checked}
         onChange={(e) => onChecked && onChecked(e.target.checked)}
       />

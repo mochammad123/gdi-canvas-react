@@ -17,11 +17,11 @@ export default function SelectionCustomLabel({ options }: { options: ISelect['op
         <Typography
           as="global-paragraph"
           className={clsx(
-            index === 0 && '!font-bold',
-            index === 1 && '!text-red-500 ml-2',
-            index === 2 && '!text-yellow-500 ml-4',
-            index === 3 && '!text-green-500 ml-6',
-            index === 4 && '!text-blue-500 ml-8'
+            index === 0 && 'font-bold!',
+            index === 1 && 'text-red-500! ml-2',
+            index === 2 && 'text-yellow-500! ml-4',
+            index === 3 && 'text-green-500! ml-6',
+            index === 4 && 'text-blue-500! ml-8'
           )}
         >
           List Item {index + 1}
@@ -47,7 +47,7 @@ export default function SelectionCustomLabel({ options }: { options: ISelect['op
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
         options={mapOptions}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
       />
 
       <ContentExampleCode show={show} code={code} />
@@ -71,11 +71,11 @@ export default function SelectionCustomLabel({ options }: { options: ISelect['op
         <Typography
           as="global-paragraph"
           className={clsx(
-            index === 0 && '!font-bold',
-            index === 1 && '!text-red-500 ml-2',
-            index === 2 && '!text-yellow-500 ml-4',
-            index === 3 && '!text-green-500 ml-6',
-            index === 4 && '!text-blue-500 ml-8'
+            index === 0 && 'font-bold!',
+            index === 1 && 'text-red-500! ml-2',
+            index === 2 && 'text-yellow-500! ml-4',
+            index === 3 && 'text-green-500! ml-6',
+            index === 4 && 'text-blue-500! ml-8'
           )}
         >
           List Item {index + 1}
@@ -90,7 +90,7 @@ export default function SelectionCustomLabel({ options }: { options: ISelect['op
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
         options={mapOptions}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
       />
   );
 }

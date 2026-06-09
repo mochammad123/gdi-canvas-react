@@ -36,7 +36,7 @@ export default function SelectionDisabledOption({ options }: { options: ISelect[
         placeHolder="Search..."
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
         options={options.map((item, index) => ({
           ...item,
           disabled: index === 2 || index === 3 ? true : false,
@@ -81,7 +81,7 @@ export default function SelectionDisabledOption({ options }: { options: ISelect[
         placeHolder="Search..."
         onChangeSingleOption={(value) => setValue(value as string)}
         onResetSelection={() => setValue(null)}
-        className="!w-[20rem]"
+        className="w-[20rem]!"
         options={options.map((item, index) => ({
           ...item,
           disabled: index === 2 || index === 3 ? true : false,
