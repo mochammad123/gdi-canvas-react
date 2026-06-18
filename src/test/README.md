@@ -1,36 +1,88 @@
 # Testing (Vitest Browser)
 
-Dokumentasi ini menjelaskan cara menulis & menjalankan test di template ini, dengan fokus pada:
+Dokumentasi cara menulis dan menjalankan test di **knitto-react-template**.
 
-1. Test Function biasa (unit)
-2. Test Component
-3. Test Integration
-4. Test Variabel/State (local state & global state/Redux)
+Project menggunakan **Vitest** mode **browser** (Playwright Chromium) dan helper **`vitest-browser-react`** untuk render komponen di lingkungan yang mendekati browser asli.
 
-Project ini menggunakan **Vitest** dengan mode **browser** (Playwright) dan helper dari `vitest-browser-react`.
+## Daftar isi
 
-## 📋 Daftar Isi
-
+- [Ringkasan](#ringkasan)
 - [Instalasi](#instalasi)
-- [Cara Menjalankan Test](#cara-menjalankan-test)
-- [Struktur & File Penting](#struktur--file-penting)
-- [1) Test Function Biasa (Unit)](#1-test-function-biasa-unit)
-- [2) Test Component](#2-test-component)
-- [3) Test Integration](#3-test-integration)
-- [4) Test State](#4-test-state)
+- [Menjalankan test](#menjalankan-test)
+- [Struktur folder](#struktur-folder)
+- [File penting](#file-penting)
+- [Cakupan: apa yang ditest & tidak ditest](#cakupan-apa-yang-ditest--tidak-ditest)
+- [Helper `renderWithProviders`](#helper-renderwithproviders)
+- [1) Unit test (logic murni)](#1-unit-test-logic-murni)
+- [2) Component test](#2-component-test)
+- [3) Integration test](#3-integration-test)
+- [4) Test state & hooks](#4-test-state--hooks)
+- [Mock API (MSW)](#mock-api-msw)
+- [Mock modul](#mock-modul)
+- [Menambah test baru](#menambah-test-baru)
+- [Catatan penting](#catatan-penting)
+
+---
+
+## Ringkasan
+
+| Kategori           | Jumlah file | Lokasi                             |
+| ------------------ | ----------- | ---------------------------------- |
+| Integration        | 8           | `src/test/integrations/*.spec.tsx` |
+| Unit               | 4           | `src/test/units/**`                |
+| Template component | 1           | `src/test/templates/*.spec.tsx`    |
+| Page (colocated)   | 2           | `src/pages/login/*.test.tsx`       |
+| **Total**          | **15 file** |                                    |
+
+### Daftar test saat ini
+
+**Integration (`src/test/integrations/`)**
+
+| File                              | Yang ditest                                                  |
+| --------------------------------- | ------------------------------------------------------------ |
+| `login.spec.tsx`                  | Login page: render, validasi, toast, navigate, MSW auth      |
+| `login-cabang.spec.tsx`           | Template login cabang: render, validasi form                 |
+| `login-chatbot.spec.tsx`          | Template login chatbot: render, toast success                |
+| `template-master-detail.spec.tsx` | Template master & detail: layout, validasi, navigasi history |
+| `template-history.spec.tsx`       | Template history: render filter & export                     |
+| `dashboard.spec.tsx`              | Layout: toggle sidebar via hamburger                         |
+| `sidebar.spec.tsx`                | Sidebar + Redux `toggleSidebar`                              |
+| `modal.spec.tsx`                  | Modal lokal + hook `useModal`                                |
+
+**Unit (`src/test/units/`)**
+
+| File                                        | Yang ditest                          |
+| ------------------------------------------- | ------------------------------------ |
+| `global-state.test.ts`                      | Redux slice `layout`                 |
+| `hooks.test.ts`                             | Hook `useModal`                      |
+| `state.spec.tsx`                            | Contoh `useState` (hook + component) |
+| `templates/use-response-data-query.test.ts` | `getResponseData` (data template)    |
+
+**Template component (`src/test/templates/`)**
+
+| File                     | Yang ditest                                    |
+| ------------------------ | ---------------------------------------------- |
+| `action-toggle.spec.tsx` | Menu aksi edit/hapus di template master-detail |
+
+**Colocated di page (`src/pages/login/`)**
+
+| File                    | Yang ditest                                                   |
+| ----------------------- | ------------------------------------------------------------- |
+| `login.test.tsx`        | Schema Zod + helper `getLoginResult` / `getLoginErrorMessage` |
+| `login-cabang.test.tsx` | Schema Zod login cabang                                       |
+
+---
 
 ## Instalasi
-
-Jalankan instalasi dependency project, lalu install browser binary untuk Playwright (karena test berjalan di browser).
 
 ```sh
 pnpm install
 pnpm exec playwright install chromium
 ```
 
-### Dependencies testing yang dipakai
+### Dependencies testing
 
-Dependencies berikut **sudah tersedia** di template ini (cek `package.json`), dan akan ikut ter-install saat `pnpm install`:
+Sudah tersedia di `package.json`:
 
 - `vitest`
 - `@vitest/browser`
@@ -39,291 +91,321 @@ Dependencies berikut **sudah tersedia** di template ini (cek `package.json`), da
 - `playwright`
 - `msw`
 
-## Cara Menjalankan Test
+---
 
-### Command utama
+## Menjalankan test
 
 ```sh
 # Mode watch (default)
 pnpm test
 
-# Mode run + coverage
+# Sekali jalan + coverage
 pnpm test:coverage
 ```
 
-### Menjalankan file tertentu / filter test
+### File atau filter tertentu
 
 ```sh
-# Jalankan 1 file
+# Satu file
 pnpm vitest run src/test/integrations/login.spec.tsx
 
-# Jalankan test berdasarkan nama test
+# Pola nama file
 pnpm test login.spec.tsx
 
-# Jalankan test tertentu berdasarkan judul
+# Judul test
 pnpm vitest run -t "Login Integration Test"
 ```
 
-## Struktur & File Penting
+---
 
-- **`vite.config.ts`**
-  - Konfigurasi Vitest termasuk `test.browser.enabled: true` dan `setupFiles`.
-- **`src/test/setup.ts`**
-  - Setup global test: import `vitest-browser-react`, load CSS, dan start/stop MSW worker.
-- **`src/test/test-utils.tsx`**
-  - Helper `renderWithProviders` untuk bungkus komponen dengan `Redux Provider` + `MemoryRouter` + `ToastProvider`.
-- **`src/test/mocks/*`**
-  - MSW handlers (contoh: mock auth login).
-- **Lokasi test**
-  - Unit/integration test di `src/test/*`
-  - Unit test colocated di page, misalnya `src/pages/login/login.test.tsx`
-  - Komponen dari `@knittotextile/react-ui` (Button, KnittoTable, Pagination, dll.) **tidak** ditest di template ini
+## Struktur folder
 
-## 1) Test Function Biasa (Unit)
+```
+src/test/
+├── README.md                 # Dokumentasi ini
+├── setup.ts                  # MSW + CSS global
+├── test-utils.tsx            # renderWithProviders
+├── mocks/
+│   ├── browser.ts            # MSW worker
+│   ├── handlers.ts           # Gabungan handler
+│   └── handlers/
+│       └── auth.handlers.ts  # Mock POST /auth/login
+├── integrations/             # Page / layout / flow
+├── units/                    # Logic, hooks, redux
+└── templates/                # Komponen khusus template page
 
-Cocok untuk logic murni seperti helper function, util, schema validation (Zod), formatter, mapper, dll. Tidak perlu render UI.
+src/pages/login/
+├── login.test.tsx            # Unit schema login utama
+└── login-cabang.test.tsx     # Unit schema login cabang
+```
 
-Contoh nyata di repo:
+---
 
-- `src/test/units/templates/use-response-data-query.test.ts`
-- `src/pages/login/login.test.tsx` (contoh: `formLoginSchema`, `getLoginResult`, dll.)
-- `src/pages/login/login-cabang.test.tsx`
+## File penting
 
-Template yang disarankan:
+| File                      | Peran                                                                 |
+| ------------------------- | --------------------------------------------------------------------- |
+| `vite.config.ts`          | `test.browser.enabled`, Playwright, `setupFiles`, coverage            |
+| `src/test/setup.ts`       | Load `main.css`, start/stop MSW (`onUnhandledRequest: 'error'`)       |
+| `src/test/test-utils.tsx` | `renderWithProviders` — lihat [di bawah](#helper-renderwithproviders) |
+| `src/test/mocks/*`        | Handler MSW untuk API mock                                            |
+
+---
+
+## Cakupan: apa yang ditest & tidak ditest
+
+### Ditest di template ini
+
+- **Halaman template & login** (form, validasi, toast, navigasi)
+- **Layout aplikasi** (sidebar, header/dashboard)
+- **Komponen UI lokal** yang masih di `src/components/` (modal, toast, action-toggle, dll.)
+- **Logic murni**: Zod schema, helper, hook template (`getResponseData`), Redux slice
+
+### Tidak ditest di template ini
+
+Komponen dari **`@knittotextile/react-ui`** — testing menjadi tanggung jawab package lib:
+
+- `Button`, `Typography`, `Select`, `DatePicker`, dll.
+- `KnittoTable`, `Pagination`, `BigCalendar`
+- `KnittoProvider`, `ThemeToggle`
+
+Jangan buat ulang test komponen lib di template; cukup **smoke test** halaman yang memakainya (render + interaksi utama).
+
+---
+
+## Helper `renderWithProviders`
+
+Gunakan saat komponen butuh konteks aplikasi:
+
+```tsx
+import { renderWithProviders } from '@/test/test-utils';
+
+const screen = await renderWithProviders(<LoginPage />);
+// dengan route awal:
+const screen = await renderWithProviders(<Dashboard />, { initialEntries: ['/example/dashboard'] });
+```
+
+Provider yang dibungkus (urutan dalam):
+
+1. `KnittoProvider` (`defaultTheme="light"`) — token & komponen lib
+2. `Redux Provider` — store singleton `src/redux/store.ts`
+3. `MemoryRouter` — routing
+4. `ToastProvider` — toast lokal template
+
+Jika **tidak** butuh provider di atas, pakai `render` langsung dari `vitest-browser-react`.
+
+---
+
+## 1) Unit test (logic murni)
+
+Tanpa render UI. Cocok untuk: Zod schema, util, mapper, pure function.
+
+**Contoh di repo:** `src/pages/login/login.test.tsx`, `src/pages/login/login-cabang.test.tsx`, `src/test/units/templates/use-response-data-query.test.ts`
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { someFn } from './some-fn';
+import { formLoginSchema } from './hooks/hooks';
 
-describe('someFn', () => {
-  it('case sukses', () => {
-    expect(someFn(1)).toBe(2);
-  });
-
-  it('case error', () => {
-    expect(() => someFn(-1)).toThrow();
+describe('Form Login Schema', () => {
+  it('validasi sukses', () => {
+    expect(formLoginSchema.parse({ username: 'admin', password: 'admin' })).toEqual({
+      username: 'admin',
+      password: 'admin',
+    });
   });
 });
 ```
 
-## 2) Test Component
+Untuk logic template yang awalnya di hook React, ekspor fungsi pure (contoh: `getResponseData`) agar bisa ditest tanpa `renderHook`.
 
-Cocok untuk ngetest perilaku komponen UI lokal template secara terisolasi: render, props, event click, disabled/loading, dan output di DOM.
+---
 
-Contoh nyata di repo:
+## 2) Component test
 
-- `src/test/templates/action-toggle.spec.tsx`
+Test perilaku komponen **lokal** template secara terisolasi.
 
-Pola render:
-
-- Jika **tidak butuh** Redux/Router/Toast: pakai `render` dari `vitest-browser-react`
-- Jika **butuh** Redux/Router/Toast/KnittoProvider: pakai `renderWithProviders` dari `src/test/test-utils.tsx`
-
-Contoh:
+**Contoh di repo:** `src/test/templates/action-toggle.spec.tsx`
 
 ```tsx
 import { describe, expect, it, vi } from 'vitest';
-import { render } from 'vitest-browser-react';
-import Button from '@/components/ui/button/button';
+import { renderWithProviders } from '@/test/test-utils';
+import ActionToggle from '@/pages/example/templates/template-master-and-detail/components/action-toggle';
 
-describe('Button', () => {
-  it('memanggil onClick saat diklik', async () => {
+describe('ActionToggle', () => {
+  it('memanggil onClick edit', async () => {
     const onClick = vi.fn();
-    const screen = await render(<Button onClick={onClick}>Click</Button>);
+    const screen = await renderWithProviders(<ActionToggle onClick={onClick} />);
 
-    await screen.getByRole('button', { name: 'Click' }).click();
-    expect(onClick).toHaveBeenCalledTimes(1);
+    const toggle = screen.container.querySelector('.btn-action-toggle');
+    toggle?.click();
+
+    const editButton = Array.from(document.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === 'Edit');
+    editButton?.click();
+
+    expect(onClick).toHaveBeenCalledWith('edit');
   });
 });
 ```
 
-## 3) Test Integration
+**Tips:** komponen di dalam `Portal` kadang perlu `document.querySelector` atau `userEvent` dari `vitest/browser`, bukan hanya `screen.getByText().click()`.
 
-Cocok untuk ngetest beberapa bagian sekaligus: page + router + redux + API mock (MSW) + side effects (toast/navigate).
+---
 
-Contoh nyata di repo:
+## 3) Integration test
 
-- `src/test/integrations/login.spec.tsx`
-- `src/test/integrations/login-cabang.spec.tsx`
-- `src/test/integrations/login-chatbot.spec.tsx`
-- `src/test/integrations/template-master-detail.spec.tsx`
-- `src/test/integrations/template-history.spec.tsx`
-- `src/test/integrations/dashboard.spec.tsx`
-- `src/test/integrations/sidebar.spec.tsx`
+Test beberapa lapisan sekaligus: page + router + redux + MSW + toast/navigate.
 
-### Mock API (MSW)
+**Contoh di repo:** semua file di `src/test/integrations/`
 
-Default handler ada di `src/test/mocks/handlers/auth.handlers.ts` (disatukan lewat `src/test/mocks/handlers.ts`).
-
-- Untuk skenario normal, **cukup pakai default handler** (tanpa `server.use(...)`).
-- `server.use(...)` dipakai kalau kamu perlu **override** perilaku (contoh: network error / special case).
-
-Contoh full (1 file berisi dua case: default handler + override error). Lihat juga `src/test/integrations/login.spec.tsx`:
+### Pola umum
 
 ```tsx
-import { env } from '@/lib/variables/env';
-import LoginPage from '@/pages/login';
-import { server } from '@/test/mocks/browser';
-import { renderWithProviders } from '@/test/test-utils';
-import { http, HttpResponse } from 'msw';
+import { describe, expect, it } from 'vitest';
 import { userEvent } from 'vitest/browser';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { renderWithProviders } from '@/test/test-utils';
+import LoginChatbotPage from '@/pages/login/login-chatbot';
 
+describe('Login Chatbot', () => {
+  it('menampilkan toast success saat LOG IN diklik', async () => {
+    const screen = await renderWithProviders(<LoginChatbotPage />);
+
+    await screen.getByRole('button', { name: 'LOG IN' }).click();
+
+    await expect.element(screen.getByTestId('toast-success')).toBeInTheDocument();
+    await expect.element(screen.getByText('Login berhasil')).toBeInTheDocument();
+  });
+});
+```
+
+### Prioritas test halaman template
+
+1. **Smoke** — elemen kunci ter-render (judul, tombol, tabel/form)
+2. **Validasi form** — submit kosong → pesan error Zod
+3. **Interaksi ringan** — navigasi, toast, klik tombol utama
+4. Hindari test mendalam fitur `KnittoTable` (virtualisasi, filter) — itu di lib
+
+---
+
+## 4) Test state & hooks
+
+### Local state
+
+**Contoh:** `src/test/units/state.spec.tsx` — pola `useState` via `renderHook` dan component.
+
+### Global state (Redux)
+
+**Unit reducer:** `src/test/units/global-state.test.ts`
+
+**Integration + UI:** `src/test/integrations/sidebar.spec.tsx`
+
+### Custom hooks
+
+**Contoh:** `src/test/units/hooks.test.ts` — `useModal` dengan `renderHook` + `act`.
+
+---
+
+## Mock API (MSW)
+
+Handler default: `src/test/mocks/handlers/auth.handlers.ts` (login `admin`/`admin` → success).
+
+- Skenario normal: **tanpa** `server.use(...)` — pakai handler default.
+- Override (network error, response khusus): `server.use(...)` di dalam `it`.
+
+```tsx
+import { server } from '@/test/mocks/browser';
+import { http, HttpResponse } from 'msw';
+import { env } from '@/lib/variables/env';
+
+server.use(http.post(`${env.VITE_BASE_API_URL}/auth/login`, () => HttpResponse.error()));
+```
+
+MSW distart di `setup.ts` dengan `onUnhandledRequest: 'error'` — request API yang tidak di-mock akan **gagalkan** test.
+
+---
+
+## Mock modul
+
+Kunci dependensi eksternal dengan `vi.mock`:
+
+| Kebutuhan      | Contoh file                                         |
+| -------------- | --------------------------------------------------- |
+| `useNavigate`  | `login.spec.tsx`, `template-master-detail.spec.tsx` |
+| `useUserLogin` | `dashboard.spec.tsx`                                |
+
+```tsx
 const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  };
+  return { ...actual, useNavigate: () => mockNavigate };
 });
 
 beforeEach(() => {
   mockNavigate.mockClear();
 });
-
-describe('Login Integration Test', () => {
-  it('success pakai default handler (tanpa server.use)', async () => {
-    const screen = await renderWithProviders(<LoginPage />);
-    const user = userEvent.setup();
-
-    await user.type(screen.getByPlaceholder('Username'), 'admin');
-    await user.type(screen.getByPlaceholder('Password'), 'admin');
-    await screen.getByRole('button', { name: 'LOGIN' }).click();
-
-    await expect.element(screen.getByTestId('toast-success')).toBeInTheDocument();
-    expect(mockNavigate).toHaveBeenCalledWith('/example/dashboard');
-  });
-
-  it('override hanya untuk error (network error)', async () => {
-    server.use(
-      http.post(`${env.VITE_BASE_API_URL}/auth/login`, async () => {
-        return HttpResponse.error();
-      })
-    );
-
-    const screen = await renderWithProviders(<LoginPage />);
-    const user = userEvent.setup();
-
-    await user.type(screen.getByPlaceholder('Username'), 'admin');
-    await user.type(screen.getByPlaceholder('Password'), 'admin');
-    await screen.getByRole('button', { name: 'LOGIN' }).click();
-
-    await expect.element(screen.getByTestId('toast-error')).toBeInTheDocument();
-    expect(mockNavigate).not.toHaveBeenCalled();
-  });
-});
 ```
 
-Catatan: MSW worker distart di `src/test/setup.ts` dengan `onUnhandledRequest: 'error'`, jadi request yang tidak di-handle akan membuat test gagal (bagus untuk mencegah “silent network”).
+---
 
-### Mock modul (contoh navigate / hook)
+## Menambah test baru
 
-Untuk nge-“lock” dependensi eksternal, gunakan `vi.mock(...)` seperti di `login.spec.tsx` (mock `useNavigate`) atau `dashboard.spec.tsx` (mock `useUserLogin`).
+### Login / template page baru
 
-## 4) Test State
+1. **Unit schema** (jika pakai Zod): `src/pages/<nama>/hooks/*.ts` + `*.test.tsx` colocated
+2. **Integration**: `src/test/integrations/<nama>.spec.tsx` dengan `renderWithProviders`
 
-### A. Local state (React `useState`)
+### Komponen khusus template
 
-Cocok untuk memastikan perubahan state mempengaruhi UI dengan benar.
+Letakkan di `src/test/templates/<nama>.spec.tsx` jika hanya dipakai template page.
 
-Contoh nyata di repo:
+### Checklist sebelum commit
 
-- `src/test/units/state.spec.tsx`
+- [ ] `pnpm vitest run` lulus
+- [ ] Test yang ubah Redux store punya `beforeEach` reset (lihat `sidebar.spec.tsx`)
+- [ ] Tidak menambah test untuk komponen `@knittotextile/react-ui` secara terisolasi
+- [ ] MSW handler ditambah jika page memanggil API baru
 
-Contoh (test local state lewat component):
+---
+
+## Catatan penting
+
+### Singleton Redux store
+
+`renderWithProviders` memakai store dari `src/redux/store.ts`. Jika test melakukan `dispatch`, reset state di `beforeEach`:
 
 ```tsx
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-react';
-import { useState } from 'react';
-import { Typography } from '@/components/ui/typhography';
-import { Button } from '@/components/ui/button';
-
-function StateComponentTest() {
-  const [count, setCount] = useState<number>(0);
-  return (
-    <div className="flex flex-col items-center justify-center gap-2">
-      <Typography as="h3">{count}</Typography>
-      <div className="flex gap-2">
-        <Button onClick={() => setCount(count + 1)}>Increment</Button>
-        <Button onClick={() => setCount(count - 1)}>Decrement</Button>
-      </div>
-    </div>
-  );
-}
-
-describe('State Component Test', () => {
-  it('seharusnya menambahkan nilai ketika button increment diklik', async () => {
-    const screen = await render(<StateComponentTest />);
-
-    await expect.element(screen.getByRole('heading', { level: 3 })).toHaveTextContent('0');
-
-    await screen.getByRole('button', { name: 'Increment' }).click();
-    await expect.element(screen.getByRole('heading', { level: 3 })).toHaveTextContent('1');
-  });
-});
-```
-
-### B. Global state (Redux)
-
-Cocok untuk memastikan interaksi UI terhadap Redux store berjalan sesuai ekspektasi.
-
-Contoh nyata di repo:
-
-- `src/test/units/global-state.test.ts`
-- `src/test/integrations/sidebar.spec.tsx`
-
-Contoh 1 (unit test reducer/store tanpa render UI):
-
-```ts
-import { describe, expect, it } from 'vitest';
-import { configureStore } from '@reduxjs/toolkit';
-import layoutReducer, { toggleSidebar } from '@/redux/layoutSlice';
-
-describe('Penggunaan global state redux', () => {
-  it('seharusnya menampilkan nilai false -> true -> false', () => {
-    const store = configureStore({ reducer: { layout: layoutReducer } });
-
-    expect(store.getState().layout.isSidebarOpen).toBe(false);
-
-    store.dispatch(toggleSidebar());
-    expect(store.getState().layout.isSidebarOpen).toBe(true);
-
-    store.dispatch(toggleSidebar());
-    expect(store.getState().layout.isSidebarOpen).toBe(false);
-  });
-});
-```
-
-Contoh 2 (integration: render UI + dispatch ke singleton store). Penting: reset state di `beforeEach` kalau sebelumnya sudah berubah:
-
-```tsx
-import { beforeEach, describe, expect, it } from 'vitest';
-import { renderWithProviders } from '@/test/test-utils';
-import Sidebar, { type ISidebarMenu } from '@/components/layout/sidebar';
 import store from '@/redux/store';
 import { toggleSidebar } from '@/redux/layoutSlice';
-
-const sidebarMenuMock: ISidebarMenu[] = [{ module: 'Example', menu: [{ label: 'Dashboard', url: '/example/dashboard' }] }];
 
 beforeEach(() => {
   if (store.getState().layout.isSidebarOpen) {
     store.dispatch(toggleSidebar());
   }
 });
-
-describe('Sidebar + Global State', () => {
-  it('seharusnya sidebar terbuka ketika state di-toggle', async () => {
-    const screen = await renderWithProviders(<Sidebar sidebarMenu={sidebarMenuMock} />);
-    const sidebarEl = screen.getByTestId('sidebar');
-
-    await expect.poll(() => sidebarEl.element().getAttribute('data-open')).toBe('false');
-    store.dispatch(toggleSidebar());
-    await expect.poll(() => sidebarEl.element().getAttribute('data-open')).toBe('true');
-  });
-});
 ```
 
-Catatan penting: `renderWithProviders` saat ini memakai **singleton store** dari `src/redux/store.ts`. Kalau test memodifikasi store (dispatch action), pastikan ada `beforeEach` untuk “balikin” state ke kondisi awal (lihat pola di `sidebar.spec.tsx` dan `dashboard.spec.tsx`).
+### Assertion di browser mode
+
+Gunakan matcher dari `vitest-browser-react`:
+
+```tsx
+await expect.element(screen.getByText('...')).toBeInTheDocument();
+await expect.poll(() => element.getAttribute('data-open')).toBe('true');
+```
+
+### Interaksi keyboard / form
+
+```tsx
+import { userEvent } from 'vitest/browser';
+
+const user = userEvent.setup();
+await user.type(screen.getByPlaceholder('Username'), 'admin');
+```
+
+### Coverage
+
+```sh
+pnpm test:coverage
+```
+
+Laporan HTML di folder `coverage/` setelah dijalankan.

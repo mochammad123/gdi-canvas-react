@@ -1,72 +1,53 @@
 <div align="center">
 	<img src="https://s3.knitto.co.id/web/knitto.png" width="150"/>
 	<h1>Template React Knitto Website</h1>
-	<div>Repository ini merupakan template atau boilerplate untuk frontend knitto (website), menggunakan react sebagai library, vite sebagai builder website dan tailwind sebagai pembangun css</div>
+	<div>Boilerplate frontend Knitto menggunakan React, TypeScript, Vite, Tailwind CSS v4, Redux Toolkit, dan <code>@knittotextile/react-ui</code>.</div>
 </div>
 
 # Struktur Projek
 
 ```
 / root directory
+├─ config                         # Konfigurasi deploy & plugin Vite
 ├─ public
-|  ├─ fonts                        # Font yang digunakan
-|  └─ svg                          # Svg yang digunakan untuk diluar src
-├─ src                             # Source aplikasi
-|  ├─ assets                       # Assets yang digunakan untuk aplikasi
-|  ├─ components                   # Component yang di share
-|  |  ├─ [nama-component]          # Folder component yang di share
-|  |  ├─ [...]
-|  |  └─ ui                        # Component ui kit yang sering digunakan
-|  |     ├─ [nama-component-kit]   # Folder component ui kit
-|  |     └─ [...]
-|  ├─ lib                          # Kumpulan lib
-|  |  ├─ utils                     # Folder util atau function (folder)
-|  |  ├─ hooks                     # Function (logic) state, state global yang di share (folder)
-|  |  ├─ variabels                 # Kelompok variabel global atau konstan
-|  |  └─ [...]
-|  ├─ pages                        # Kumpulan page dan sub-page (folder)
-|  |  ├─ [nama-page]               # Folder page sesuai dengan path (folder)
-|  |  |  ├─ components             # Component yang digunakan oleh page (folder)
-|  |  |  ├─ hooks                  # Hook atau function yang digunakan untuk page (folder)
-|  |  |  ├─ index.tsx              # Index pages atau sub page menggunakan router dom
-|  |  |  └─ [nama-sub-page]        # Kumpulan sub-page (folder) sesuai dengan path
-|  |  |     ├─ components          # Component yang digunakan oleh sub-page (folder)
-|  |  |     ├─ hooks               # Hook atau function yang digunakan untuk sub-page (folder)
-|  |  |     ├─ index.tsx           # Index sub page
-|  |  |     └─ [...]
-|  |  └─ [...]
-|  ├─ redux                        # Kumpulan page dan sub-page (folder)
-|  |  ├─ api                       # Kumpulan useQuery dan mutation beserta base query (folder)
-|  |  ├─ slice                     # Kumpulan slice untuk redux
-|  |  └─ store.ts                  # Definisi redux
-|  ├─ styles                       # Kumpulan style dan font yang di custome (folder)
-|  ├─ test                         # Kumpulan file test (folder)
-|  └─ types                        # Kumpulan types atau interface (folder)
-|
-└─ plugins                         # Kumpulan plugins atau style yang khusus untuk design system knitto
-
+│  ├─ fonts                       # Font aplikasi
+│  └─ svg                         # Asset SVG di luar src
+├─ src
+│  ├─ assets
+│  ├─ components                  # Komponen shared (layout, ui lokal)
+│  ├─ lib                         # utils, hooks, variabels
+│  ├─ pages                       # Halaman & sub-halaman (React Router)
+│  ├─ redux                       # RTK Query, slice, store
+│  ├─ styles                      # main.css, font custom
+│  ├─ test                        # Setup test, mocks, integration/unit
+│  └─ types
+├─ tailwind                       # Plugin Tailwind khusus (modal, dll.)
+└─ .env.example                   # Contoh environment variable
 ```
 
-**`Keterangan`**
+**Keterangan**
 
-- Penggunaan nama file atau folder ketika ada spasi menggunakan `kebab case`.
-- Penggunaan variabel menggunakan `camel case` dan untuk global menggunakan `upper case`.
-- Masukan ke dalam folder jika component tersebut mempunyai tujuan yang sama.
-- Pastikan untuk mengaktifkan eslint dan prettier pada vscode atau IDE yang digunakan.
+- Nama file/folder: **kebab-case**
+- Variabel: **camelCase**; konstanta global: **UPPER_CASE**
+- Komponen UI utama dari **`@knittotextile/react-ui`** — komponen di `src/components/ui/` hanya untuk yang belum / belum dipindah ke lib
+- Aktifkan ESLint & Prettier di IDE
 
 # Requirements (Tech Stack)
 
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Redux Tool Kit](https://redux-toolkit.js.org/)
-- [PNPM](https://pnpm.io/)
-- [Tailwind](https://tailwindcss.com/)
+| Teknologi | Keterangan |
+|-----------|------------|
+| [React 18](https://react.dev/) | UI library |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety |
+| [Vite](https://vitejs.dev/) | Build & dev server |
+| [Tailwind CSS v4](https://tailwindcss.com/) | Styling |
+| [Redux Toolkit](https://redux-toolkit.js.org/) + RTK Query | State & data fetching |
+| [React Router DOM](https://reactrouter.com/) | Routing |
+| [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) | Form & validasi |
+| [@knittotextile/react-ui](https://github.com/knittotextile/knitto-desgin-system/pkgs/npm/react-ui) | Design system (private) |
+| [Vitest](https://vitest.dev/) + Playwright | Testing (browser mode) |
+| [PNPM](https://pnpm.io/) | Package manager |
 
-**Versi minimum:**
-
-- Node.js: >= 24
-- pnpm: >= 10.34.1
-- Tailwind CSS: v4
+**Versi minimum:** Node.js >= 24 · pnpm >= 10.34.1
 
 ### Setup toolchain
 
@@ -76,24 +57,140 @@ corepack use pnpm@10.34.1
 pnpm install
 ```
 
-Gunakan file `.nvmrc` jika memakai nvm: `nvm use`
+Gunakan `.nvmrc` jika memakai nvm: `nvm use`
 
-### Penggunaan NPM github
+### Registry NPM GitHub (Knitto UI)
 
-Repository ini menggunakan library khusus [**`Knitto UI`**](https://github.com/knittotextile/knitto-desgin-system/pkgs/npm/react-ui) secara private, gunakan panduan berikut untuk cara install library [**`Working with the npm registry`**](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
-
-# Dokumentasi Penggunaan
-
-- [Knitto Table](https://github.com/knittotextile/knitto-react-template/blob/feat/virtual-table-base-tanstack/src/components/ui/knitto-table/README.md)
-- [Big Calendar](https://github.com/knittotextile/knitto-react-template/blob/feat/big-calendar/src/components/ui/big-calendar/README.md)
+Library `@knittotextile/react-ui` bersifat private. Ikuti panduan: [Working with the npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
 
 ---
 
-# Penggunaan dan Pengisian `entrypoint.sh` untuk Environment Variable
+# Dokumentasi & Referensi
 
-Untuk deployment (misal pada Docker), environment variable yang digunakan aplikasi akan digenerate ke file JS saat build. Proses ini dapat menggunakan script `entrypoint.sh` yang akan membuat file env JS sesuai dengan environment yang diberikan.
+### Design system (`@knittotextile/react-ui`)
 
-Contoh isi `entrypoint.sh`:
+Komponen berikut **sudah dari lib**, tidak lagi di-maintain lokal di template:
+
+- `Button`, `Typography`, `Select`, `DatePicker`, `Pagination`
+- `KnittoTable`, `BigCalendar`
+- `KnittoProvider`, `ThemeToggle`
+
+Import contoh:
+
+```tsx
+import { Button, KnittoTable, Typography, KnittoProvider } from '@knittotextile/react-ui';
+import '@knittotextile/react-ui/styles';
+```
+
+### Dokumentasi komponen lib (Storybook / docs server)
+
+Setelah menjalankan project, buka **Example → Dashboard**. Di bagian atas ada kartu **Dokumentasi Komponen** dengan tombol ke:
+
+`http://192.168.20.15:11111/`
+
+*(URL internal dokumentasi komponen yang sudah dikomponenkan di lib.)*
+
+### Halaman contoh di template
+
+| Area | Path |
+|------|------|
+| Dashboard navigasi | `/example/dashboard` |
+| Contoh komponen lib | `/example/komponen/*` (table, button, selection, …) |
+| Template login | `/login`, `/login-cabang`, `/login-chatbot` |
+| Template master & detail | `/example/master-and-detail` |
+
+### Komponen UI lokal (`src/components/ui/`)
+
+Masih di template (belum / belum sepenuhnya di lib): `modal`, `toast`, `input`, `card`, `layout/sidebar`, dll. Lihat folder `src/components/` untuk detail.
+
+### Testing
+
+Panduan lengkap menulis & menjalankan test: **[src/test/README.md](./src/test/README.md)**
+
+---
+
+# Knitto UI & Dark Mode
+
+Setup inti di template:
+
+1. **Styles lib** di `src/styles/main.css`:
+
+   ```css
+   @import 'tailwindcss';
+   @import '@knittotextile/react-ui/styles';
+   ```
+
+2. **`KnittoProvider`** di `src/main.tsx` (`defaultTheme="system"`).
+
+3. **Anti-FOUC** — script blocking di `index.html` membaca `localStorage` key `knitto-theme` sebelum React mount.
+
+4. **Theme toggle** di navbar (`ThemeToggle` dari lib) pada layout example.
+
+---
+
+# Environment Variable
+
+Salin `.env.example` ke `.env`:
+
+```sh
+cp .env.example .env
+```
+
+| Variable | Keterangan |
+|----------|------------|
+| `VITE_APP_NAME` | Nama aplikasi (judul login, dll.) |
+| `VITE_BASE_API_URL` | Base URL API |
+| `VITE_ENVIRONTMENT` | `DEVELOPMENT` / `PRODUCTION` |
+| `VITE_DOCUMENTATION_URL` | Base URL dokumentasi KNUI (footer komponen example) |
+| `VITE_USE_MOCK_API` | `true` → MSW aktif di development |
+
+Nilai dibaca lewat `window.__ENV__` (lihat `src/lib/variables/env.ts` dan `config/generate-env-plugin.ts`).
+
+---
+
+# Scripts
+
+```sh
+pnpm dev              # Development server
+pnpm build            # Production build
+pnpm preview          # Preview build
+pnpm lint             # ESLint
+pnpm format:all       # Prettier
+pnpm test             # Vitest (watch)
+pnpm test:coverage    # Vitest sekali jalan + coverage
+```
+
+### Testing (singkat)
+
+```sh
+pnpm exec playwright install chromium   # sekali, untuk browser test
+pnpm test
+```
+
+Detail: [src/test/README.md](./src/test/README.md)
+
+---
+
+# Cara Menjalankan Project (Development)
+
+```sh
+corepack enable
+corepack use pnpm@10.34.1
+pnpm install
+pnpm dev
+```
+
+Environment di-load dari `.env` pada root. Setelah mengubah `.env`, restart dev server.
+
+Dengan `VITE_USE_MOCK_API=true`, API login di-mock oleh MSW (lihat `src/test/mocks/`).
+
+---
+
+# Penggunaan `entrypoint.sh` (Deployment)
+
+Untuk deployment (Docker), environment variable digenerate ke `generated-env.js` saat container start.
+
+Contoh (`config/entrypoint.sh`):
 
 ```sh
 #!/bin/sh
@@ -110,50 +207,29 @@ EOF
 exec "$@"
 ```
 
-**Langkah Penggunaan:**
+**Langkah:**
 
-1. Pastikan environment variable (`VITE_APP_NAME`, `VITE_BASE_API_URL`, dll) sudah di-set pada environment container/server Anda.
-2. Saat container dijalankan, script `entrypoint.sh` akan membuat file JS env di direktori web server (misal: `/usr/share/nginx/html/`).
-3. File JS ini akan di-load oleh aplikasi frontend secara otomatis.
-4. Nama file JS env yang dihasilkan adalah `generated-env.js` (sudah fixed), sehingga konsisten antara plugin build dan script deployment.
+1. Set env di container/server (`VITE_APP_NAME`, `VITE_BASE_API_URL`, dll.).
+2. Saat container jalan, script menulis `generated-env.js` di direktori static web.
+3. Aplikasi memuat file tersebut otomatis (plugin `config/generate-env-plugin.ts` pada build).
 
-**Catatan:**
-
-- File env JS akan digenerate secara otomatis saat proses build menggunakan plugin custom (lihat `generate-env-plugin.ts`).
-- Pastikan penamaan dan lokasi file sesuai dengan yang diharapkan aplikasi (lihat juga konfigurasi plugin dan Dockerfile).
-
----
-
-# Cara Menjalankan Project (Development)
-
-Untuk menjalankan project pada mode development:
-
-```sh
-corepack enable
-corepack use pnpm@10.34.1
-pnpm install
-pnpm dev
-```
-
-Secara default, environment variable akan di-load dari file `.env` atau `.env.local` pada root project. Tidak perlu menggunakan `entrypoint.sh` pada mode development, cukup pastikan file env sudah terisi sesuai kebutuhan.
-
-Jika ingin menambah/mengubah variable, edit file `.env` lalu restart dev server.
+Pada **development**, cukup file `.env` — tidak perlu `entrypoint.sh`.
 
 ---
 
 # Docker
 
-Build image (membutuhkan `GITHUB_TOKEN` untuk registry `@knittotextile`):
+Build image (butuh `GITHUB_TOKEN` untuk registry `@knittotextile`):
 
 ```sh
 docker build -t template . --build-arg GITHUB_TOKEN=your_github_token
 ```
 
-Atau dengan Docker Compose:
+Atau Docker Compose:
 
 ```sh
 export GITHUB_TOKEN=your_github_token
 docker compose up --build -d
 ```
 
-Aplikasi akan tersedia di `http://localhost:3000`.
+Aplikasi tersedia di `http://localhost:3000`.
