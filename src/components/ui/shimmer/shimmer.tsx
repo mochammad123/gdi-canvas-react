@@ -6,9 +6,9 @@ export function Shimmer({ children, className }: { children: React.ReactNode; cl
 }
 
 export function Circle({ className, width = 'w-10', height = 'h-10' }: { className?: string; width?: string; height?: string }) {
-  return <div className={clsx('rounded-full bg-gray-300', width, height, className)}></div>;
+  return <div className={clsx('rounded-full bg-gray-300 dark:bg-black-60', width, height, className)}></div>;
 }
 
 export function Line({ width = 'w-full', height = 'h-2' }: { width?: string; height?: string }) {
-  return <div className={clsx('h-2 rounded bg-gray-300', width, height)}></div>;
+  return <div className={clsx('h-2 rounded bg-gray-300 dark:bg-black-60', width, height)}></div>;
 }

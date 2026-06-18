@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { clsx } from 'clsx';
 
 type IDummyData = {

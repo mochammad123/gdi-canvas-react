@@ -1,7 +1,7 @@
 import Spinner from '@/components/ui/icon/spinner';
 import Confirmation from '@/components/ui/modal/modal-confirmation';
 import { IModalConfirmationProps } from '@/components/ui/modal/types';
-import { Button } from '../button';
+import { Button } from '@knittotextile/react-ui';
 
 export default function ConfirmationDelete({
   show,
@@ -11,7 +11,7 @@ export default function ConfirmationDelete({
 }: IModalConfirmationProps & { onConfirm: () => void; isLoading: boolean }) {
   return (
     <Confirmation show={show} onHide={onHide} onConfirm={() => ''} hideButton>
-      <h1 className="text-2xl text-center font-bold text-gray-900 mt-1">Apakah anda yakin ingin menghapusnya ?</h1>
+      <h1 className="text-2xl text-center font-bold text-gray-900 dark:text-greyish-semi-white mt-1">Apakah anda yakin ingin menghapusnya ?</h1>
       <div className="flex gap-x-2 justify-center mt-6 px-5">
         <Button variant="outline" onClick={onHide} disabled={isLoading} className="shrink-0 w-1/2!">
           Cancel

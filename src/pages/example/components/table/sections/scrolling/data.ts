@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { Employee } from '@/lib/variables/table-sample';
 
 export type ScrollPosition = {
@@ -26,7 +26,7 @@ export const getEmployeeHeaders = (): IHeader<Employee>[] => [
 ];
 
 export const CODE_EXAMPLES = {
-  scrollTracking: `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+  scrollTracking: `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
   import { useRef, useCallback } from 'react';
   
   const ScrollTrackingTable = () => {
@@ -59,7 +59,7 @@ export const CODE_EXAMPLES = {
     );
   };`,
 
-  programmaticScrolling: `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+  programmaticScrolling: `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
   import { useRef } from 'react';
   
   const ProgrammaticScrollTable = () => {
@@ -99,7 +99,7 @@ export const CODE_EXAMPLES = {
     );
   };`,
 
-  infiniteScroll: `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+  infiniteScroll: `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
   import { useCallback, useState } from 'react';
   
   const InfiniteScrollTable = () => {

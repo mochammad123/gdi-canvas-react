@@ -4,7 +4,7 @@ import CodeBlock from '../../components/code-block';
 import { CODE_EXAMPLES, ScrollPosition, getEmployeeHeaders } from './data';
 import ToggleShowCode from '@/components/toggle-show-code';
 import { generateEmployeeData } from '@/lib/variables/table-sample';
-import { IVirtualTableRef, KnittoTable } from '@/components/ui/knitto-table';
+import { IVirtualTableRef, KnittoTable } from '@knittotextile/react-ui';
 
 function Scrolling({ id }: { id: string }) {
   const [showCode1, setShowCode1] = useState(false);
@@ -51,11 +51,11 @@ function Scrolling({ id }: { id: string }) {
         <div className="flex-1 h-80">
           <KnittoTable headers={headers} data={data} rowKey="id" onScroll={handleScroll} />
         </div>
-        <div className="w-80 border rounded-md p-3 bg-white">
-          <div className="font-semibold mb-2">Current Scroll Position</div>
-          <div className="text-sm">Scroll Top: {scrollPos.scrollTop}px</div>
-          <div className="text-sm">Scroll Left: {scrollPos.scrollLeft}px</div>
-          <div className="text-xs text-gray-600 mt-2">Sticky headers, progress indicator, or analytics can use this.</div>
+        <div className="w-80 border dark:border-black-60 rounded-md p-3 bg-white dark:bg-black-80">
+          <div className="font-semibold mb-2 dark:text-greyish-semi-white">Current Scroll Position</div>
+          <div className="text-sm dark:text-black-40">Scroll Top: {scrollPos.scrollTop}px</div>
+          <div className="text-sm dark:text-black-40">Scroll Left: {scrollPos.scrollLeft}px</div>
+          <div className="text-xs text-gray-600 dark:text-black-40 mt-2">Sticky headers, progress indicator, or analytics can use this.</div>
         </div>
       </div>
       {showCode1 && (
@@ -69,21 +69,33 @@ function Scrolling({ id }: { id: string }) {
         <span className="global-report-title">2. Programmatic Scrolling with Ref</span>
         <ToggleShowCode show={showCode2} setShow={setShowCode2} />
       </div>
-      <div className="mb-2 p-3 border rounded bg-green-50 text-green-800 text-sm">
+      <div className="mb-2 p-3 border dark:border-black-60 rounded bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 text-sm">
         Use the ref prop to access the table&apos;s scroll element and implement programmatic scrolling. Great for navigation, search results, or
         user-controlled scrolling.
       </div>
       <div className="mb-2 flex gap-2">
-        <button className="px-2 py-1 text-xs border rounded" onClick={scrollToTop}>
+        <button
+          className="px-2 py-1 text-xs border dark:border-black-60 rounded dark:text-greyish-semi-white hover:bg-black-20 dark:hover:bg-black-60"
+          onClick={scrollToTop}
+        >
           Scroll to Top
         </button>
-        <button className="px-2 py-1 text-xs border rounded" onClick={scrollToBottom}>
+        <button
+          className="px-2 py-1 text-xs border dark:border-black-60 rounded dark:text-greyish-semi-white hover:bg-black-20 dark:hover:bg-black-60"
+          onClick={scrollToBottom}
+        >
           Scroll to Bottom
         </button>
-        <button className="px-2 py-1 text-xs border rounded" onClick={() => scrollTo(500)}>
+        <button
+          className="px-2 py-1 text-xs border dark:border-black-60 rounded dark:text-greyish-semi-white hover:bg-black-20 dark:hover:bg-black-60"
+          onClick={() => scrollTo(500)}
+        >
           Scroll to 500px
         </button>
-        <button className="px-2 py-1 text-xs border rounded" onClick={() => scrollTo(1000, 200)}>
+        <button
+          className="px-2 py-1 text-xs border dark:border-black-60 rounded dark:text-greyish-semi-white hover:bg-black-20 dark:hover:bg-black-60"
+          onClick={() => scrollTo(1000, 200)}
+        >
           Scroll to (1000px, 200px)
         </button>
       </div>
@@ -101,7 +113,7 @@ function Scrolling({ id }: { id: string }) {
         <span className="global-report-title">3. Scroll Touch Bottom for Infinite Loading</span>
         <ToggleShowCode show={showCode3} setShow={setShowCode3} />
       </div>
-      <div className="mb-2 p-3 border rounded bg-amber-50 text-amber-800 text-sm">
+      <div className="mb-2 p-3 border dark:border-black-60 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 text-sm">
         Use the onScrollTouchBottom prop to detect when users scroll near the bottom. Perfect for implementing infinite loading, pagination, or lazy
         loading of data.
       </div>
@@ -109,12 +121,12 @@ function Scrolling({ id }: { id: string }) {
         <div className="flex-1 h-80">
           <KnittoTable headers={headers} isLoading={loading} data={infiniteData} rowKey="id" onScrollTouchBottom={handleTouchBottom} />
         </div>
-        <div className="w-80 border rounded-md p-3 bg-white">
-          <div className="font-semibold mb-2">Infinite Scroll Stats</div>
-          <div className="text-sm">Total Records: {infiniteData.length}</div>
-          <div className="text-sm">Bottom Touches: {bottomTouches}</div>
-          <div className="text-sm">Loading: {loading ? 'Yes' : 'No'}</div>
-          <div className="text-xs text-gray-600 mt-2">Threshold: ~100px from bottom. Throttled to prevent excessive calls.</div>
+        <div className="w-80 border dark:border-black-60 rounded-md p-3 bg-white dark:bg-black-80">
+          <div className="font-semibold mb-2 dark:text-greyish-semi-white">Infinite Scroll Stats</div>
+          <div className="text-sm dark:text-black-40">Total Records: {infiniteData.length}</div>
+          <div className="text-sm dark:text-black-40">Bottom Touches: {bottomTouches}</div>
+          <div className="text-sm dark:text-black-40">Loading: {loading ? 'Yes' : 'No'}</div>
+          <div className="text-xs text-gray-600 dark:text-black-40 mt-2">Threshold: ~100px from bottom. Throttled to prevent excessive calls.</div>
         </div>
       </div>
       {showCode3 && (

@@ -1,9 +1,9 @@
 import ToggleShowCode from '@/components/toggle-show-code';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import { IHeader, KnittoTable } from '@knittotextile/react-ui';
 import { memo, useState } from 'react';
 import CodeBlock from '../../../components/code-block';
 import { User } from '@/lib/variables/table-sample';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import clsx from 'clsx';
 
 interface IBasicStylingProps {
@@ -59,7 +59,7 @@ function BasicStyling({ users, headers }: IBasicStylingProps) {
 
 export default memo(BasicStyling);
 
-const BASIC_STYLING_EXAMPLE = `import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+const BASIC_STYLING_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 import { useState } from 'react';
 import clsx from 'clsx';

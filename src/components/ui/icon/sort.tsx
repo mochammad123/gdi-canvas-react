@@ -1,6 +1,8 @@
+import clsx from 'clsx';
+
 export default function SortIcon({ sort = 'unset' }: TIconSort) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-black-100 dark:text-greyish-semi-white">
       <SortUp sort={sort} />
       <SortDown sort={sort} />
     </div>
@@ -10,9 +12,8 @@ export default function SortIcon({ sort = 'unset' }: TIconSort) {
 function SortDown({ sort }: TIconSort) {
   return (
     <svg
-      className="-mt-1"
+      className={clsx('-mt-1', sort === 'desc' ? 'fill-current' : 'fill-black-40 dark:fill-black-40')}
       stroke="currentColor"
-      fill={sort === 'desc' ? '#333' : '#ccc'}
       strokeWidth="0"
       version="1.2"
       baseProfile="tiny"
@@ -25,11 +26,12 @@ function SortDown({ sort }: TIconSort) {
     </svg>
   );
 }
+
 function SortUp({ sort }: TIconSort) {
   return (
     <svg
+      className={clsx(sort === 'asc' ? 'fill-current' : 'fill-black-40 dark:fill-black-40')}
       stroke="currentColor"
-      fill={sort === 'asc' ? '#333' : '#ccc'}
       strokeWidth="0"
       version="1.2"
       baseProfile="tiny"

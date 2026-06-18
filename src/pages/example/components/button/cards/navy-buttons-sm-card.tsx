@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typhography';
+import { Button } from '@knittotextile/react-ui';
+import { Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
 import ToggleShowCode from '@/components/toggle-show-code';
 import ContentExampleCode from '@/components/content-example-code';
 
 const navyButtonsSmExampleCode = `
 // Required imports:
-// import { Button } from '@/components/ui/button';
-// import { Typography } from '@/components/ui/typhography';
+// import { Button } from '@knittotextile/react-ui';
+// import { Typography } from '@knittotextile/react-ui';
 
 // Example JSX structure:
 <div className="flex flex-col gap-3 items-center w-full">
@@ -81,9 +81,9 @@ export default function NavyButtonsSmCard() {
   const [showCode, setShowCode] = useState(false);
 
   return (
-    <div className="bg-white shadow p-4 flex flex-col gap-3">
+    <div className="bg-white dark:bg-black-80 shadow p-4 flex flex-col gap-3">
       <div className="flex justify-between items-center">
-        <Typography as="h4" className="text-navy-100">
+        <Typography as="h4" className="text-navy-100 dark:text-greyish-semi-white">
           Navy (SM)
         </Typography>
         <ToggleShowCode show={showCode} setShow={setShowCode} />

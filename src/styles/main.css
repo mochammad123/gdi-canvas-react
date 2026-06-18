@@ -1,111 +1,6 @@
 @import 'tailwindcss';
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-@plugin '../../tailwind/tailwind.components.ts';
-
-@theme {
-  --color-knitto-blue-100: var(--knitto-blue-100);
-  --color-knitto-blue-80: var(--knitto-blue-80);
-  --color-knitto-blue-60: var(--knitto-blue-60);
-  --color-knitto-blue-40: var(--knitto-blue-40);
-  --color-knitto-blue-20: var(--knitto-blue-20);
-
-  --color-navy-100: var(--navy-100);
-  --color-navy-80: var(--navy-80);
-  --color-navy-60: var(--navy-60);
-  --color-navy-40: var(--navy-40);
-  --color-navy-20: var(--navy-20);
-
-  --color-steel-blue-100: var(--steel-blue-100);
-  --color-steel-blue-80: var(--steel-blue-80);
-  --color-steel-blue-60: var(--steel-blue-60);
-  --color-steel-blue-40: var(--steel-blue-40);
-  --color-steel-blue-20: var(--steel-blue-20);
-
-  --color-burnt-orange-100: var(--burnt-orange-100);
-  --color-burnt-orange-80: var(--burnt-orange-80);
-  --color-burnt-orange-60: var(--burnt-orange-60);
-  --color-burnt-orange-40: var(--burnt-orange-40);
-  --color-burnt-orange-20: var(--burnt-orange-20);
-
-  --color-greyish-down: var(--greyish-down);
-  --color-greyish-semi-dark: var(--greyish-semi-dark);
-  --color-greyish-semi-dark-50: var(--greyish-semi-dark-50);
-  --color-greyish-semi-white: var(--greyish-semi-white);
-  --color-greyish-bright-white: var(--greyish-bright-white);
-
-  --color-black-100: var(--black-100);
-  --color-black-80: var(--black-80);
-  --color-black-60: var(--black-60);
-  --color-black-40: var(--black-40);
-  --color-black-20: var(--black-20);
-
-  --color-blue-950: #172554;
-
-  --font-open-sans: 'Open Sans', sans-serif;
-  --font-source-sans-pro: 'Source Sans Pro', sans-serif;
-
-  --animate-scale-up: scale-up 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
-
-  @keyframes scale-up {
-    0% {
-      transform: scale(0.7);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-}
-
-@import './fonts/index.css';
-@import './tailwind-typography.css';
-@import './_datePicker.css';
-@import './_dateTimePicker.css';
-
-:root {
-  /* knito blue */
-  --knitto-blue-100: #2f3574;
-  --knitto-blue-80: #595d90;
-  --knitto-blue-60: #e8eaff;
-  --knitto-blue-40: #eceeff;
-  --knitto-blue-20: #f6f6ff;
-
-  /* navy */
-  --navy-80: #3f4565;
-  --navy-100: #0f163f;
-  --navy-60: #6f738c;
-  --navy-40: #9fa2b2;
-  --navy-20: #cfd0d9;
-
-  /* steel blue */
-  --steel-blue-100: #3e6282;
-  --steel-blue-80: #4f7faa;
-  --steel-blue-60: #7299bb;
-  --steel-blue-40: #95b2cc;
-  --steel-blue-20: #dce5ee;
-
-  /* burnt orange */
-  --burnt-orange-100: #c4592a;
-  --burnt-orange-80: #d15f2c;
-  --burnt-orange-60: #e06934;
-  --burnt-orange-40: #f3c3ae;
-  --burnt-orange-20: #f9e1d6;
-
-  /* Greyish */
-  --greyish-down: #b7becb;
-  --greyish-semi-dark: #e9ebef;
-  --greyish-semi-dark-50: #eff0f6;
-  --greyish-semi-white: #f7f7fc;
-  --greyish-bright-white: #f5f7f6;
-
-  /* Black */
-  --black-100: #1d1f26;
-  --black-80: #292c35;
-  --black-60: #4a4c51;
-  --black-40: #8e8f93;
-  --black-20: #d2d2d4;
-}
+@plugin "../../tailwind/tailwind.components.ts";
+@import '@knittotextile/react-ui/styles';
 
 html,
 body,
@@ -114,27 +9,12 @@ body,
   height: 100vh;
   font-size: 16px;
   font-weight: 400;
-  @apply font-open-sans;
-  /* @media screen and (max-height: 744px) {
-    font-size: 13px;
-  }
-  @media screen and (max-height: 500px) {
-    font-size: 12px;
-  } */
-}
-* {
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
+  @apply font-open-sans bg-greyish-bright-white text-black-100 dark:bg-black-100 dark:text-greyish-semi-white;
 }
 
 th,
 td {
   padding: 0;
-}
-
-.element-input__placeholder::before {
-  content: attr(data-placeholder);
-  @apply text-black-40 w-full absolute;
 }
 
 .management-master-and-detail {
@@ -146,6 +26,7 @@ td {
     'sidebar detail';
   grid-template-columns: 300px 1fr;
   grid-template-rows: 1fr 1fr;
+
   .sidebar {
     grid-area: sidebar;
   }
@@ -153,6 +34,7 @@ td {
   .master {
     grid-area: master;
   }
+
   .detail {
     grid-area: detail;
   }

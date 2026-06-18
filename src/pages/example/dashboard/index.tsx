@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typhography';
+import { Button } from '@knittotextile/react-ui';
+import { Typography } from '@knittotextile/react-ui';
+
+const COMPONENT_LIB_DOCS_URL = 'http://192.168.20.15:11111/';
 
 interface NavLink {
   label: string;
@@ -48,13 +50,29 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   return (
-    <div className="p-4 bg-knitto-blue-20 min-h-screen flex flex-col gap-8">
-      <Typography as="h1" className="text-2xl font-semibold text-navy-100">
+    <div className="p-4 min-h-screen flex flex-col gap-8">
+      <Typography as="h1" className="text-2xl font-semibold text-navy-100 dark:text-white">
         Navigasi Halaman Contoh Komponen dan Layout
       </Typography>
+
+      <section className="rounded-lg border border-black-20 dark:border-black-60 bg-white dark:bg-black-80 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1">
+          <Typography as="global-strong" className="text-navy-100 dark:text-greyish-semi-white">
+            Dokumentasi Komponen (@knittotextile/react-ui)
+          </Typography>
+          <Typography as="global-paragraph" className="text-black-60 dark:text-black-40">
+            Untuk melihat dokumentasi komponen yang sudah dikomponenkan di lib, buka melalui tombol di samping atau akses{' '}
+            <span className="font-medium text-navy-100 dark:text-greyish-semi-white">{COMPONENT_LIB_DOCS_URL}</span>
+          </Typography>
+        </div>
+        <Button className="shrink-0" color="navy" onClick={() => window.open(COMPONENT_LIB_DOCS_URL, '_blank', 'noopener,noreferrer')}>
+          Buka Dokumentasi Lib
+        </Button>
+      </section>
+
       {examplePageSections.map((section) => (
         <section key={section.title}>
-          <Typography as="h2" className="mb-4 text-xl font-bold text-navy-80">
+          <Typography as="h2" className="mb-4 text-xl font-bold text-navy-80 dark:text-white">
             {section.title}
           </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -62,7 +80,7 @@ export default function Dashboard() {
               <Button
                 key={pageLink.path + pageLink.label}
                 onClick={() => navigate(pageLink.path)}
-                className="w-full h-auto py-3 text-left justify-start hover:bg-navy-100 hover:text-white"
+                className="w-full h-auto py-3 text-left justify-start hover:bg-navy-100 hover:text-white dark:border-white dark:text-white"
                 variant="outline"
                 color="navy"
               >

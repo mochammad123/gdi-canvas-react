@@ -1,9 +1,9 @@
+import { DatePicker, Typography } from '@knittotextile/react-ui';
 import Input from '@/components/ui/inputs/input';
-import InputDatePicker from '@/components/ui/inputs/input-date-picker';
 import Confirmation from '@/components/ui/modal/modal-confirmation';
-import { Typography } from '@/components/ui/typhography';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import type { ISchedule } from '@knittotextile/react-ui/big-calendar';
 
 type AddAddScheduleModalProps = {
   isShow: boolean;
@@ -52,8 +52,8 @@ export const AddScheduleModal = ({ isShow, onConfirm, onHide }: AddAddScheduleMo
           </Typography>
         </div>
         <div className="flex flex-row gap-2">
-          <InputDatePicker value={startDate} onChange={setStartDate} formatDate="YYYY-MM-DD" />
-          <InputDatePicker value={endDate} onChange={setEndDate} formatDate="YYYY-MM-DD" />
+          <DatePicker value={startDate} onChange={setStartDate} formatDate="YYYY-MM-DD" />
+          <DatePicker value={endDate} onChange={setEndDate} formatDate="YYYY-MM-DD" />
         </div>
       </section>
     </Confirmation>

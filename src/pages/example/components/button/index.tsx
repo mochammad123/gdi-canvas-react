@@ -1,4 +1,4 @@
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import NavyButtonsCard from './cards/navy-buttons-card';
 import BurntOrangeButtonsCard from './cards/burnt-orange-buttons-card';
 import SteelBlueButtonsCard from './cards/steel-blue-buttons-card';
@@ -11,7 +11,7 @@ import IconButtonsCard from './cards/icon-buttons-card';
 
 export default function ButtonPage() {
   return (
-    <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3">
+    <div className="p-4 flex flex-col gap-3 mb-10">
       <Typography as="h3">Button</Typography>
       <div className="h-2 w-72 bg-burnt-orange-100" />
 

@@ -1,10 +1,12 @@
-import { Button } from '@/components/ui/button';
+import { Button, Typography } from '@knittotextile/react-ui';
 import LogoIcon from '@/components/ui/icon/logo';
-import { Typography } from '@/components/ui/typhography';
+import { useToast } from '@/components/ui/toast';
 
 export default function TemplateLogin() {
+  const toast = useToast();
+
   const onClickLogin = () => {
-    alert('login');
+    toast.open('success', 'Login berhasil');
   };
 
   return (
@@ -14,9 +16,9 @@ export default function TemplateLogin() {
           <LogoIcon />
         </div>
 
-        <div className="w-[400px] mx-auto p-[48px] bg-white rounded-[8px]">
+        <div className="w-[400px] mx-auto p-[48px] bg-white dark:bg-black-80 dark:border dark:border-black-60 rounded-[8px] shadow-md">
           <div className="flex flex-col gap-y-10">
-            <Typography as="h3" className="text-black-100">
+            <Typography as="h3" className="text-black-100 dark:text-greyish-semi-white">
               Learning Management System
             </Typography>
             <Button className="w-full flex justify-center" rounded onClick={onClickLogin}>

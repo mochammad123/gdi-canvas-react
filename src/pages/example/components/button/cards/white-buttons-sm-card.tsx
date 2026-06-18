@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typhography';
+import { Button } from '@knittotextile/react-ui';
+import { Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
 import ToggleShowCode from '@/components/toggle-show-code';
 import ContentExampleCode from '@/components/content-example-code';
 
 const whiteButtonsSmExampleCode = `
 // Required imports:
-// import { Button } from '@/components/ui/button';
-// import { Typography } from '@/components/ui/typhography';
+// import { Button } from '@knittotextile/react-ui';
+// import { Typography } from '@knittotextile/react-ui';
 
 // Example JSX structure (ensure parent has dark background for white buttons to be visible):
 // <div className="bg-navy-60 p-4">

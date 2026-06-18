@@ -2,7 +2,14 @@ import clsx from 'clsx';
 import * as React from 'react';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={clsx('rounded-lg border bg-white text-card-foreground shadow-sm', className)} {...props} />
+  <div
+    ref={ref}
+    className={clsx(
+      'rounded-lg border bg-white dark:bg-black-80 dark:border-black-60 dark:text-greyish-semi-white text-card-foreground shadow-sm',
+      className
+    )}
+    {...props}
+  />
 ));
 Card.displayName = 'Card';
 
@@ -17,7 +24,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
 CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(({ className, ...props }, ref) => (
-  <p ref={ref} className={clsx('text-sm text-muted-foreground', className)} {...props} />
+  <p ref={ref} className={clsx('text-sm text-muted-foreground dark:text-black-40', className)} {...props} />
 ));
 CardDescription.displayName = 'CardDescription';
 

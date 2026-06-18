@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { render, renderHook } from 'vitest-browser-react';
 import { act } from 'react';
 import { useState } from 'react';
-import { Typography } from '@/components/ui/typhography';
-import { Button } from '@/components/ui/button';
+import { Typography } from '@knittotextile/react-ui';
+import { Button } from '@knittotextile/react-ui';
 
 function StateComponentTest() {
   const [count, setCount] = useState<number>(0);

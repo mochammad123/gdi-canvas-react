@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@knittotextile/react-ui';
 import { useToast } from '@/components/ui/toast';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
 
 function ToatSchema() {

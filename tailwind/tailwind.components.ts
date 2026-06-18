@@ -1,7 +1,14 @@
 import plugin from 'tailwindcss/plugin';
 
-export default plugin(({ addComponents, addUtilities }) => {
-  const modalComponent = [
+export default plugin(({ addBase, addComponents }) => {
+  addBase({
+    '@keyframes scale-up': {
+      '0%': { transform: 'scale(0.7)' },
+      '100%': { transform: 'scale(1)' },
+    },
+  });
+
+  addComponents([
     {
       '.modal': {
         overflow: 'auto',
@@ -25,7 +32,7 @@ export default plugin(({ addComponents, addUtilities }) => {
           '.modal-content': {
             position: 'relative',
             backgroundColor: 'white',
-            animation: `scale-up 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000)`,
+            animation: 'scale-up 0.1s cubic-bezier(0.390, 0.575, 0.565, 1.000)',
             borderRadius: '.25rem',
           },
         },
@@ -46,102 +53,10 @@ export default plugin(({ addComponents, addUtilities }) => {
           right: '17px',
         },
       },
-    },
-  ];
-
-  const tableComponent = [
-    {
-      '.table-admin': {
-        position: 'relative',
-        borderCollapse: 'collapse',
-        tableLayout: 'fixed',
-        '&.separate-border': {
-          borderSpacing: 'initial',
-          borderCollapse: 'separate',
-          'td, th': {
-            borderTopWidth: '0',
-            borderLeftWidth: '0',
-            borderColor: '0.2px',
-          },
-        },
-        '&.stripped-rows': {
-          tbody: {
-            tr: {
-              backgroundColor: 'var(--greyish-semi-white)',
-              '&:nth-of-type(odd)': {
-                backgroundColor: 'white',
-              },
-            },
-          },
-        },
-        '&.sticky-header': {
-          thead: {
-            tr: {
-              'th, .th-sort': {
-                position: 'sticky',
-                top: '-1px',
-                backgroundColor: 'var(--greyish-semi-white)',
-                zIndex: '50',
-                cursor: 'pointer',
-              },
-            },
-          },
-        },
-        '&.table-hover': {
-          tbody: {
-            'tr:hover': {
-              td: {
-                backgroundColor: 'var(--greyish-semi-white)',
-              },
-            },
-          },
-        },
-        '&.row-cursor-pointer': {
-          tbody: {
-            tr: {
-              cursor: 'pointer',
-            },
-          },
-        },
-        tbody: {
-          'tr.active-row-navy': {
-            'td:not(:has(svg))': {
-              backgroundColor: 'var(--navy-100) !important',
-              color: 'white',
-            },
-          },
-          'tr.active-row': {
-            td: {
-              backgroundColor: 'var(--knitto-blue-40) !important',
-            },
-          },
-        },
+      '.dark .modal-content': {
+        backgroundColor: 'var(--black-80)',
+        color: 'var(--greyish-semi-white)',
       },
     },
-  ];
-  const formComponent = [
-    {
-      '.form-validated input:invalid, .form-validated input:invalid ~ .input-div': {
-        borderColor: '#ef4444',
-      },
-    },
-  ];
-
-  const textUtility = [
-    {
-      '.input-error-text': {
-        color: '#ef4444',
-        fontWeight: '500',
-        fontSize: '0.875rem',
-        lineHeight: '1.25rem',
-      },
-      '.text-link': {
-        color: 'var(--navy-100)',
-        textDecoration: 'underline',
-      },
-    },
-  ];
-
-  addUtilities(textUtility);
-  addComponents([...modalComponent, ...tableComponent, ...formComponent]);
+  ]);
 });

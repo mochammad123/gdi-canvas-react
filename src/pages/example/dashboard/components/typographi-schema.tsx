@@ -1,4 +1,4 @@
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 
 const TyphographiSchema = () => {
   return (

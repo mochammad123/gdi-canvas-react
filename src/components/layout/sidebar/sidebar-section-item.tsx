@@ -66,11 +66,15 @@ export default function SidebarSectionItem(props: ISidebarSectionItem) {
     <div>
       <div
         onClick={handleClickMenu}
-        className={clsx('p-[.625rem] relative flex items-center justify-between cursor-pointer hover:bg-navy-80 hover:text-white', {
-          'pr-6!': item.children,
-          'bg-navy-100 text-white': isExactActive,
-          'bg-navy-20': !isExactActive && isActiveMenu,
-        })}
+        className={clsx(
+          'group p-[.625rem] relative flex items-center justify-between cursor-pointer dark:text-greyish-semi-white',
+          'hover:bg-navy-80 hover:text-white',
+          {
+            'pr-6!': item.children,
+            'bg-navy-100 text-white dark:bg-navy-80': isExactActive,
+            'bg-navy-20 dark:bg-black-60 dark:text-greyish-semi-white': !isExactActive && isActiveMenu,
+          }
+        )}
         style={{ paddingLeft }}
       >
         <SidebarLineVertical isLastMenu={isLastMenu} level={level} />
@@ -81,7 +85,7 @@ export default function SidebarSectionItem(props: ISidebarSectionItem) {
       {/* Sub menu item */}
       {item.children && (
         <div
-          className={clsx('overflow-hidden transition-all duration-500 ease-in-out', {
+          className={clsx('overflow-hidden transition-all duration-500 ease-in-out dark:bg-black-60/50', {
             'max-h-0 opacity-0': !isSubOpen,
             'max-h-[700px] opacity-100': isSubOpen,
           })}

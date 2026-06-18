@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@knittotextile/react-ui';
 import Modal from '@/components/ui/modal';
 import { useModal } from '@/lib/hooks/hooks';
 import { describe, expect, it } from 'vitest';

@@ -1,6 +1,5 @@
+import { Typography, ISelect, Select } from '@knittotextile/react-ui';
 import { useState } from 'react';
-import { Typography } from '@/components/ui/typhography';
-import { ISelect, Select } from '@/components/ui/select';
 import ContentExampleCode from '@/components/content-example-code';
 import ToggleShowCode from '@/components/toggle-show-code';
 
@@ -72,7 +71,6 @@ export default function SelectionStatus({ options }: { options: ISelect['options
 }
 
 const code = `
-import { ISelect, Select } from '@/components/ui/select';
 import { useState } from 'react';
 
 export default function SelectionError({ options }: { options: ISelect['options'] }) {

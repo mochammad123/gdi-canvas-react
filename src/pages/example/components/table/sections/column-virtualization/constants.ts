@@ -1,4 +1,4 @@
-export const CODE_EXAMPLE_VIRTUALIZED = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_VIRTUALIZED = `import { KnittoTable } from '@knittotextile/react-ui';
 
 const headers = [
   { key: 'id', caption: 'ID', width: 80, freeze: 'left' },
@@ -27,7 +27,7 @@ function MyTable() {
   );
 }`;
 
-export const CODE_EXAMPLE_NON_VIRTUALIZED = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_NON_VIRTUALIZED = `import { KnittoTable } from '@knittotextile/react-ui';
 
 const headers = [
   { key: 'id', caption: 'ID', width: 80, freeze: 'left' },
@@ -56,7 +56,7 @@ function MyTable() {
   );
 }`;
 
-export const CODE_EXAMPLE_COMBINED = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_COMBINED = `import { KnittoTable } from '@knittotextile/react-ui';
 
 // Example with both modes side by side
 function ComparisonTable() {

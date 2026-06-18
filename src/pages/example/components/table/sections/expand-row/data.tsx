@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { Company, Department, Employee, Team } from '@/lib/variables/table-sample';
 
 export const getEmployeeHeaders = (): IHeader<Employee>[] => [

@@ -1,12 +1,12 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@knittotextile/react-ui';
 import { FormWrapper } from '@/components/ui/form/form';
 import LogoIcon from '@/components/ui/icon/logo';
 import InputwithLabel from '@/components/ui/inputs/input-with-label';
 import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
 import Label from '@/components/ui/label';
 import { useToast } from '@/components/ui/toast';
-import { Typography } from '@/components/ui/typhography';
-import FeedbackError from '@/components/ui/typhography/feedback-error-input';
+import { Typography } from '@knittotextile/react-ui';
+import FeedbackError from '@/components/ui/form/feedback-error-input';
 import { env } from '@/lib/variables/env';
 import { useAuthLoginMutation } from '@/redux/api/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -47,8 +47,8 @@ export default function LoginPage() {
           <LogoIcon />
         </div>
         <FormProvider {...form}>
-          <div className="w-[400px] mx-auto p-[48px] bg-white rounded-[8px]">
-            <Typography as="h3" className="text-black-100">
+          <div className="w-[400px] mx-auto p-[48px] bg-white dark:bg-black-80 dark:border dark:border-black-60 rounded-[8px] shadow-md">
+            <Typography as="h3" className="text-black-100 dark:text-greyish-semi-white">
               {env.VITE_APP_NAME}
             </Typography>
             <div className="mt-[32px]">

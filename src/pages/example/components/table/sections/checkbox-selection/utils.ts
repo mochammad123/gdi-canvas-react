@@ -1,7 +1,7 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { Employee, generateEmployeeData } from '@/lib/variables/table-sample';
 
-export const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+export const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateEmployeeData, Employee } from '@/lib/variables/table-sample';
 
 

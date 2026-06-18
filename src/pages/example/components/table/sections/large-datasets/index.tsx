@@ -4,7 +4,7 @@ import CodeBlock from '../../components/code-block';
 import { getEmployeeHeaders } from './headers';
 import { CODE_EXAMPLES } from './constants';
 import { EmployeeData, generateDatasetAsync } from '@/lib/variables/table-sample';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 function LargeDataset({ id }: { id: string }) {
   const [showCode, setShowCode] = useState(false);
@@ -30,13 +30,17 @@ function LargeDataset({ id }: { id: string }) {
 
   return (
     <ContentSection id={id} title="Large Dataset (100,000 records)" showCode={showCode} setShowCode={setShowCode} className="mb-10">
-      <div className="p-3 border rounded bg-amber-50 text-amber-800 text-sm mb-3">
+      <div className="p-3 border dark:border-black-60 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 text-sm mb-3">
         <span className="font-semibold mr-1">Example:</span>
         100,000 employee records. Klik tombol di bawah untuk generate dataset. Perhatikan performa tabel tetap halus meskipun dataset besar.
       </div>
 
       <div className="mb-3">
-        <button className="px-3 py-1.5 text-xs border rounded bg-white" onClick={handleGenerate} disabled={isGenerating}>
+        <button
+          className="px-3 py-1.5 text-xs border dark:border-black-60 rounded bg-white dark:bg-black-80 dark:text-greyish-semi-white hover:bg-black-20 dark:hover:bg-black-60 disabled:opacity-50"
+          onClick={handleGenerate}
+          disabled={isGenerating}
+        >
           {isGenerating ? 'Generating…' : 'Generate 100K Records'}
         </button>
       </div>

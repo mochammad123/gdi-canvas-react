@@ -1,6 +1,5 @@
+import { ISelect, Select, Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
-import { Typography } from '@/components/ui/typhography';
 import ContentExampleCode from '@/components/content-example-code';
 import ToggleShowCode from '@/components/toggle-show-code';
 
@@ -33,7 +32,7 @@ export default function SelectionIgnoreUnknownValue({ options }: { options: ISel
         <ToggleShowCode show={show} setShow={setShow} className="-mt-[40px]" />
       </div>
 
-      <button className="w-max text-xs text-knitto-blue-100 font-bold" onClick={() => setValue(DEFAULT_VALUE)}>
+      <button className="w-max text-xs text-knitto-blue-100 dark:text-knitto-blue-60 font-bold" onClick={() => setValue(DEFAULT_VALUE)}>
         Gunakan value awal.
       </button>
 
@@ -63,9 +62,6 @@ export default function SelectionIgnoreUnknownValue({ options }: { options: ISel
 
 const code = `
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
-import { Typography } from '@/components/ui/typhography';
-
 const Icon = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5">
     <g className="user-outline">

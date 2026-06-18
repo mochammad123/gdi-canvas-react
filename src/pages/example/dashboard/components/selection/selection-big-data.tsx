@@ -1,6 +1,5 @@
+import { Typography, Select } from '@knittotextile/react-ui';
 import { memo, useState } from 'react';
-import { Typography } from '@/components/ui/typhography';
-import { Select } from '@/components/ui/select';
 import ToggleShowCode from '../toggle-show-code';
 import ContentExampleCode from '../content-example-code';
 
@@ -45,8 +44,6 @@ export default memo(SelectionBigData);
 
 const code = `
 import { memo, useState } from 'react';
-import { Select } from '@/components/ui/select';
-
 const options = Array(500000)
   .fill(true)
   .map((_, idx) => ({

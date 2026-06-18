@@ -1,32 +1,17 @@
-import { Button } from '@/components/ui/button';
+import { Button, Select, Typography } from '@knittotextile/react-ui';
 import { FormWrapper } from '@/components/ui/form/form';
 import LogoIcon from '@/components/ui/icon/logo';
 import InputwithLabel from '@/components/ui/inputs/input-with-label';
 import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
 import Label from '@/components/ui/label';
-import { SelectionWithLabel } from '@/components/ui/selection';
-import { Typography } from '@/components/ui/typhography';
-import FeedbackError from '@/components/ui/typhography/feedback-error-input';
+import FeedbackError from '@/components/ui/form/feedback-error-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { branchOptions, formLoginCabangSchema, FormLoginCabangSchema } from './hooks/login-cabang';
 
-const formLoginSchema = z.object({
-  username: z.string().min(1, { message: 'Username wajib diisi' }),
-  password: z.string().min(1, { message: 'Password wajib diisi' }),
-  branch: z.string().min(1, { message: 'Cabang wajib diisi' }),
-});
-
-const branchOptions: Record<string, string> = {
-  HOLIS: 'HOLIS',
-  'KEBON JUKUT': 'KEBON JUKUT',
-  SUDIRMAN: 'SUDIRMAN',
-};
-
-type FormLoginSchema = z.infer<typeof formLoginSchema>;
 export default function TemplateLogin() {
-  const form = useForm<FormLoginSchema>({
-    resolver: zodResolver(formLoginSchema),
+  const form = useForm<FormLoginCabangSchema>({
+    resolver: zodResolver(formLoginCabangSchema),
     defaultValues: {
       username: '',
       password: '',
@@ -34,7 +19,7 @@ export default function TemplateLogin() {
     },
   });
 
-  const onSave = (values: FormLoginSchema) => {
+  const onSave = (values: FormLoginCabangSchema) => {
     console.log(values);
   };
 
@@ -45,8 +30,8 @@ export default function TemplateLogin() {
           <LogoIcon />
         </div>
         <FormProvider {...form}>
-          <div className="w-[400px] mx-auto p-[48px] bg-white rounded-[8px]">
-            <Typography as="h3" className="text-black-100">
+          <div className="w-[400px] mx-auto p-[48px] bg-white dark:bg-black-80 dark:border dark:border-black-60 rounded-[8px] shadow-md">
+            <Typography as="h3" className="text-black-100 dark:text-greyish-semi-white">
               Auth Login
             </Typography>
             <div className="mt-[32px]">
@@ -83,14 +68,13 @@ export default function TemplateLogin() {
                   render={({ field }) => {
                     return (
                       <div>
-                        <SelectionWithLabel
+                        <Select
                           label="Cabang"
+                          placeHolder="Pilih cabang"
                           options={branchOptions}
-                          onSelect={(selected) => {
-                            form.setValue('branch', selected.key.toString());
-                          }}
-                          value={branchOptions[field.value] || ''}
-                          placeholder="Pilih cabang"
+                          value={field.value || null}
+                          onChangeSingleOption={(value) => form.setValue('branch', (value as string) ?? '')}
+                          onResetSelection={() => form.setValue('branch', '')}
                         />
                         {form.formState.errors.branch?.message && <FeedbackError text={form.formState.errors.branch?.message} />}
                       </div>

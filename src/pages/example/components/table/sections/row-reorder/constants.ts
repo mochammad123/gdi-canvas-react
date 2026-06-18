@@ -1,6 +1,6 @@
 // Mode 1: Drag dari seluruh row (reorderOnlyFromToggle=false, tidak perlu kolom row-reorder)
 export const CODE_EXAMPLE_REGULAR_WHOLE_ROW = `import { useCallback, useState } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 const headers: IHeader<User>[] = [
@@ -34,7 +34,7 @@ const RegularTableReorderWholeRow = () => {
 
 // Mode 2: Drag hanya dari kolom handle (reorderOnlyFromToggle=true, wajib ada kolom row-reorder)
 export const CODE_EXAMPLE_REGULAR_FROM_TOGGLE = `import { useCallback, useState } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 const headers: IHeader<User>[] = [
@@ -78,7 +78,7 @@ export const CODE_EXAMPLE_REGULAR_TABLE = `${CODE_EXAMPLE_REGULAR_WHOLE_ROW}\n\n
 
 // Mode 1: Drag dari seluruh row
 export const CODE_EXAMPLE_VIRTUAL_WHOLE_ROW = `import { useCallback, useState } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 const headers: IHeader<User>[] = [
@@ -111,7 +111,7 @@ const VirtualTableReorderWholeRow = () => {
 
 // Mode 2: Drag hanya dari kolom handle
 export const CODE_EXAMPLE_VIRTUAL_FROM_TOGGLE = `import { useCallback, useState } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 const headers: IHeader<User>[] = [

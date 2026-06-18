@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { Employee } from '@/lib/variables/table-sample';
 
 export const getEmployeeHeaders = (opt?: { withFreeze?: boolean; withColspan?: boolean }): IHeader<Employee>[] => {
@@ -46,7 +46,7 @@ export const getEmployeeHeaders = (opt?: { withFreeze?: boolean; withColspan?: b
   ];
 };
 
-export const CODE_EXAMPLE_BASIC = `import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_BASIC = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateEmployeeData } from '@/lib/variables/table-sample';
 
 // Define employee data type
@@ -97,7 +97,7 @@ const BasicImplementation = () => {
   );
 };`;
 
-export const CODE_EXAMPLE_WITH_FREEZE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+export const CODE_EXAMPLE_WITH_FREEZE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateEmployeeData } from './lib/constants';
 
 // Define employee data type

@@ -1,7 +1,7 @@
 import { generateEmployeeData } from '@/lib/variables/table-sample';
 import { memo, useMemo, useState } from 'react';
 import { CODE_EXAMPLE_WITH_FREEZE, getEmployeeHeaders } from '../data';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 import ToggleShowCode from '@/components/toggle-show-code';
 import CodeBlock from '../../../components/code-block';
 

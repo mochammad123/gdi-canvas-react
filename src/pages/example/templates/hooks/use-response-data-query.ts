@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { useMemo } from 'react';
 
 export type IDummyDataResponse = {
@@ -9,7 +9,7 @@ export type IDummyDataResponse = {
   active: string;
   data: number;
 };
-const responseData = (filter: { id?: number | string; currentPage: number; currentPerPage: number }) => {
+export function getResponseData(filter: { id?: number | string; currentPage: number; currentPerPage: number }) {
   const { id, currentPage = 1, currentPerPage = 100 } = filter;
   let temp: Record<number, IDummyDataResponse[]> = {};
   let totalData = 1000;
@@ -75,8 +75,8 @@ const responseData = (filter: { id?: number | string; currentPage: number; curre
     perPage: currentPerPage,
     page: currentPage,
   };
-};
+}
 export function useResponseDataQuery({ page, perPage, id }: { page: number; perPage: number; id?: number | string }) {
-  const data = useMemo(() => responseData({ id, currentPage: page, currentPerPage: perPage }), [id, page, perPage]);
+  const data = useMemo(() => getResponseData({ id, currentPage: page, currentPerPage: perPage }), [id, page, perPage]);
   return data;
 }

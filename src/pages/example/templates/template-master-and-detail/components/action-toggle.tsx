@@ -61,23 +61,23 @@ function ActionToggle({ onClick }: { onClick: (type: 'edit' | 'delete') => void 
         ref={buttonRef}
         className={clsx(
           'btn-action-toggle',
-          'cursor-pointer w-5 bg-transparent py-0.5 rounded flex justify-center items-center',
-          'hover:bg-gray-300 transition-colors duration-150',
-          position && 'bg-gray-300!'
+          'cursor-pointer w-5 bg-transparent py-0.5 rounded flex justify-center items-center text-black-100 dark:text-greyish-semi-white',
+          'hover:bg-gray-300 dark:hover:bg-black-60 transition-colors duration-150',
+          position && 'bg-gray-300! dark:bg-black-60!'
         )}
         onClick={handleToggle}
       >
-        <DotsVertical color="#1D1D1D" />
+        <DotsVertical color="currentColor" />
       </button>
 
       {position && (
         <Portal>
           <div ref={cardRef} className="fixed z-50" style={{ top: position.y, left: position.x }}>
-            <div className="bg-white shadow-lg w-[3.813rem] flex flex-col space-y-1">
+            <div className="bg-white dark:bg-black-80 dark:border dark:border-black-60 shadow-lg w-[3.813rem] flex flex-col space-y-1">
               {actions.map(({ label, type }, idx) => (
                 <button
                   key={idx}
-                  className="global-report-content text-start hover:bg-blue-950 hover:text-white py-1 pl-2 cursor-pointer"
+                  className="global-report-content text-start hover:bg-blue-950 hover:text-white dark:hover:bg-knitto-blue-60 py-1 pl-2 cursor-pointer dark:text-greyish-semi-white"
                   onClick={() => handleActionClick(type as 'edit' | 'delete')}
                 >
                   {label}

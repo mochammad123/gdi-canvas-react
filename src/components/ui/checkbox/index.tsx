@@ -16,9 +16,9 @@ export default function Checkbox({
         {...props}
       />
       <div
-        className={clsx('w-4 h-4 flex justify-center items-center border border-black-40 absolute', {
+        className={clsx('w-4 h-4 flex justify-center items-center border border-black-40 dark:border-black-60 absolute', {
           'bg-knitto-blue-100': checked,
-          'bg-white': !checked,
+          'bg-white dark:bg-black-80': !checked,
         })}
       >
         {checked && <CheckedIcon />}

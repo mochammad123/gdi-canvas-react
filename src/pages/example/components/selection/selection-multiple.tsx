@@ -1,7 +1,6 @@
+import { ISelect, Select, Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
 import ToggleShowCode from '@/components/toggle-show-code';
-import { Typography } from '@/components/ui/typhography';
 import ContentExampleCode from '@/components/content-example-code';
 
 export default function SelectionMultiple({ options }: { options: ISelect['options'] }) {
@@ -33,8 +32,6 @@ export default function SelectionMultiple({ options }: { options: ISelect['optio
 
 const code = `
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
-
 export default function SelectionMultiple({ options }: { options: ISelect['options'] }) {
   const [value, setValue] = useState<string[] | null>(null);
 

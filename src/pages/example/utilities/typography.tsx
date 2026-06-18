@@ -1,17 +1,17 @@
 import ContentExampleCode from '@/components/content-example-code';
 import ToggleShowCode from '@/components/toggle-show-code';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
 
 export default function TypographyPage() {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3 mb-10">
+    <div className="p-4 flex flex-col gap-3 mb-10">
       <Typography as="h3">Typhograph</Typography>
       <div className="h-2 w-72 bg-burnt-orange-100" />
 
-      <div className="flex flex-col bg-white rounded shadow pb-7">
+      <div className="flex flex-col rounded shadow pb-7 bg-white dark:bg-black-80">
         <div className="flex justify-end p-3">
           <ToggleShowCode show={show} setShow={setShow} />
         </div>
@@ -114,7 +114,7 @@ export default function TypographyPage() {
 }
 
 const codeExample = `
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 
 export default function TypographyPage() {
   return (

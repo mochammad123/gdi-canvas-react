@@ -1,8 +1,7 @@
-import { ISelectionOption } from '@/components/ui/selection/types';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
-export function convertObjectToDataOptions(obj: ISelectionOption, swap: boolean = false) {
+export function convertObjectToDataOptions(obj: Record<string, string | number>, swap: boolean = false) {
   return Object.keys(obj).map((key) => ({
     id: swap ? obj[key] : key,
     text: swap ? key : obj[key],

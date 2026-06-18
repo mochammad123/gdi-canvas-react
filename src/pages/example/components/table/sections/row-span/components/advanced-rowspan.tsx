@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from 'react';
 import { generateSalesReportData } from '../utils/data-generator';
 import { getSalesReportHeaders } from '../utils/table-headers';
 import { CODE_EXAMPLE_ADVANCED_ROWSPAN } from '../utils/constants';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 import CodeBlock from '../../../components/code-block';
 import ToggleShowCode from '@/components/toggle-show-code';
 

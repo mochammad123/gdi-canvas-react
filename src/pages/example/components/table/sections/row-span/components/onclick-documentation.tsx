@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from 'react';
 import { CODE_EXAMPLE_ONCLICK } from '../utils/constants';
 import { generateEmployeeData } from '../utils/data-generator';
 import { getEmployeeHeaders } from '../utils/table-headers';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 import CodeBlock from '../../../components/code-block';
 import ToggleShowCode from '@/components/toggle-show-code';
 

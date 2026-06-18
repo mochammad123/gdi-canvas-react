@@ -5,7 +5,7 @@ import ToggleShowCode from '@/components/toggle-show-code';
 import { getAdvancedHeaders, getBasicHeaders } from './headers';
 import { CODE_EXAMPLE_BASIC, CODE_EXAMPLE_WITH_CUSTOM_CELL } from './constants';
 import { generateProductData } from '@/lib/variables/table-sample';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 function DynamicRowHeight({ id }: { id: string }) {
   const [showCode1, setShowCode1] = useState(false);
@@ -18,20 +18,24 @@ function DynamicRowHeight({ id }: { id: string }) {
   return (
     <ContentSection id={id} title="Dynamic Row Height" className="mb-10">
       {/* Configuration Requirements */}
-      <div className="border rounded-md p-3 mb-4 bg-white">
-        <div className="font-semibold mb-2">Persyaratan Konfigurasi</div>
-        <div className="text-sm font-medium mb-1">Properti Wajib</div>
-        <div className="text-xs bg-gray-50 border rounded px-2 py-1 inline-block mr-2">enableColumnVirtualization={'{false}'}</div>
-        <span className="text-[10px] text-red-600 mr-3 align-middle">Wajib</span>
-        <div className="mt-2 text-sm text-gray-700">
+      <div className="border dark:border-black-60 rounded-md p-3 mb-4 bg-white dark:bg-black-80">
+        <div className="font-semibold mb-2 dark:text-greyish-semi-white">Persyaratan Konfigurasi</div>
+        <div className="text-sm font-medium mb-1 dark:text-greyish-semi-white">Properti Wajib</div>
+        <div className="text-xs bg-gray-50 dark:bg-black-60 border dark:border-black-60 rounded px-2 py-1 inline-block mr-2">
+          enableColumnVirtualization={'{false}'}
+        </div>
+        <span className="text-[10px] text-red-600 dark:text-red-400 mr-3 align-middle">Wajib</span>
+        <div className="mt-2 text-sm text-gray-700 dark:text-black-40">
           Column virtualization harus dinonaktifkan untuk menggunakan tinggi baris dinamis. Fitur ini membutuhkan semua kolom dirender agar pengukuran
           tinggi baris akurat.
         </div>
         <div className="mt-3">
-          <div className="text-xs bg-gray-50 border rounded px-2 py-1 inline-block mr-2">useDynamicRowHeight={'{true}'}</div>
-          <span className="text-[10px] text-red-600 align-middle">Wajib</span>
+          <div className="text-xs bg-gray-50 dark:bg-black-60 border dark:border-black-60 rounded px-2 py-1 inline-block mr-2">
+            useDynamicRowHeight={'{true}'}
+          </div>
+          <span className="text-[10px] text-red-600 dark:text-red-400 align-middle">Wajib</span>
         </div>
-        <div className="mt-2 text-sm text-gray-700">
+        <div className="mt-2 text-sm text-gray-700 dark:text-black-40">
           Mengaktifkan fitur tinggi baris dinamis. Tabel akan otomatis mengukur dan menyesuaikan tinggi baris berdasarkan konten.
         </div>
       </div>

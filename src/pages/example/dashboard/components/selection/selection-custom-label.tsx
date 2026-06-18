@@ -1,8 +1,7 @@
+import { ISelect, Select, Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
 import clsx from 'clsx';
 
-import { ISelect, Select } from '@/components/ui/select';
-import { Typography } from '@/components/ui/typhography';
 import ToggleShowCode from '../toggle-show-code';
 import ContentExampleCode from '../content-example-code';
 
@@ -58,8 +57,6 @@ export default function SelectionCustomLabel({ options }: { options: ISelect['op
 const code = `
 import { useState } from 'react';
 import clsx from 'clsx';
-
-import { ISelect, Select } from '@/components/ui/select';
 
 export default function SelectionCustomLabel({ options }: { options: ISelect['options'] }) {
   const [value, setValue] = useState<string | null>(null);

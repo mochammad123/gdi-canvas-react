@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { generateProductData, Product } from '@/lib/variables/table-sample';
 
 export type ContextMenuPosition = {
@@ -30,7 +30,7 @@ export const generateSampleData = (): Product[] => {
   return generateProductData(20);
 };
 
-export const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+export const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateProductData, Product } from '@/lib/variables/table-sample';
 
 const ProductTable = () => {

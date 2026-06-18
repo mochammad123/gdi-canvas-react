@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import CodeBlock from '../../../components/code-block';
 import ToggleShowCode from '@/components/toggle-show-code';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 import { generateUsers, getUserHeaders } from '../data';
 import { CODE_EXAMPLE_VIRTUAL_FROM_TOGGLE, CODE_EXAMPLE_VIRTUAL_WHOLE_ROW } from '../constants';

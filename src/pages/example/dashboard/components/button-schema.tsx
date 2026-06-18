@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@knittotextile/react-ui';
 import ChevronIcon from '@/components/ui/icon/chevron';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 
 const ButtonSchema = () => {
   return (

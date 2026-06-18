@@ -1,4 +1,4 @@
-export const CODE_EXAMPLE_BASIC = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_BASIC = `import { KnittoTable } from '@knittotextile/react-ui';
 
 const headers = [
   { key: 'id', caption: 'ID', width: 80 },
@@ -21,7 +21,7 @@ function MyTable() {
   );
 }`;
 
-export const CODE_EXAMPLE_WITH_CUSTOM_CELL = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_WITH_CUSTOM_CELL = `import { KnittoTable } from '@knittotextile/react-ui';
 
 const headers = [
   { key: 'id', caption: 'ID', width: 80 },
@@ -65,7 +65,7 @@ function MyTable() {
   );
 }`;
 
-export const CODE_EXAMPLE_WITH_FREEZE = `import { KnittoTable } from '@/components/ui/knitto-table';
+export const CODE_EXAMPLE_WITH_FREEZE = `import { KnittoTable } from '@knittotextile/react-ui';
 
 const headers = [
   { key: 'id', caption: 'ID', width: 80, freeze: 'left' },

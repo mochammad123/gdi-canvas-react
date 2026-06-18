@@ -1,17 +1,17 @@
 import clsx from 'clsx';
 import { IToast } from './types';
 import CloseIcon from '../icon/close';
-import { Button } from '../button';
-import { Typography } from '../typhography';
+import { Button } from '@knittotextile/react-ui';
+import { Typography } from '@knittotextile/react-ui';
 import CheckIcon from '../icon/check';
 import WarningIcon from '../icon/warning';
 import { useEffect, useState } from 'react';
 
 const TOAST_THEME = {
-  error: 'bg-red-50 text-red-800',
+  error: 'bg-red-50 text-red-800 dark:bg-red-900/30 dark:text-red-200',
   success: 'text-white bg-navy-100',
-  warning: 'bg-yellow-50 text-yellow-800',
-  info: 'bg-blue-50 text-blue-800',
+  warning: 'bg-yellow-50 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200',
+  info: 'bg-blue-50 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200',
 };
 
 const ICON_BACKGROUND = {

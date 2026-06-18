@@ -1,6 +1,6 @@
 export const CODE_EXAMPLES = {
   basicExpand: `import { memo, useMemo } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { Employee, generateEmployeeData } from '@/lib/variables/table-sample';
 
 const EmployeeTable = () => {
@@ -59,7 +59,7 @@ const EmployeeTable = () => {
 export default memo(EmployeeTable);`,
 
   nestedTable: `import { memo, useMemo } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { Company, Department, Team, generateCompanyData } from '@/lib/variables/table-sample';
 
 const CompanyTable = () => {
@@ -163,7 +163,7 @@ const CompanyTable = () => {
 export default memo(CompanyTable);`,
 
   customToggle: `import { memo, useMemo } from 'react';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { Employee, generateEmployeeData } from '@/lib/variables/table-sample';
 
 const CustomExpandTable = () => {

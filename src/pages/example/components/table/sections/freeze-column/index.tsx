@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from 'react';
 import ContentSection from '../../components/content-section';
 import CodeBlock from '../../components/code-block';
 import { CODE_EXAMPLE, generateSampleData, getEmployeeHeaders } from './utils';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 function FreezeColumn({ id }: { id: string }) {
   const [showCode, setShowCode] = useState(false);

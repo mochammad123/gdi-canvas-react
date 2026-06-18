@@ -3,27 +3,31 @@ import ContentSection from '../../components/content-section';
 import CodeBlock from '../../components/code-block';
 import { sampleData, CODE_EXAMPLE } from './utils';
 import { Employee } from '@/lib/variables/table-sample';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import { IHeader, KnittoTable } from '@knittotextile/react-ui';
 
 const StatusBadge = ({ status }: { status: string }) => {
   const map = {
-    active: { bg: 'bg-green-100', text: 'text-green-800', label: 'Active' },
-    inactive: { bg: 'bg-red-100', text: 'text-red-800', label: 'Inactive' },
-    pending: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Pending' },
+    active: { bg: 'bg-green-100 dark:bg-green-900/30', text: 'text-green-800 dark:text-green-200', label: 'Active' },
+    inactive: { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-800 dark:text-red-200', label: 'Inactive' },
+    pending: { bg: 'bg-yellow-100 dark:bg-yellow-900/30', text: 'text-yellow-800 dark:text-yellow-200', label: 'Pending' },
   } as const;
-  const cfg = map[status as keyof typeof map] ?? { bg: 'bg-gray-100', text: 'text-gray-800', label: 'Unknown' };
+  const cfg = map[status as keyof typeof map] ?? {
+    bg: 'bg-gray-100 dark:bg-black-60',
+    text: 'text-gray-800 dark:text-greyish-semi-white',
+    label: 'Unknown',
+  };
   return <span className={`px-2 py-1 rounded-full text-xs font-medium ${cfg.bg} ${cfg.text}`}>{cfg.label}</span>;
 };
 
 const ProgressBar = ({ value }: { value: number }) => (
   <div className="w-full">
-    <div className="w-full bg-gray-200 rounded-full h-2">
+    <div className="w-full bg-gray-200 dark:bg-black-60 rounded-full h-2">
       <div
         className={`h-2 rounded-full transition-all duration-300 ${value < 70 ? 'bg-red-500' : value < 85 ? 'bg-yellow-500' : 'bg-green-500'}`}
         style={{ width: `${value}%` }}
       />
     </div>
-    <span className="text-xs text-gray-600 mt-1 block">{value}%</span>
+    <span className="text-xs text-gray-600 dark:text-black-40 mt-1 block">{value}%</span>
   </div>
 );
 
@@ -46,7 +50,7 @@ const AvatarCell = ({ name }: { name: string }) => {
 const SkillsTags = ({ skills }: { skills: string[] }) => (
   <div className="flex flex-wrap gap-1">
     {skills.map((s) => (
-      <span key={s} className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs">
+      <span key={s} className="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200 rounded text-xs">
         {s}
       </span>
     ))}
@@ -54,7 +58,9 @@ const SkillsTags = ({ skills }: { skills: string[] }) => (
 );
 
 const SalaryCell = ({ salary }: { salary: number }) => (
-  <span className={salary >= 90000 ? 'text-green-700 font-semibold' : 'text-gray-800'}>{`$${salary.toLocaleString()}`}</span>
+  <span
+    className={salary >= 90000 ? 'text-green-700 dark:text-green-400 font-semibold' : 'text-gray-800 dark:text-greyish-semi-white'}
+  >{`$${salary.toLocaleString()}`}</span>
 );
 
 function CustomRenderCell({ id }: { id: string }) {
@@ -75,7 +81,7 @@ function CustomRenderCell({ id }: { id: string }) {
         key: 'joinDate',
         caption: 'Join Date',
         width: 140,
-        renderCell: (e) => <span className="text-sm text-gray-600">{new Date(e.joinDate).toLocaleDateString()}</span>,
+        renderCell: (e) => <span className="text-sm text-gray-600 dark:text-black-40">{new Date(e.joinDate).toLocaleDateString()}</span>,
       },
       {
         key: 'action',
@@ -84,7 +90,7 @@ function CustomRenderCell({ id }: { id: string }) {
         renderCell: () => (
           <div className="flex gap-2">
             <button className="px-2 py-0.5 text-xs rounded bg-blue-600 text-white">View</button>
-            <button className="px-2 py-0.5 text-xs rounded bg-gray-200">Edit</button>
+            <button className="px-2 py-0.5 text-xs rounded bg-gray-200 dark:bg-black-60 dark:text-greyish-semi-white">Edit</button>
           </div>
         ),
       },
@@ -104,9 +110,9 @@ function CustomRenderCell({ id }: { id: string }) {
           headerHeight={40}
           filterHeight={32}
           classNameCell={(row, rowIndex, columnIndex) => {
-            if (columnIndex === 4) return 'bg-blue-50';
+            if (columnIndex === 4) return 'bg-blue-50 dark:bg-knitto-blue-60/20';
             if ((row as Employee).status === 'inactive') return 'opacity-60';
-            if (rowIndex % 2 === 0) return 'bg-gray-50';
+            if (rowIndex % 2 === 0) return 'bg-gray-50 dark:bg-black-60';
             return '';
           }}
         />

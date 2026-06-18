@@ -1,5 +1,5 @@
 import Modal, { Backdrop } from '.';
-import { Button } from '../button';
+import { Button } from '@knittotextile/react-ui';
 import Spinner from '../icon/spinner';
 import Portal from '../portal';
 import { IModalConfirmationProps } from './types';
@@ -40,7 +40,7 @@ export default function Confirmation({
             children
           ) : (
             <div className="flex flex-col items-center gap-y-2">
-              <h1 className="text-3xl font-semibold text-gray-900">{title}</h1>
+              <h1 className="text-3xl font-semibold text-gray-900 dark:text-greyish-semi-white">{title}</h1>
               <div>{subTitle}</div>
             </div>
           )}

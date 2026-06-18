@@ -5,7 +5,7 @@ import ToggleShowCode from '@/components/toggle-show-code';
 import { getNonVirtualizedHeaders, getVirtualizedHeaders } from './headers';
 import { CODE_EXAMPLE_NON_VIRTUALIZED, CODE_EXAMPLE_VIRTUALIZED } from './constants';
 import { generateUserData } from '@/lib/variables/table-sample';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 function ColumnVirtualization({ id }: { id: string }) {
   const [showCode1, setShowCode1] = useState(false);
@@ -22,7 +22,7 @@ function ColumnVirtualization({ id }: { id: string }) {
         <span className="global-report-title">1. Column Virtualization Enabled</span>
         <ToggleShowCode show={showCode1} setShow={setShowCode1} />
       </div>
-      <p className="text-xs text-gray-600 mb-2">Catatan: Secara default, column virtualization sudah aktif</p>
+      <p className="text-xs text-gray-600 dark:text-black-40 mb-2">Catatan: Secara default, column virtualization sudah aktif</p>
       <div className="h-80 mb-2.5">
         <KnittoTable
           headers={headersVirtualized}
@@ -42,7 +42,7 @@ function ColumnVirtualization({ id }: { id: string }) {
         <span className="global-report-title">2. Column Virtualization Disabled</span>
         <ToggleShowCode show={showCode2} setShow={setShowCode2} />
       </div>
-      <p className="text-xs text-gray-600 mb-2">
+      <p className="text-xs text-gray-600 dark:text-black-40 mb-2">
         Catatan: Disabled column virtualization berguna ketika ingin membuat dynamic row height. <br /> Kekurangannya ketika terdapat kolom dalam
         jumlah besar kemungkinan akan mempengaruhi performa
       </p>

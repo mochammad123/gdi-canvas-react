@@ -14,7 +14,7 @@ export default function Radio({ name, checked = false, onChecked }: IRadioProps)
     <div
       className={clsx('w-[1.125rem] cursor-pointer rounded-full h-[1.125rem] flex justify-center items-center', {
         'bg-knitto-blue-100': checked,
-        'border-black-40 border': !checked,
+        'border-black-40 dark:border-black-60 border': !checked,
       })}
     >
       <input ref={inputRef} type="radio" name={name} className="absolute opacity-0" onChange={(e) => onChecked(e.target.checked)} />

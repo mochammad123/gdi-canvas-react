@@ -1,12 +1,8 @@
-import { Button } from '@/components/ui/button';
-import InputDatePicker from '@/components/ui/inputs/input-date-picker';
-import Pagination from '@/components/ui/pagination';
-import { Typography } from '@/components/ui/typhography';
+import { Button, DatePicker, IHeader, KnittoTable, Pagination, Typography } from '@knittotextile/react-ui';
 import { useParams } from '@/lib/hooks/hooks';
 import { exportDataToExcel, generateColumnWidths } from '@/lib/utils/utils';
 import { useMemo, useState } from 'react';
 import { IDummyDataResponse, useResponseDataQuery } from '../../hooks/use-response-data-query';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
 import ActionToggle from './action-toggle';
 import clsx from 'clsx';
 
@@ -57,9 +53,9 @@ export default function TableHistory({ onClickRow }: { onClickRow: (id: string) 
           onClickRow={(data) => onClickRow(data.name as string)}
           classNameCell={(_, __, ___, opts) => {
             return clsx({
-              'border-l! border-l-blue-950!': opts?.isFirstIndex && opts?.isRowHighlighted,
-              'border-r! border-r-blue-950!': opts?.isLastIndex && opts?.isRowHighlighted,
-              'border-y! border-y-blue-950! bg-[#ECEEFF]': opts?.isRowHighlighted,
+              'border-l! border-l-blue-950! dark:border-l-knitto-blue-40!': opts?.isFirstIndex && opts?.isRowHighlighted,
+              'border-r! border-r-blue-950! dark:border-r-knitto-blue-40!': opts?.isLastIndex && opts?.isRowHighlighted,
+              'border-y! border-y-blue-950! dark:border-y-knitto-blue-40! bg-[#ECEEFF] dark:bg-knitto-blue-60/25': opts?.isRowHighlighted,
             });
           }}
         />
@@ -91,7 +87,7 @@ function FilterDate({
 
   return (
     <div className="flex gap-x-3">
-      <InputDatePicker
+      <DatePicker
         onChange={(value) =>
           setFilterDate((e) => ({
             ...e,
@@ -101,7 +97,7 @@ function FilterDate({
         classNameInput="h-[32px]"
         value={filterDate.startDate}
       />
-      <InputDatePicker
+      <DatePicker
         onChange={(value) =>
           setFilterDate((e) => ({
             ...e,

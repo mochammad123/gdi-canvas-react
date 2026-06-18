@@ -61,7 +61,7 @@ export default defineConfig({
     dedupe: ['react', 'react-dom'],
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit'],
+    include: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', '@knittotextile/react-ui'],
   },
   test: {
     globals: true,
@@ -69,7 +69,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', '**/*.d.ts'],
+      exclude: ['node_modules/', '**/*.d.ts', 'src/components/ui/knitto-table/**'],
     },
     setupFiles: './src/test/setup.ts',
     browser: {

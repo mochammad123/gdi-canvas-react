@@ -2,7 +2,7 @@ import ContentSection from '../../components/content-section';
 import CodeBlock from '../../components/code-block';
 import { memo, useState } from 'react';
 import { generateUsers, getUserHeaders } from './utils';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 const users = generateUsers(100);
 const headers = getUserHeaders();
@@ -27,7 +27,7 @@ function BasicUsage({ id }: { id: string }) {
 
 export default memo(BasicUsage);
 
-export const BASIC_USAGE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+export const BASIC_USAGE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 // Generate sample data

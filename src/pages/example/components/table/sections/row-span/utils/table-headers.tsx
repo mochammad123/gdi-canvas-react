@@ -1,4 +1,4 @@
-import type { IHeader } from '@/components/ui/knitto-table';
+import type { IHeader } from '@knittotextile/react-ui';
 import { IEmployee, ISalesReport } from './types';
 
 export const getEmployeeHeaders = (): IHeader<IEmployee>[] => [

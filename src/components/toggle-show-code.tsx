@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { Button } from './ui/button';
+import { Button } from '@knittotextile/react-ui';
 
 export default function ToggleShowCode({ show, setShow, className }: { show: boolean; setShow: (show: boolean) => void; className?: string }) {
   return (
     <Button
       className={clsx(
-        'w-max inline-flex items-center bg-gray-400 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1',
-        show && 'bg-blue-900!',
+        'w-max inline-flex items-center bg-gray-400 dark:bg-black-60 text-white rounded-md p-1 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1',
+        show && 'bg-blue-900! dark:bg-navy-80!',
         className
       )}
       onClick={() => setShow(!show)}

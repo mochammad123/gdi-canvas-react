@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '../typhography';
+import { Typography } from '@knittotextile/react-ui';
 import Radio from './radio';
 import type { IRadioProps } from './types';
 

@@ -1,16 +1,20 @@
 import clsx from 'clsx';
 import * as React from 'react';
-import { Typography } from '../typhography';
+import { Typography } from '@knittotextile/react-ui';
 import SortIcon from '../icon/sort';
 import InputDebounce from '../inputs/input-debounce';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(({ className, ...props }, ref) => (
-  <table ref={ref} className={clsx('w-full caption-bottom text-sm overflow-auto border-[1.7px] border-black-20', className)} {...props} />
+  <table
+    ref={ref}
+    className={clsx('w-full caption-bottom text-sm overflow-auto border-[1.7px] border-black-20 dark:border-black-60', className)}
+    {...props}
+  />
 ));
 Table.displayName = 'Table';
 
 const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <thead ref={ref} className={clsx('bg-greyish-semi-dark-50 text-left', className)} {...props} />
+  <thead ref={ref} className={clsx('bg-greyish-semi-dark-50 dark:bg-black-80 dark:text-greyish-semi-white text-left', className)} {...props} />
 ));
 TableHeader.displayName = 'TableHeader';
 
@@ -20,12 +24,21 @@ const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes
 TableBody.displayName = 'TableBody';
 
 const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={clsx('border-t bg-muted/50 font-medium [&>tr]:last:border-b-0', className)} {...props} />
+  <tfoot ref={ref} className={clsx('border-t bg-muted/50 dark:bg-black-80 font-medium [&>tr]:last:border-b-0', className)} {...props} />
 ));
 TableFooter.displayName = 'TableFooter';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement> & {}>(({ className, ...props }, ref) => {
-  return <tr ref={ref} className={clsx('border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted', className)} {...props} />;
+  return (
+    <tr
+      ref={ref}
+      className={clsx(
+        'border-b transition-colors hover:bg-muted/50 dark:hover:bg-black-60 data-[state=selected]:bg-muted dark:data-[state=selected]:bg-black-60',
+        className
+      )}
+      {...props}
+    />
+  );
 });
 TableRow.displayName = 'TableRow';
 
@@ -51,7 +64,11 @@ const TableHead = React.forwardRef<
     setSort('unset');
   }, [activeSort]);
   return (
-    <th ref={ref} className={clsx('px-1 align-middle global-report-title py-[.375rem] border-black-20 border-[1.7px] ', className)} {...props}>
+    <th
+      ref={ref}
+      className={clsx('px-1 align-middle global-report-title py-[.375rem] border-black-20 dark:border-black-60 border-[1.7px]', className)}
+      {...props}
+    >
       {withSort ? (
         <div
           className="flex justify-between items-center th-sort "
@@ -119,7 +136,7 @@ const TableCell = React.forwardRef<
           ref.current = node;
         }
       }}
-      className={clsx('global-report-content break-words align-middle border-black-20 border-[1.7px]', className, {
+      className={clsx('global-report-content break-words align-middle border-black-20 dark:border-black-60 border-[1.7px]', className, {
         relative: clicked,
         'py-2 px-[.125rem]': !clicked,
       })}
@@ -152,7 +169,7 @@ const TableCell = React.forwardRef<
             onUpdateContent?.(e.currentTarget.value);
           }}
           value={textContent || ''}
-          classNameInput="bg-white! px-[.125rem]! global-report-content absolute! left-0 right-0 top-0 rounded-none border-none"
+          classNameInput="bg-white! dark:bg-black-80! dark:text-greyish-semi-white! px-[.125rem]! global-report-content absolute! left-0 right-0 top-0 rounded-none border-none"
         />
       ) : (
         children
@@ -163,7 +180,7 @@ const TableCell = React.forwardRef<
 TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(({ className, ...props }, ref) => (
-  <caption ref={ref} className={clsx('mt-4 text-sm text-muted-foreground', className)} {...props} />
+  <caption ref={ref} className={clsx('mt-4 text-sm text-muted-foreground dark:text-black-40', className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';
 

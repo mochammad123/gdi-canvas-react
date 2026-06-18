@@ -36,7 +36,7 @@ export const SidebarScrollingText: React.FC<ScrollingTextProps> = ({ children, t
       ref={outerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="flex-1 min-w-0 truncate global-report-content"
+      className="flex-1 min-w-0 truncate global-report-content !text-inherit"
       title={title}
     >
       <div ref={innerRef} className="inline-block">

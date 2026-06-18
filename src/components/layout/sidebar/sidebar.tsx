@@ -6,7 +6,7 @@ import { searchSidebarData } from './utils';
 import { ISidebar } from './types';
 import SidebarProvier from './service/sidebar-provider';
 import InputSearch from '@/components/ui/inputs/input-search';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import SearchIcon from '@/components/ui/icon/search';
 import SidebarSection from './sidebar-section';
 
@@ -25,11 +25,11 @@ const Sidebar = ({ sidebarMenu, hideSearch, className, ...props }: ISidebar) => 
         data-testid="sidebar"
         data-open={sidebarIsOpen}
         className={clsx(
-          'w-[15.625rem] pt-[.625rem] bg-white shadow-md overflow-auto scrollbar',
-          'fixed top-[3.25rem] bottom-0 z-[999] transition-all duration-300',
+          'w-62.5 pt-[.625rem] bg-white dark:bg-black-80 shadow-md overflow-auto scrollbar',
+          'fixed top-13 bottom-0 z-999 transition-all duration-300',
           {
             'left-0': sidebarIsOpen,
-            '-left-[260px]': !sidebarIsOpen,
+            'left-[-260px]': !sidebarIsOpen,
           },
           className
         )}
@@ -39,7 +39,7 @@ const Sidebar = ({ sidebarMenu, hideSearch, className, ...props }: ISidebar) => 
           <div className="mb-[.625rem]">
             <InputSearch
               className="w-full"
-              classNameInput="global-paragraph focus:bg-white! border-none outline-none! "
+              classNameInput="global-paragraph text-black-100 dark:text-greyish-semi-white focus:bg-white! dark:focus:bg-black-60! border-none outline-none! "
               placeholder="Cari menu"
               suffix={<SearchIcon />}
               value={search}

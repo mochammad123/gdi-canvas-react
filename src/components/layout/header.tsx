@@ -1,13 +1,14 @@
+import { Button, ThemeToggle } from '@knittotextile/react-ui';
 import { useUserLogin } from '@/lib/hooks/hooks';
 import { COOKIES_NAME } from '@/lib/variables/example';
 import { toggleSidebar } from '@/redux/layoutSlice';
 import Cookies from 'js-cookie';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '@/components/ui/button';
 import HamburgerIcon from '@/components/ui/icon/hamburger';
 import { ISidebarMenu, ISidebarMenuItem } from './sidebar';
 import { useLocation } from 'react-router-dom';
+import './header-theme-toggle.css';
 
 const parsedMenu = (menu: ISidebarMenuItem[]) => {
   let result: { label: string; url: string }[] = [];
@@ -34,10 +35,11 @@ function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
   const textTitle = allMenu.find(({ url }) => url.endsWith(lastPath))?.label || sidebar?.[0]?.menu?.[0]?.label || '';
 
   return (
-    <header className="z-[999] h-[3.25rem] fixed top-0 left-0 right-0 flex justify-between px-[.875rem] bg-navy-100 header">
+    <header className="z-999 h-13 fixed top-0 left-0 right-0 flex justify-between px-[.875rem] bg-navy-100 header">
       <TitleHeader menuName={textTitle} />
       <div className="flex gap-x-[.625rem] items-center">
-        <Button variant="outline" color="white" className="">
+        <ThemeToggle className="header-theme-toggle" />
+        <Button variant="outline" color="white" size="sm" rounded>
           {userLogin?.username || 'User'}
         </Button>
         <Button
@@ -46,6 +48,8 @@ function Header({ sidebar }: { sidebar: ISidebarMenu[] }) {
             Cookies.remove(COOKIES_NAME.Token);
             document.location = '/';
           }}
+          size="sm"
+          rounded
         >
           Log out
         </Button>

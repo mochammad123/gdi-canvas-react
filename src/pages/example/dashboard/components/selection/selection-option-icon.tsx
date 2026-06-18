@@ -1,6 +1,5 @@
+import { ISelect, Select, Typography } from '@knittotextile/react-ui';
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
-import { Typography } from '@/components/ui/typhography';
 import ContentExampleCode from '../content-example-code';
 import ToggleShowCode from '../toggle-show-code';
 
@@ -85,8 +84,6 @@ export default function SelectionOptionIcon({ options }: { options: ISelect['opt
 
 const code = `
 import { useState } from 'react';
-import { ISelect, Select } from '@/components/ui/select';
-
 const Icon = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5">
     <g className="user-outline">

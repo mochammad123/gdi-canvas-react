@@ -4,7 +4,7 @@ import CodeBlock from '../../components/code-block';
 import ToggleShowCode from '@/components/toggle-show-code';
 import { CODE_EXAMPLES } from './constants';
 import { Company, Department, Employee, generateCompanyData, generateEmployeeData, Team } from '@/lib/variables/table-sample';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
+import { IHeader, KnittoTable } from '@knittotextile/react-ui';
 import { getCompanyHeaders, getCustomEmployeeHeaders, getDepartmentHeaders, getEmployeeHeaders, getTeamHeaders } from './data';
 
 function ExpanRow({ id }: { id: string }) {
@@ -26,7 +26,7 @@ function ExpanRow({ id }: { id: string }) {
   const customToggleHeaders = useMemo<IHeader<Employee>[]>(() => getCustomEmployeeHeaders(), []);
 
   const renderEmployeeExpanded = (emp: Employee) => (
-    <div className="p-3 bg-gray-50 border-l-4 border-blue-500">
+    <div className="p-3 bg-gray-50 dark:bg-black-60 border-l-4 border-blue-500 dark:text-greyish-semi-white">
       <div className="grid grid-cols-2 gap-4 text-xs">
         <div>
           <div className="font-medium mb-1">Personal</div>
@@ -47,7 +47,7 @@ function ExpanRow({ id }: { id: string }) {
   );
 
   const renderDepartmentTeams = (dept: Department) => (
-    <div className="p-3 bg-blue-50 border-l-4 border-blue-400 w-full">
+    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 w-full dark:text-greyish-semi-white">
       <div className="font-medium text-sm mb-2">{dept.name} Teams</div>
       <div className="h-48">
         <KnittoTable headers={teamHeaders} data={dept.teams} rowKey="name" headerMode="single" rowHeight={24} headerHeight={28} filterHeight={0} />
@@ -56,7 +56,7 @@ function ExpanRow({ id }: { id: string }) {
   );
 
   const renderCompanyDepartments = (company: Company) => (
-    <div className="p-4 bg-green-50 border-l-4 border-green-500">
+    <div className="p-4 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 dark:text-greyish-semi-white">
       <div className="font-semibold text-sm mb-2">Company Departments</div>
       <div className="h-64">
         <KnittoTable

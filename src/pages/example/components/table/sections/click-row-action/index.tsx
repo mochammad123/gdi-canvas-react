@@ -3,13 +3,13 @@ import ContentSection from '../../components/content-section';
 import CodeBlock from '../../components/code-block';
 import { CODE_EXAMPLE, generateSampleData, getProductHeaders } from './data';
 import { Product } from '@/lib/variables/table-sample';
-import { KnittoTable, useClickOutside } from '@/components/ui/knitto-table';
+import { KnittoTable, useClickOutside } from '@knittotextile/react-ui';
 import clsx from 'clsx';
 
 const StatCard = ({ title, content }: { title: string; content: string }) => (
-  <div className="border rounded-md p-3 bg-white">
-    <div className="text-sm font-semibold mb-1">{title}</div>
-    <div className="text-sm text-gray-700 min-h-5">{content}</div>
+  <div className="border dark:border-black-60 rounded-md p-3 bg-white dark:bg-black-80">
+    <div className="text-sm font-semibold mb-1 dark:text-greyish-semi-white">{title}</div>
+    <div className="text-sm text-gray-700 dark:text-black-40 min-h-5">{content}</div>
   </div>
 );
 
@@ -75,12 +75,12 @@ function ClickRowAction({ id }: { id: string }) {
         <div className="w-80 flex flex-col gap-3">
           <StatCard title="Selected Row" content={selectedRow ? selectedRow.name : 'No row selected'} />
           <StatCard title="Double-Clicked Row" content={doubleClickedRow ? doubleClickedRow.name : 'No row double-clicked'} />
-          <div className="border rounded-md p-3 bg-white">
-            <div className="text-sm font-semibold mb-1">Interaction Log</div>
+          <div className="border dark:border-black-60 rounded-md p-3 bg-white dark:bg-black-80">
+            <div className="text-sm font-semibold mb-1 dark:text-greyish-semi-white">Interaction Log</div>
             {interactionLog.length === 0 ? (
-              <div className="text-sm text-gray-700">No interactions yet</div>
+              <div className="text-sm text-gray-700 dark:text-black-40">No interactions yet</div>
             ) : (
-              <ul className="list-disc pl-4 text-sm text-gray-700 space-y-1">
+              <ul className="list-disc pl-4 text-sm text-gray-700 dark:text-black-40 space-y-1">
                 {interactionLog.map((log, idx) => (
                   <li key={`${log}-${idx}`}>{log}</li>
                 ))}
@@ -93,11 +93,11 @@ function ClickRowAction({ id }: { id: string }) {
       {contextMenu.show && (
         <div
           ref={menuRef}
-          className="fixed z-50 w-48 bg-white border rounded-md shadow-md text-sm"
+          className="fixed z-50 w-48 bg-white dark:bg-black-80 border dark:border-black-60 rounded-md shadow-md text-sm dark:text-greyish-semi-white"
           style={{ top: contextMenu.y, left: contextMenu.x }}
         >
           <button
-            className="block w-full text-left px-3 py-2 hover:bg-blue-50"
+            className="block w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-knitto-blue-60/20"
             onClick={() => {
               if (contextMenu.row) pushLog(`View details: ${contextMenu.row.name}`);
               setContextMenu({ show: false, x: 0, y: 0, row: null });
@@ -106,7 +106,7 @@ function ClickRowAction({ id }: { id: string }) {
             View details
           </button>
           <button
-            className="block w-full text-left px-3 py-2 hover:bg-blue-50"
+            className="block w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-knitto-blue-60/20"
             onClick={() => {
               if (contextMenu.row) pushLog(`Edit: ${contextMenu.row.name}`);
               setContextMenu({ show: false, x: 0, y: 0, row: null });
@@ -115,7 +115,7 @@ function ClickRowAction({ id }: { id: string }) {
             Edit
           </button>
           <button
-            className="block w-full text-left px-3 py-2 text-red-600 hover:bg-red-50"
+            className="block w-full text-left px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
             onClick={() => {
               if (contextMenu.row) pushLog(`Delete: ${contextMenu.row.name}`);
               setContextMenu({ show: false, x: 0, y: 0, row: null });

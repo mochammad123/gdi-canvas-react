@@ -1,120 +1,56 @@
 import dayjs from 'dayjs';
+import type { ISchedule } from '@knittotextile/react-ui/big-calendar';
 
-const thisMonth = dayjs().format('MM');
-const prevMonth = dayjs().subtract(1, 'month').format('MM');
-const nextMonth = dayjs().add(1, 'month').format('MM');
+const SCHEDULE_COLORS = [
+  { backgroundColor: '#456EF4', textColor: '#ffffff' },
+  { backgroundColor: '#0EB942', textColor: '#ffffff' },
+  { backgroundColor: '#b90e41', textColor: '#ffffff' },
+  { backgroundColor: '#b9b60e', textColor: '#ffffff' },
+  { backgroundColor: '#5e0eb9', textColor: '#ffffff' },
+  { backgroundColor: '#69b90e', textColor: '#ffffff' },
+] as const;
 
-export const schedules: ISchedule[] = [
-  {
-    id: '1',
-    title: 'Mastering Digital Marketing',
-    startDate: `2025-${thisMonth}-07`,
-    endDate: `2025-${thisMonth}-08`,
-    backgroundColor: '#456EF4',
-    textColor: '#ffffff',
-  },
-  {
-    id: '2',
-    title: 'Introduction to Data Science',
-    startDate: `2025-${thisMonth}-01`,
-    endDate: `2025-${thisMonth}-08`,
-    backgroundColor: '#456EF4',
-    textColor: '#ffffff',
-  },
-  {
-    id: '3',
-    title: 'Fundamentals of Marketing in the Digital Age',
-    startDate: `2025-${thisMonth}-08`,
-    endDate: `2025-${thisMonth}-12`,
-    backgroundColor: '#0EB942',
-    textColor: '#ffffff',
-  },
-  {
-    id: '4',
-    title: 'Creative Writing for Beginner',
-    startDate: `2025-${thisMonth}-09`,
-    endDate: `2025-${thisMonth}-09`,
-    backgroundColor: '#0EB942',
-    textColor: '#ffffff',
-  },
-  {
-    id: '5',
-    title: 'Fundamentals of Webs',
-    startDate: `2025-${thisMonth}-08`,
-    endDate: `2025-${thisMonth}-08`,
-    backgroundColor: '#0EB942',
-    textColor: '#ffffff',
-  },
-  {
-    id: '6',
-    title: 'Fundamentals of Mobile',
-    startDate: `2025-${thisMonth}-08`,
-    endDate: `2025-${thisMonth}-09`,
-    backgroundColor: '#0EB942',
-    textColor: '#ffffff',
-  },
-  {
-    id: '7',
-    title: 'Fundamentals of Desktop',
-    startDate: `2025-${thisMonth}-10`,
-    endDate: `2025-${thisMonth}-12`,
-    backgroundColor: '#b90e41',
-    textColor: '#ffffff',
-  },
-  {
-    id: '8',
-    title: 'How to create an event?',
-    startDate: `2025-${thisMonth}-06`,
-    endDate: `2025-${thisMonth}-07`,
-    backgroundColor: '#b90e41',
-    textColor: '#ffffff',
-  },
-  {
-    id: '9',
-    title: 'How to create website?',
-    startDate: `2025-${thisMonth}-09`,
-    endDate: `2025-${thisMonth}-12`,
-    backgroundColor: '#b90e41',
-    textColor: '#ffffff',
-  },
-  {
-    id: '10',
-    title: 'How to create mobile app?',
-    startDate: `2025-${thisMonth}-11`,
-    endDate: `2025-${thisMonth}-16`,
-    backgroundColor: '#b90e41',
-    textColor: '#ffffff',
-  },
-  {
-    id: '11',
-    title: 'UI/UX Design Basics',
-    startDate: `2025-${prevMonth}-23`,
-    endDate: `2025-${prevMonth}-28`,
-    backgroundColor: '#b9b60e',
-    textColor: '#ffffff',
-  },
-  {
-    id: '12',
-    title: 'Python for Beginners',
-    startDate: `2025-${prevMonth}-15`,
-    endDate: `2025-${prevMonth}-23`,
-    backgroundColor: '#5e0eb9',
-    textColor: '#ffffff',
-  },
-  {
-    id: '13',
-    title: 'Cloud Computing Essentials',
-    startDate: `2025-${nextMonth}-01`,
-    endDate: `2025-${nextMonth}-04`,
-    backgroundColor: '#b90e5e',
-    textColor: '#ffffff',
-  },
-  {
-    id: '14',
-    title: 'Cybersecurity Fundamentals',
-    startDate: `2025-${nextMonth}-05`,
-    endDate: `2025-${nextMonth}-10`,
-    backgroundColor: '#69b90e',
-    textColor: '#ffffff',
-  },
-];
+const SCHEDULE_TITLES = [
+  'Mastering Digital Marketing',
+  'Introduction to Data Science',
+  'UI/UX Design Workshop',
+  'Cloud Computing Essentials',
+  'Cybersecurity Fundamentals',
+  'Creative Writing for Beginners',
+] as const;
+
+function randomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function createSchedule(month: dayjs.Dayjs, index: number): ISchedule {
+  const daysInMonth = month.daysInMonth();
+  const startDay = randomInt(1, Math.max(1, daysInMonth - 4));
+  const endDay = randomInt(startDay, Math.min(startDay + randomInt(0, 4), daysInMonth));
+  const color = SCHEDULE_COLORS[index % SCHEDULE_COLORS.length];
+
+  return {
+    id: `${month.format('YYYY-MM')}-${index + 1}`,
+    title: SCHEDULE_TITLES[index % SCHEDULE_TITLES.length],
+    startDate: month.date(startDay).format('YYYY-MM-DD'),
+    endDate: month.date(endDay).format('YYYY-MM-DD'),
+    backgroundColor: color.backgroundColor,
+    textColor: color.textColor,
+  };
+}
+
+/** 6 sample schedules: 2 di bulan lalu, 2 di bulan ini, 2 di bulan depan */
+export function generateSampleSchedules(): ISchedule[] {
+  const currentMonth = dayjs();
+  const prevMonth = currentMonth.subtract(1, 'month');
+  const nextMonth = currentMonth.add(1, 'month');
+
+  return [
+    createSchedule(prevMonth, 0),
+    createSchedule(prevMonth, 1),
+    createSchedule(currentMonth, 2),
+    createSchedule(currentMonth, 3),
+    createSchedule(nextMonth, 4),
+    createSchedule(nextMonth, 5),
+  ];
+}

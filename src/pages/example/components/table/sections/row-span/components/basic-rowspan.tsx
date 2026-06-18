@@ -1,5 +1,5 @@
 import ToggleShowCode from '@/components/toggle-show-code';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 import { useMemo, useState } from 'react';
 import CodeBlock from '../../../components/code-block';
 import { getEmployeeHeaders } from '../utils/table-headers';

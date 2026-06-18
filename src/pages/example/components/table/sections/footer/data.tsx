@@ -1,4 +1,4 @@
-import { IHeader } from '@/components/ui/knitto-table';
+import { IHeader } from '@knittotextile/react-ui';
 import { SampleData } from '@/lib/variables/table-sample';
 
 export const getAdvancedHeaders = (
@@ -56,7 +56,7 @@ export const getAdvancedHeaders = (
 ];
 
 export const CODE_EXAMPLE = `// Advanced Footer with Freeze Columns
-import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { SampleData } from '@/lib/variables/table-sample';
 
 // Footer component for calculations
@@ -79,7 +79,7 @@ const CalculationFooter = ({ data, columnKey }) => {
   };
 
   return (
-    <div className="flex items-center justify-center h-full bg-gray-50 font-semibold">
+    <div className="flex items-center justify-center h-full bg-gray-50 dark:bg-black-60 font-semibold dark:text-greyish-semi-white">
       {getCalculation()}
     </div>
   );

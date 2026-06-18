@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { KnittoProvider } from '@knittotextile/react-ui';
 import App from './App';
 import store from './redux/store';
 import './styles/main.css';
@@ -17,10 +18,12 @@ if (useMockApi) {
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastProvider position="bottom-right" duration={10000}>
-        <App />
-      </ToastProvider>
-    </Provider>
+    <KnittoProvider defaultTheme="system" showSystemOption>
+      <Provider store={store}>
+        <ToastProvider position="bottom-right" duration={10000}>
+          <App />
+        </ToastProvider>
+      </Provider>
+    </KnittoProvider>
   </React.StrictMode>
 );

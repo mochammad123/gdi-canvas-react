@@ -1,12 +1,8 @@
-import { Button } from '@/components/ui/button';
-import InputDatePicker from '@/components/ui/inputs/input-date-picker';
-import Pagination from '@/components/ui/pagination';
-import { Typography } from '@/components/ui/typhography';
+import { Button, DatePicker, IHeader, KnittoTable, Pagination, Typography } from '@knittotextile/react-ui';
 import { useParams } from '@/lib/hooks/hooks';
 import { exportDataToExcel, generateColumnWidths } from '@/lib/utils/utils';
 import { useMemo, useState } from 'react';
 import { IDummyDataResponse, useResponseDataQuery } from '../hooks/use-response-data-query';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
 import ActionToggle from './components/action-toggle';
 
 type InitFilter = {
@@ -31,51 +27,53 @@ export default function TemplateMasterDetailHistoryPage() {
   }, [header]);
 
   return (
-    <div className="p-3">
-      <div className="flex justify-between items-end mb-2">
-        <div className="flex flex-col gap-y-3">
-          <Typography as="global-strong">History</Typography>
-          <FilterDate
-            key={JSON.stringify(filter)}
-            filter={filter}
-            onApply={(filter) => {
-              setFilter(filter);
-              setPage(1);
-            }}
-            onReset={setFilter}
-          />
-        </div>
-        <div className="flex gap-x-2">
-          <Button
-            size="sm"
-            onClick={() => {
-              const dataSet: unknown[] = [];
-              Object.keys(allData).forEach((page) => {
-                dataSet.push(...allData[+page]);
-              });
-              const columnWidths = generateColumnWidths(dataSet);
-              const title = `Laporan History`;
+    <div className="p-4 bg-knitto-blue-20 dark:bg-black-100 min-h-full">
+      <div className="bg-white dark:bg-black-80 dark:border dark:border-black-60 rounded-md shadow-md p-3">
+        <div className="flex justify-between items-end mb-2">
+          <div className="flex flex-col gap-y-3">
+            <Typography as="global-strong">History</Typography>
+            <FilterDate
+              key={JSON.stringify(filter)}
+              filter={filter}
+              onApply={(filter) => {
+                setFilter(filter);
+                setPage(1);
+              }}
+              onReset={setFilter}
+            />
+          </div>
+          <div className="flex gap-x-2">
+            <Button
+              size="sm"
+              onClick={() => {
+                const dataSet: unknown[] = [];
+                Object.keys(allData).forEach((page) => {
+                  dataSet.push(...allData[+page]);
+                });
+                const columnWidths = generateColumnWidths(dataSet);
+                const title = `Laporan History`;
 
-              exportDataToExcel(dataSet, title, 'Sheet 1', columnWidths);
-            }}
-          >
-            Export
-          </Button>
+                exportDataToExcel(dataSet, title, 'Sheet 1', columnWidths);
+              }}
+            >
+              Export
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <div className="h-[70vh] mb-2">
-        <KnittoTable headers={modifiedHeader} data={data} rowKey="id" />
+        <div className="h-[70vh] mb-2">
+          <KnittoTable headers={modifiedHeader} data={data} rowKey="id" />
+        </div>
+        <Pagination
+          page={page}
+          onNext={onNextPrev}
+          onPrev={onNextPrev}
+          onApplyPage={setPage}
+          perPage={currentPerPage}
+          totalData={totalData}
+          onApplyPerPage={(page) => setPerPage(page)}
+        />
       </div>
-      <Pagination
-        page={page}
-        onNext={onNextPrev}
-        onPrev={onNextPrev}
-        onApplyPage={setPage}
-        perPage={currentPerPage}
-        totalData={totalData}
-        onApplyPerPage={(page) => setPerPage(page)}
-      />
     </div>
   );
 }
@@ -93,7 +91,7 @@ function FilterDate({
 
   return (
     <div className="flex gap-x-3">
-      <InputDatePicker
+      <DatePicker
         onChange={(value) =>
           setFilterDate((e) => ({
             ...e,
@@ -103,7 +101,7 @@ function FilterDate({
         classNameInput="h-[32px]"
         value={filterDate.startDate}
       />
-      <InputDatePicker
+      <DatePicker
         onChange={(value) =>
           setFilterDate((e) => ({
             ...e,

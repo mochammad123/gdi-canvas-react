@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ContentSection from '../../components/content-section';
-import { KnittoTable, type IHeader } from '@/components/ui/knitto-table';
+import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import CodeBlock from '../../components/code-block';
 import ToggleShowCode from '@/components/toggle-show-code';
 import { CODE_EXAMPLES } from './constants';

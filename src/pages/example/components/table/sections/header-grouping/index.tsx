@@ -2,7 +2,7 @@ import ContentSection from '../../components/content-section';
 import { memo, useMemo, useState } from 'react';
 import CodeBlock from '../../components/code-block';
 import { generateUsers, getGroupedHeaders } from './utils';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 function HeaderGrouping({ id }: { id: string }) {
   const [showCode, setShowCode] = useState(false);
@@ -12,8 +12,8 @@ function HeaderGrouping({ id }: { id: string }) {
 
   return (
     <ContentSection id={id} title="Header Grouping" showCode={showCode} setShowCode={setShowCode} className="mb-10">
-      <p className="text-xs text-gray-600 mb-2">
-        Catatan: Untuk membuat group header, key harus diawali dengan <code>group-header-</code>.
+      <p className="text-xs text-gray-600 dark:text-black-40 mb-2">
+        Catatan: Untuk membuat group header, key harus diawali dengan <code className="dark:text-greyish-semi-white">group-header-</code>.
       </p>
 
       <div className="h-80 mb-2.5 mt-2.5">
@@ -31,7 +31,7 @@ function HeaderGrouping({ id }: { id: string }) {
 
 export default memo(HeaderGrouping);
 
-export const HEADER_GROUPING_EXAMPLE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+export const HEADER_GROUPING_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 const users = generateUserData(100);

@@ -12,13 +12,13 @@ export const Input = React.forwardRef<HTMLInputElement, IInputProps>(({ classNam
       type={type}
       disabled={disabled}
       className={clsx(
-        'h-10 rounded-[4px] text-base py-[.625rem] px-[.5rem] placeholder-black-40',
-        'flex w-full text-black-100 border border-black-40 global-paragraph',
-        'outline-none focus:border-navy-100 focus:text-black-60 focus:border-2',
-        'read-only:bg-greyish-semi-dark-50',
+        'h-10 rounded-[4px] text-base py-[.625rem] px-[.5rem] placeholder-black-40 dark:placeholder:text-black-40',
+        'flex w-full text-black-100 dark:text-greyish-semi-white border border-black-40 dark:border-black-60 global-paragraph',
+        'outline-none focus:border-navy-100 dark:focus:border-navy-80 focus:text-black-60 dark:focus:text-greyish-semi-white focus:border-2',
+        'read-only:bg-greyish-semi-dark-50 dark:read-only:bg-black-60',
         className,
         {
-          'pointer-events-none bg-greyish-semi-dark-50': disabled,
+          'pointer-events-none bg-greyish-semi-dark-50 dark:bg-black-60': disabled,
         }
       )}
       {...props}

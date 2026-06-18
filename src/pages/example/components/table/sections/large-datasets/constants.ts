@@ -1,5 +1,5 @@
 export const CODE_EXAMPLES = {
-  basicUsage: `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+  basicUsage: `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { useMemo } from 'react';
 
 const LargeDatasetTable = () => {

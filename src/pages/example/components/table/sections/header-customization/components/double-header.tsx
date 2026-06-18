@@ -1,9 +1,9 @@
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import CodeBlock from '../../../components/code-block';
 import { useState } from 'react';
 import ToggleShowCode from '@/components/toggle-show-code';
 import { generateUsers, getUserHeaders } from '../utils';
-import { KnittoTable } from '@/components/ui/knitto-table';
+import { KnittoTable } from '@knittotextile/react-ui';
 
 const users = generateUsers(20);
 const headers = getUserHeaders(true);
@@ -31,7 +31,7 @@ function DoubleHeader() {
 
 export default DoubleHeader;
 
-const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knitto/knitto-table';
+const CODE_EXAMPLE = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateUserData, User } from '@/lib/variables/table-sample';
 
 // Generate sample data

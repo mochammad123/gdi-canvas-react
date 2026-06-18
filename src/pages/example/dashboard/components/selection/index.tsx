@@ -1,6 +1,5 @@
+import { Typography, ISelect } from '@knittotextile/react-ui';
 import { ReactNode } from 'react';
-import { Typography } from '@/components/ui/typhography';
-import { ISelect } from '@/components/ui/select';
 import SelectionDefault from './selection-default';
 import SelectionMultiple from './selection-multiple';
 import SelectionLabel from './selection-label';
@@ -91,8 +90,10 @@ export default function Selection() {
 
 const Card = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
-    <div className="p-4 flex flex-col gap-4 bg-white shadow-md h-max">
-      <Typography as="h4">{title}</Typography>
+    <div className="p-4 flex flex-col gap-4 bg-white dark:bg-black-80 shadow-md h-max">
+      <Typography as="h4" className="text-navy-100 dark:text-greyish-semi-white">
+        {title}
+      </Typography>
       {children}
     </div>
   );

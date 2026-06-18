@@ -1,4 +1,4 @@
-export const CODE_EXAMPLE_BASIC_ROWSPAN = `import { KnittoTable, type IHeader } from '@knitto/virtual-table';
+export const CODE_EXAMPLE_BASIC_ROWSPAN = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateEmployeeData } from './lib/constants';
 
 // Define employee data type
@@ -57,7 +57,7 @@ const BasicRowspanExample = () => {
   );
 };`;
 
-export const CODE_EXAMPLE_ADVANCED_ROWSPAN = `import { KnittoTable, type IHeader } from '@knitto/virtual-table';
+export const CODE_EXAMPLE_ADVANCED_ROWSPAN = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 
 // Define sales report data type
 interface ISalesReport {
@@ -152,7 +152,7 @@ const AdvancedRowspanExample = () => {
   );
 };`;
 
-export const CODE_EXAMPLE_ONCLICK = `import { KnittoTable, type IHeader } from '@knitto/virtual-table';
+export const CODE_EXAMPLE_ONCLICK = `import { KnittoTable, type IHeader } from '@knittotextile/react-ui';
 import { generateBasicRowspanData } from './data-generator';
 import { basicRowspanHeaders } from './table-headers';
 

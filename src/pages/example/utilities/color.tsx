@@ -1,41 +1,30 @@
-import ColorKnitto from '@/../tailwind/tailwind.colors';
-import { Typography } from '@/components/ui/typhography';
-import { useMemo } from 'react';
+import { Typography } from '@knittotextile/react-ui';
+import { COLOR_GROUPS } from './color-tokens';
 
 export default function Color() {
-  const colorKnittos = Object.keys(ColorKnitto).map((colorKnitto) => colorKnitto);
-
-  const splitArrays = useMemo(() => {
-    const result: string[][] = [];
-    const chunkSize = 5;
-
-    for (let i = 0; i < colorKnittos.length; i += chunkSize) {
-      const chunk = colorKnittos.slice(i, i + chunkSize);
-      chunk.map((chunk) => chunk);
-      result.push(chunk);
-    }
-
-    return result;
-  }, [colorKnittos]);
-
   return (
-    <div className="p-4 bg-knitto-blue-20 h-full flex flex-col gap-3 mb-10">
-      <Typography as="h3">Color</Typography>
+    <div className="p-4 h-full flex flex-col gap-3 mb-10">
+      <Typography as="h3" className="text-navy-100 dark:text-white">
+        Color
+      </Typography>
       <div className="h-2 w-72 bg-burnt-orange-100" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        {splitArrays.map((splitArrayChildrens, key) => {
-          return (
-            <div key={key} className="shadow p-2 rounded bg-white">
-              {splitArrayChildrens.map((splitArrayChildren, keyChildren) => (
-                <div key={keyChildren} className="flex flex-row items-center gap-5 w-full">
-                  <div className={`w-10 h-3 bg-${splitArrayChildren} `} />
-                  {`bg-${splitArrayChildren}`}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {COLOR_GROUPS.map((group) => (
+          <div key={group.title} className="shadow p-3 rounded bg-white dark:bg-black-80">
+            <Typography as="h5" className="mb-3 text-navy-100 dark:text-greyish-semi-white">
+              {group.title}
+            </Typography>
+            <div className="flex flex-col gap-2">
+              {group.classNames.map((className) => (
+                <div key={className} className="flex flex-row items-center gap-4 w-full">
+                  <div className={`w-10 h-3 shrink-0 ${className}`} />
+                  <span className="text-sm text-black-80 dark:text-black-20">{className}</span>
                 </div>
               ))}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

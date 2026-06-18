@@ -2,7 +2,7 @@ import { useSensorKeyboard } from '@/lib/hooks/hooks';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef } from 'react';
 import Portal from '../portal';
-import { Typography } from '../typhography';
+import { Typography } from '@knittotextile/react-ui';
 import { IModalProps } from './types';
 import CloseIcon from '../icon/close';
 
@@ -89,7 +89,7 @@ export default function Modal({
             centered: centered,
           })}
         >
-          <div className={clsx('modal-content')}>
+          <div className={clsx('modal-content bg-white dark:bg-black-80 dark:text-greyish-semi-white')}>
             {title && <ModalTitle onHide={() => hideModal()}>{title}</ModalTitle>}
             {children}
           </div>
@@ -104,7 +104,10 @@ function ModalTitle({ children, onHide }: { children: React.ReactNode; onHide: (
   return (
     <div className="p-4 flex justify-between">
       <Typography as="global-strong">{children}</Typography>
-      <div onClick={onHide} className="w-[1.375rem] hover:opacity-65 cursor-pointer h-[1.375rem] flex justify-center items-center">
+      <div
+        onClick={onHide}
+        className="w-[1.375rem] hover:opacity-65 cursor-pointer h-[1.375rem] flex justify-center items-center text-black-100 dark:text-greyish-semi-white"
+      >
         <CloseIcon className="w-[22px]" />
       </div>
     </div>

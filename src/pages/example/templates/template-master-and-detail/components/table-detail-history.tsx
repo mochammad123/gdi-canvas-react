@@ -1,6 +1,5 @@
-import Pagination from '@/components/ui/pagination';
+import { IHeader, KnittoTable, Pagination } from '@knittotextile/react-ui';
 import { IDummyDataResponse } from '../../hooks/use-response-data-query';
-import { IHeader, KnittoTable } from '@/components/ui/knitto-table';
 import { useMemo } from 'react';
 import ActionToggle from './action-toggle';
 

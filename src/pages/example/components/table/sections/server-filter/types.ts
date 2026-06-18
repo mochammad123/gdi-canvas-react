@@ -1,4 +1,6 @@
-import { TFilterAdvanceConfig, TSortOrder } from '@/components/ui/knitto-table/lib';
+export type TSortOrder = 'asc' | 'desc' | 'unset';
+
+export type TFilterAdvanceConfig = 'none' | 'equal' | 'notEqual' | 'startsWith' | 'endsWith' | 'contains' | 'notContains';
 
 export type User = {
   id: number;

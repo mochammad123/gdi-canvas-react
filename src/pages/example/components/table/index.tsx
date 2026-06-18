@@ -1,7 +1,7 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { lazy, Suspense, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { Typography } from '@/components/ui/typhography';
+import { Typography } from '@knittotextile/react-ui';
 import DelayedRender from '@/components/delayed-render';
 
 // Lazy load section components
@@ -47,7 +47,7 @@ export const TABLE_CONTENTS = [
   { title: 'API Reference', href: 'api-reference' },
 ];
 
-const SectionFallback = () => <div className="h-[800px] flex items-center justify-center">Loading...</div>;
+const SectionFallback = () => <div className="h-[800px] flex items-center justify-center dark:text-greyish-semi-white">Loading...</div>;
 
 function Table() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -127,7 +127,7 @@ function Table() {
 
   return (
     <DelayedRender delay={100}>
-      <div className="p-4 bg-knitto-blue-20 flex flex-col gap-y-3">
+      <div className="p-4 bg-knitto-blue-20 dark:bg-black-100 flex flex-col gap-y-3 mb-10">
         <div className="space-y-0">
           <Typography as="h3">Knitto Table</Typography>
           <div className="h-2 w-72 bg-burnt-orange-100" />
@@ -159,7 +159,7 @@ function Table() {
             ))}
           </div>
 
-          <div className="flex-none bg-white w-[18rem] border sticky top-14 rounded-md h-max">
+          <div className="flex-none bg-white dark:bg-black-80 w-[18rem] border dark:border-black-60 sticky top-14 rounded-md h-max">
             <Typography as="global-report-title" className="p-2.5">
               Table of Content
             </Typography>
@@ -167,8 +167,8 @@ function Table() {
               {TABLE_CONTENTS.map((content, index) => (
                 <button
                   key={content.title}
-                  className={clsx('global-report-content', {
-                    'border-b border-blue-900': activeIndex === index,
+                  className={clsx('global-report-content dark:text-greyish-semi-white', {
+                    'border-b border-blue-900 dark:border-burnt-orange-100': activeIndex === index,
                     'text-burnt-orange-100': content.title == 'API Reference',
                   })}
                   onClick={() => {

@@ -1,6 +1,5 @@
+import { ISelect, Typography } from '@knittotextile/react-ui';
 import DelayedRender from '@/components/delayed-render';
-import { ISelect } from '@/components/ui/select';
-import { Typography } from '@/components/ui/typhography';
 import { ReactNode } from 'react';
 import SelectionBigData from './selection-big-data';
 import SelectionButtonAdd from './selection-button-add';
@@ -29,7 +28,7 @@ export default function Selection() {
 
   return (
     <DelayedRender delay={150}>
-      <div className="p-4 bg-knitto-blue-20 flex flex-col gap-3">
+      <div className="p-4 flex flex-col gap-3 mb-10">
         <Typography as="h3">Selection</Typography>
         <div className="h-2 w-72 bg-burnt-orange-100" />
 
@@ -68,7 +67,7 @@ export default function Selection() {
             <Card title="Loading">
               <SelectionLoading options={options} />
             </Card>
-            <Card title="Selection With Button Add">
+            <Card title="Single & Multiple with Label">
               <SelectionButtonAdd />
             </Card>
           </div>
@@ -98,8 +97,10 @@ export default function Selection() {
 
 const Card = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
-    <div className="p-4 flex flex-col gap-4 bg-white shadow-md h-max">
-      <Typography as="h4">{title}</Typography>
+    <div className="p-4 flex flex-col gap-4 bg-white dark:bg-black-80 shadow-md h-max">
+      <Typography as="h4" className="text-navy-100 dark:text-greyish-semi-white">
+        {title}
+      </Typography>
       {children}
     </div>
   );

@@ -75,8 +75,9 @@ pnpm vitest run -t "Login Integration Test"
 - **`src/test/mocks/*`**
   - MSW handlers (contoh: mock auth login).
 - **Lokasi test**
-  - Unit/integration test bisa di `src/test/*`
-  - Component test juga banyak yang colocated, misalnya `src/components/ui/button/button.test.tsx`
+  - Unit/integration test di `src/test/*`
+  - Unit test colocated di page, misalnya `src/pages/login/login.test.tsx`
+  - Komponen dari `@knittotextile/react-ui` (Button, KnittoTable, Pagination, dll.) **tidak** ditest di template ini
 
 ## 1) Test Function Biasa (Unit)
 
@@ -84,8 +85,9 @@ Cocok untuk logic murni seperti helper function, util, schema validation (Zod), 
 
 Contoh nyata di repo:
 
-- `src/test/units/sum.test.ts`
-- `src/pages/login/login.test.tsx` (contoh : `formLoginSchema`, `getLoginResult`, dll)
+- `src/test/units/templates/use-response-data-query.test.ts`
+- `src/pages/login/login.test.tsx` (contoh: `formLoginSchema`, `getLoginResult`, dll.)
+- `src/pages/login/login-cabang.test.tsx`
 
 Template yang disarankan:
 
@@ -106,17 +108,16 @@ describe('someFn', () => {
 
 ## 2) Test Component
 
-Cocok untuk ngetest perilaku komponen UI secara terisolasi: render, props, event click, disabled/loading, dan output di DOM.
+Cocok untuk ngetest perilaku komponen UI lokal template secara terisolasi: render, props, event click, disabled/loading, dan output di DOM.
 
 Contoh nyata di repo:
 
-- `src/components/ui/button/button.test.tsx`
-- `src/components/ui/pagination/pagination.spec.tsx`
+- `src/test/templates/action-toggle.spec.tsx`
 
 Pola render:
 
 - Jika **tidak butuh** Redux/Router/Toast: pakai `render` dari `vitest-browser-react`
-- Jika **butuh** Redux/Router/Toast: pakai `renderWithProviders` dari `src/test/test-utils.tsx`
+- Jika **butuh** Redux/Router/Toast/KnittoProvider: pakai `renderWithProviders` dari `src/test/test-utils.tsx`
 
 Contoh:
 
@@ -143,6 +144,10 @@ Cocok untuk ngetest beberapa bagian sekaligus: page + router + redux + API mock 
 Contoh nyata di repo:
 
 - `src/test/integrations/login.spec.tsx`
+- `src/test/integrations/login-cabang.spec.tsx`
+- `src/test/integrations/login-chatbot.spec.tsx`
+- `src/test/integrations/template-master-detail.spec.tsx`
+- `src/test/integrations/template-history.spec.tsx`
 - `src/test/integrations/dashboard.spec.tsx`
 - `src/test/integrations/sidebar.spec.tsx`
 
