@@ -1,0 +1,58 @@
+---
+description: Vitest browser mode, renderWithProviders, MSW, cakupan test
+globs: "**/*.{spec,test}.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing
+
+Vitest 4 **browser mode** (Playwright Chromium) + `vitest-browser-react`.
+
+## Struktur
+
+| Lokasi | Tujuan |
+|--------|--------|
+| `src/test/integrations/*.spec.tsx` | Flow halaman end-to-end ringan |
+| `src/test/units/**` | Logic murni, hooks, slice |
+| `src/test/templates/*.spec.tsx` | Komponen template lokal |
+| `src/pages/**/*.test.tsx` | Colocated (schema Zod, helper) |
+
+## Render
+
+```tsx
+import { renderWithProviders } from '@/test/test-utils';
+
+const screen = await renderWithProviders(<LoginPage />, { initialEntries: ['/login'] });
+await expect.element(screen.getByRole('button', { name: 'LOGIN' })).toBeInTheDocument();
+```
+
+`renderWithProviders` = `KnittoProvider` + Redux + `MemoryRouter`.
+
+## Interaksi
+
+```tsx
+import { userEvent } from 'vitest/browser';
+const user = userEvent.setup();
+await user.type(screen.getByPlaceholder('Username'), 'admin');
+```
+
+## MSW
+
+Handler di `src/test/mocks/handlers/`. Setup: `onUnhandledRequest: 'error'`.
+
+## Cakupan
+
+| Test | Jangan test |
+|------|-------------|
+| Page flow, validasi form, navigasi | Komponen lib secara isolasi |
+| Hook/slice/logic template | Implementasi internal react-ui |
+| Komponen lokal (layout, form input) | — |
+
+## Perintah
+
+```bash
+pnpm test          # watch
+pnpm test:coverage # sekali jalan + coverage
+```
+
+Panduan lengkap: `src/test/README.md`

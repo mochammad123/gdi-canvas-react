@@ -12,6 +12,10 @@ const TablePage = loadable(() => import('./components/table'));
 const InputDateAndTimePage = loadable(() => import('./components/input-date-and-time'));
 const SelectionPage = loadable(() => import('./components/selection'));
 const PaginationPage = loadable(() => import('./components/pagination'));
+const ToastPage = loadable(() => import('./components/toast'));
+const RadioPage = loadable(() => import('./components/radio'));
+const ModalPage = loadable(() => import('./components/modal'));
+const DropdownPage = loadable(() => import('./components/dropdown'));
 const BigCalendarPage = loadable(() => import('./components/big-calendar'));
 const TemplateMasterAndDetailPage = loadable(() => import('./templates/template-master-and-detail'));
 const TemplateMasterDetailHistoryPage = loadable(() => import('./templates/template-master-and-detail/history'));
@@ -47,6 +51,10 @@ export default function AdminRoutes() {
           { label: 'Selection', url: 'komponen/selection', element: <SelectionPage /> },
           { label: 'Input Date & Time', url: 'komponen/input-date-and-time', element: <InputDateAndTimePage /> },
           { label: 'Pagination', url: 'komponen/pagination', element: <PaginationPage /> },
+          { label: 'Toast', url: 'komponen/toast', element: <ToastPage /> },
+          { label: 'Radio', url: 'komponen/radio', element: <RadioPage /> },
+          { label: 'Modal', url: 'komponen/modal', element: <ModalPage /> },
+          { label: 'Dropdown', url: 'komponen/dropdown', element: <DropdownPage /> },
           { label: 'Big Calendar', url: 'komponen/big-calendar', element: <BigCalendarPage /> },
           { label: 'Table', url: 'komponen/table', element: <TablePage /> },
         ],

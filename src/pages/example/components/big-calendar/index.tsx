@@ -1,7 +1,6 @@
 import ContentExampleCode from '@/components/content-example-code';
 import ToggleShowCode from '@/components/toggle-show-code';
-import { useToast } from '@/components/ui/toast';
-import { BigCalendar, Typography } from '@knittotextile/react-ui';
+import { BigCalendar, Typography, useToast } from '@knittotextile/react-ui';
 import type { ISchedule } from '@knittotextile/react-ui/big-calendar';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -10,8 +9,7 @@ import { AddScheduleModal } from './components/add-schedule-modal';
 import { generateSampleSchedules } from './constants';
 
 const bigCalendarPageExampleCode = `
-import { BigCalendar } from '@knittotextile/react-ui';
-import { useToast } from '@/components/ui/toast';
+import { BigCalendar, useToast } from '@knittotextile/react-ui';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { generateSampleSchedules } from './constants';
@@ -26,7 +24,7 @@ export default function BigCalendarPageExample() {
   const [sampleSchedules, setSampleSchedules] = useState<ISchedule[]>(() => generateSampleSchedules());
 
   const showToast = (message: string) => {
-    toast.open('info', message);
+    toast.show({ variant: 'info', message });
   };
 
   const addSchedule = (schedule: ISchedule) => {
@@ -65,7 +63,7 @@ export default function BigCalendarPage() {
   const [showCode, setShowCode] = useState(false);
 
   const showToast = (message: string) => {
-    toast.open('info', message);
+    toast.show({ variant: 'info', message });
   };
 
   const addSchedule = (schedule: ISchedule) => {

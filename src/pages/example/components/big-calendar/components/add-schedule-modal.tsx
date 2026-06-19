@@ -1,6 +1,5 @@
-import { DatePicker, Typography } from '@knittotextile/react-ui';
+import { Button, DatePicker, Modal, Typography } from '@knittotextile/react-ui';
 import Input from '@/components/ui/inputs/input';
-import Confirmation from '@/components/ui/modal/modal-confirmation';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import type { ISchedule } from '@knittotextile/react-ui/big-calendar';
@@ -36,26 +35,45 @@ export const AddScheduleModal = ({ isShow, onConfirm, onHide }: AddAddScheduleMo
   };
 
   return (
-    <Confirmation show={isShow} onHide={onHide} onConfirm={addSchedule} buttonConfirmText="Add" buttonCancelText="Close">
-      <Typography as="h5">Add Schedule</Typography>
-      <section className="mt-4">
-        <Typography as="global-report-title">Title</Typography>
-        <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-      </section>
-      <section className="mt-3 mb-8">
-        <div className="flex flex-row gap-2">
-          <Typography as="global-report-title" className="flex-1">
-            Start Date
-          </Typography>
-          <Typography as="global-report-title" className="flex-1">
-            End Date
-          </Typography>
-        </div>
-        <div className="flex flex-row gap-2">
-          <DatePicker value={startDate} onChange={setStartDate} formatDate="YYYY-MM-DD" />
-          <DatePicker value={endDate} onChange={setEndDate} formatDate="YYYY-MM-DD" />
-        </div>
-      </section>
-    </Confirmation>
+    <Modal isOpen={isShow} onOpenChange={(open) => !open && onHide()}>
+      <Modal.Backdrop isDismissable={false}>
+        <Modal.Container size="sm">
+          <Modal.Dialog aria-label="Add schedule">
+            <Modal.Header>
+              <Modal.Heading>Add Schedule</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
+              <section>
+                <Typography as="global-report-title">Title</Typography>
+                <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              </section>
+              <section className="mt-3">
+                <div className="flex flex-row gap-2">
+                  <Typography as="global-report-title" className="flex-1">
+                    Start Date
+                  </Typography>
+                  <Typography as="global-report-title" className="flex-1">
+                    End Date
+                  </Typography>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <DatePicker value={startDate} onChange={setStartDate} formatDate="YYYY-MM-DD" />
+                  <DatePicker value={endDate} onChange={setEndDate} formatDate="YYYY-MM-DD" />
+                </div>
+              </section>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="outline" color="navy" onClick={onHide}>
+                Close
+              </Button>
+              <Button color="navy" onClick={addSchedule}>
+                Add
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 };

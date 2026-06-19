@@ -1,0 +1,65 @@
+---
+description: Standar inti Knitto React Template — stack, struktur, naming, do/don't
+alwaysApply: true
+---
+
+# Knitto React Template — Core
+
+Boilerplate frontend Knitto: React 18, TypeScript, Vite 6, Tailwind CSS v4, Redux Toolkit, RTK Query, React Router, React Hook Form + Zod, `@knittotextile/react-ui`, PNPM.
+
+**Versi minimum:** Node.js >= 24 · pnpm >= 10.34.1
+
+## Struktur proyek
+
+```
+src/
+├── assets/
+├── components/          # shared (layout, ui lokal)
+│   └── ui/              # hanya yang belum ada di react-ui
+├── lib/                 # utils, hooks, variables
+├── pages/               # halaman & sub-halaman (React Router)
+│   └── [page]/
+│       ├── components/
+│       ├── hooks/
+│       └── index.tsx
+├── redux/               # api/, slice, store.ts
+├── styles/              # main.css
+├── test/                # setup, mocks, integrations, units
+└── types/
+config/                  # plugin Vite, deploy
+```
+
+## Konvensi penamaan
+
+- File & folder: **kebab-case**
+- Komponen React: **PascalCase**
+- Variabel & fungsi: **camelCase**
+- Konstanta global: **UPPER_CASE**
+- Import alias: **`@/*`** → `src/*`
+
+## Perintah
+
+```bash
+pnpm dev | build | preview | lint | format:all | test | test:coverage
+```
+
+## Do
+
+- TypeScript strict — no `any`
+- UI dari `@knittotextile/react-ui` dulu, lokal hanya jika belum ada di lib
+- RTK Query untuk semua data fetching; handle loading & error
+- ESLint + Prettier
+- Hook/logic shared → `src/lib/hooks/`; page-specific → `pages/[page]/hooks/`
+
+## Don't
+
+- npm / yarn (gunakan PNPM)
+- fetch/axios langsung
+- inline styles
+- skip error handling
+- duplikasi komponen UI yang sudah ada di lib
+
+## Referensi docs
+
+- README.md — setup & migrasi komponen
+- src/test/README.md — panduan testing

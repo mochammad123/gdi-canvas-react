@@ -1,11 +1,8 @@
-import { Button } from '@knittotextile/react-ui';
+import { Button, Typography, useToast } from '@knittotextile/react-ui';
 import { FormWrapper } from '@/components/ui/form/form';
 import LogoIcon from '@/components/ui/icon/logo';
 import InputwithLabel from '@/components/ui/inputs/input-with-label';
 import InputWithSuffix from '@/components/ui/inputs/input-with-suffix';
-import Label from '@/components/ui/label';
-import { useToast } from '@/components/ui/toast';
-import { Typography } from '@knittotextile/react-ui';
 import FeedbackError from '@/components/ui/form/feedback-error-input';
 import { env } from '@/lib/variables/env';
 import { useAuthLoginMutation } from '@/redux/api/auth';
@@ -32,11 +29,11 @@ export default function LoginPage() {
     try {
       const response = await mutateLogin(values).unwrap();
       const result = getLoginResult(response);
-      toast.open('success', result.message);
+      toast.show({ variant: 'success', message: result.message });
       navigate('/example/dashboard');
     } catch (error: unknown) {
       const errorMessage = getLoginErrorMessage(error);
-      toast.open('error', errorMessage);
+      toast.show({ variant: 'error', message: errorMessage });
     }
   };
 
@@ -71,7 +68,9 @@ export default function LoginPage() {
                   render={({ field }) => {
                     return (
                       <div>
-                        <Label>Password</Label>
+                        <Typography as="global-report-title" className="inline-block text-black-100 dark:text-greyish-semi-white">
+                          Password
+                        </Typography>
                         <InputWithSuffix required placeholder="Password" type="password" classNameInput="h-[44px]" {...field} />
                         {form.formState.errors.password?.message && <FeedbackError text={form.formState.errors.password?.message} />}
                       </div>

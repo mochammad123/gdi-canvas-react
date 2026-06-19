@@ -1,0 +1,60 @@
+---
+description: Penggunaan @knittotextile/react-ui vs komponen lokal
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# React UI — Lib vs Lokal
+
+## Prioritas import
+
+```tsx
+// ✅ Lib dulu
+import { Button, Typography, Modal, Dropdown, Select, KnittoTable, Pagination, useToast, useOverlayState } from '@knittotextile/react-ui';
+
+// ✅ Lokal hanya jika belum di lib
+import InputWithLabel from '@/components/ui/inputs/input-with-label';
+import { FormWrapper } from '@/components/ui/form/form';
+```
+
+## Bootstrap app
+
+```tsx
+// src/main.tsx
+<KnittoProvider defaultTheme={readStoredTheme() ?? 'system'} toast={{ position: 'top-right', duration: 3000 }}>
+  <Provider store={store}><App /></Provider>
+</KnittoProvider>
+```
+
+```css
+/* src/styles/main.css */
+@import 'tailwindcss';
+@import '@knittotextile/react-ui/styles';
+```
+
+## Komponen dari lib (jangan buat ulang lokal)
+
+Button, Typography, Select, DatePicker, DateTimePicker, DateRangePicker, MonthYearPicker, Pagination, KnittoTable, BigCalendar, Modal, Dropdown, Radio, RadioGroup, Toast/useToast, KnittoProvider, ThemeToggle, useOverlayState
+
+## Masih lokal di template
+
+`src/components/ui/inputs/*`, `form/*`, `icon/*`, `card`, `container/*`, `portal` — plus `src/components/layout/`
+
+## Pola halaman demo komponen
+
+```tsx
+<div className="p-4 flex flex-col gap-3 mb-10">
+  <Typography as="h3">Judul</Typography>
+  <div className="h-2 w-72 bg-burnt-orange-100" />
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">{/* cards */}</div>
+</div>
+```
+
+## Modal & Dropdown
+
+```tsx
+const modal = useOverlayState();
+<Modal isOpen={modal.isOpen} onOpenChange={modal.setOpen}>
+  <Modal.Backdrop><Modal.Container size="md">...</Modal.Container></Modal.Backdrop>
+</Modal>
+```

@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { KnittoProvider } from '@knittotextile/react-ui';
+import { KnittoProvider, readStoredTheme } from '@knittotextile/react-ui';
 import App from './App';
 import store from './redux/store';
 import './styles/main.css';
-import ToastProvider from './components/ui/toast';
 import { env } from './lib/variables/env';
 
 const useMockApi = env.VITE_ENVIRONTMENT === 'DEVELOPMENT' && env.VITE_USE_MOCK_API === 'true';
@@ -16,13 +15,13 @@ if (useMockApi) {
   });
 }
 
+const initialTheme = readStoredTheme() ?? 'system';
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement).render(
   <React.StrictMode>
-    <KnittoProvider defaultTheme="system" showSystemOption>
+    <KnittoProvider defaultTheme={initialTheme} showSystemOption defaultToastPosition="bottom-right" defaultToastDuration={10000}>
       <Provider store={store}>
-        <ToastProvider position="bottom-right" duration={10000}>
-          <App />
-        </ToastProvider>
+        <App />
       </Provider>
     </KnittoProvider>
   </React.StrictMode>

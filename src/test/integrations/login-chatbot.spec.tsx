@@ -16,7 +16,6 @@ describe('Login Chatbot Integration Test', () => {
 
     await loginButton.click();
 
-    await expect.element(screen.getByTestId('toast-success')).toBeInTheDocument();
     await expect.element(screen.getByText('Login berhasil')).toBeInTheDocument();
   });
 });

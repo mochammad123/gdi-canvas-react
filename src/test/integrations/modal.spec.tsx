@@ -1,41 +1,46 @@
-import { Button } from '@knittotextile/react-ui';
-import Modal from '@/components/ui/modal';
-import { useModal } from '@/lib/hooks/hooks';
+import { Button, Modal, useOverlayState } from '@knittotextile/react-ui';
 import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-react';
+import { renderWithProviders } from '../test-utils';
 
 const MODAL_TITLE = 'Modal Title';
 const MODAL_CONTENT = 'Modal Content';
 
 function ModalComponentTest() {
-  const { show, showModal, hideModal } = useModal<'modal-test'>();
+  const { isOpen, open, close, setOpen } = useOverlayState();
 
   return (
     <div>
-      <Button onClick={() => showModal('modal-test')}>Show Modal</Button>
-      {show && (
-        <Modal show={show} title={MODAL_TITLE} onHide={hideModal}>
-          <Modal.Content>
-            <p>{MODAL_CONTENT}</p>
-          </Modal.Content>
-          <div className="flex justify-end p-2">
-            <Button onClick={() => hideModal()}>Hide Modal</Button>
-          </div>
-        </Modal>
-      )}
+      <Button onClick={open}>Show Modal</Button>
+      <Modal isOpen={isOpen} onOpenChange={setOpen}>
+        <Modal.Backdrop>
+          <Modal.Container size="sm">
+            <Modal.Dialog>
+              <Modal.Header>
+                <Modal.Heading>{MODAL_TITLE}</Modal.Heading>
+              </Modal.Header>
+              <Modal.Body>
+                <p>{MODAL_CONTENT}</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={close}>Hide Modal</Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
     </div>
   );
 }
 
-describe('Hooks Test', () => {
+describe('Modal Integration Test', () => {
   it('seharusnya menampilkan button show modal dan modal tidak tampil', async () => {
-    const screen = await render(<ModalComponentTest />);
+    const screen = await renderWithProviders(<ModalComponentTest />);
     expect(screen.container.textContent).not.toContain(MODAL_TITLE);
     expect(screen.container.textContent).not.toContain(MODAL_CONTENT);
   });
 
   it('seharusnya menampilkan modal ketika button show modal diklik', async () => {
-    const screen = await render(<ModalComponentTest />);
+    const screen = await renderWithProviders(<ModalComponentTest />);
     const showModalButton = screen.getByText('Show Modal');
 
     await showModalButton.click();
@@ -44,7 +49,7 @@ describe('Hooks Test', () => {
   });
 
   it('seharusnya menutup modal ketika button hide modal diklik', async () => {
-    const screen = await render(<ModalComponentTest />);
+    const screen = await renderWithProviders(<ModalComponentTest />);
     const showModalButton = screen.getByText('Show Modal');
     const hideModalButton = screen.getByText('Hide Modal');
 

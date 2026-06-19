@@ -1,12 +1,12 @@
 import { Button, Typography } from '@knittotextile/react-ui';
 import LogoIcon from '@/components/ui/icon/logo';
-import { useToast } from '@/components/ui/toast';
+import { useToast } from '@knittotextile/react-ui';
 
 export default function TemplateLogin() {
   const toast = useToast();
 
   const onClickLogin = () => {
-    toast.open('success', 'Login berhasil');
+    toast.show({ variant: 'success', message: 'Login berhasil' });
   };
 
   return (

@@ -1,9 +1,7 @@
-import { Button, IHeader, KnittoTable, Pagination, Select, Typography } from '@knittotextile/react-ui';
+import { Button, IHeader, KnittoTable, Pagination, Radio, RadioGroup, Select, Typography } from '@knittotextile/react-ui';
 import { Card, CardContent } from '@/components/ui/card';
 import ContainerInput from '@/components/ui/container/container-input';
 import InputwithLabel from '@/components/ui/inputs/input-with-label';
-import Label from '@/components/ui/label';
-import RadioWithLabel from '@/components/ui/radio/radio-with-label';
 import FeedbackError from '@/components/ui/form/feedback-error-input';
 import { useParams } from '@/lib/hooks/hooks';
 import { exportDataToExcel, generateColumnWidths } from '@/lib/utils/utils';
@@ -120,15 +118,13 @@ function FormAdd({ className, form, onSave }: { className: string; form: UseForm
                 name="status"
                 render={({ field }) => (
                   <ContainerInput>
-                    <Label>Status</Label>
-                    <div className="flex gap-x-4">
-                      <RadioWithLabel label="Aktif" checked={field.value === 'aktif'} onChecked={() => form.setValue('status', 'aktif')} />
-                      <RadioWithLabel
-                        label="Tidak aktif"
-                        checked={field.value === 'tidak aktif'}
-                        onChecked={() => form.setValue('status', 'tidak aktif')}
-                      />
-                    </div>
+                    <Typography as="global-report-title" className="inline-block text-black-100 dark:text-greyish-semi-white">
+                      Status
+                    </Typography>
+                    <RadioGroup value={field.value} onChange={field.onChange} orientation="horizontal">
+                      <Radio value="aktif" label="Aktif" />
+                      <Radio value="tidak aktif" label="Tidak aktif" />
+                    </RadioGroup>
                   </ContainerInput>
                 )}
               />

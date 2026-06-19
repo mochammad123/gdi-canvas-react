@@ -75,7 +75,7 @@ describe('Login Integration Test', () => {
     await user.type(passwordInput, 'admin');
     await submitButton.click();
 
-    await expect.element(screen.getByTestId('toast-success')).toBeInTheDocument();
+    await expect.element(screen.getByText('Login berhasil')).toBeInTheDocument();
     expect(mockNavigate).toHaveBeenCalledWith('/example/dashboard');
   });
 
@@ -90,7 +90,7 @@ describe('Login Integration Test', () => {
     await user.type(passwordInput, 'admin');
     await submitButton.click();
 
-    await expect.element(screen.getByTestId('toast-error')).toBeInTheDocument();
+    await expect.element(screen.getByText('Password atau username salah')).toBeInTheDocument();
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -105,7 +105,7 @@ describe('Login Integration Test', () => {
     await user.type(passwordInput, 'password');
     await submitButton.click();
 
-    await expect.element(screen.getByTestId('toast-error')).toBeInTheDocument();
+    await expect.element(screen.getByText('Password atau username salah')).toBeInTheDocument();
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -126,7 +126,7 @@ describe('Login Integration Test', () => {
     await user.type(passwordInput, 'admin');
     await submitButton.click();
 
-    await expect.element(screen.getByTestId('toast-error')).toBeInTheDocument();
+    await expect.element(screen.getByText('Failed to fetch')).toBeInTheDocument();
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 });

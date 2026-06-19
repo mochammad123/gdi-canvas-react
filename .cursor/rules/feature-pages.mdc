@@ -1,0 +1,73 @@
+---
+description: Pola halaman feature — struktur folder, routing, hooks
+globs: "src/pages/**"
+alwaysApply: false
+---
+
+# Feature Pages
+
+## Struktur folder feature
+
+```
+src/pages/{modul}/{feature}/
+├── index.page.tsx       # list / index
+├── form.page.tsx        # create / edit / history
+├── history.page.tsx     # opsional
+├── route.tsx            # sub-routes + code-splitting
+├── hooks/
+│   ├── use-{feature}.ts
+│   └── use-{feature}-by-id.ts
+├── components/
+│   ├── table-{feature}.tsx
+│   └── section-*.tsx
+└── context/             # form kompleks (RHF + Zod)
+    ├── {feature}-context.tsx
+    └── {feature}-form-schema.ts
+```
+
+## Routing modul
+
+Modul utama (`index.tsx`): sidebar `ISidebarMenu[]` + `@loadable/component`. URL nested pakai suffix `/*`.
+
+```tsx
+// route.tsx feature
+const ListPage = loadable(() => import('./index.page'));
+const FormPage = loadable(() => import('./form.page'));
+
+export default function FeatureRoute() {
+  return (
+    <Routes>
+      <Route path="/" element={<ListPage />} />
+      <Route path="/:id/edit" element={<FormPage type="edit" />} />
+    </Routes>
+  );
+}
+```
+
+## Page hook
+
+Logic data di hook, bukan di komponen page:
+
+```tsx
+export default function useFeature() {
+  const { page, perPage, setPage, setPerPage, onNextPrev, search, setSearch } = useParams();
+  const { data, isLoading } = useGetFeatureListQuery({ page, perPage, q: search });
+  return { data: data?.result.data ?? [], pagination: data?.result.metadata, isLoading, page, perPage, setPage, setPerPage, onNextPrev };
+}
+```
+
+## Halaman list
+
+```tsx
+<section className="px-4 py-5 bg-white h-full">
+  <Typography as="global-strong">List Feature</Typography>
+  <TableFeature isLoading={isLoading} data={data} />
+  <div className="flex justify-end mt-4">
+    <Pagination page={page} perPage={perPage} totalData={pagination?.totalData ?? 0} onApplyPage={setPage} onApplyPerPage={setPerPage} onNext={onNextPrev} onPrev={onNextPrev} />
+  </div>
+</section>
+```
+
+## Halaman example (template)
+
+Path: `src/pages/example/components/{nama}/index.tsx` — daftarkan di `src/pages/example/index.tsx` sidebar module **Komponen**.

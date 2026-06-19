@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@plugin "../../tailwind/tailwind.components.ts";
 @import '@knittotextile/react-ui/styles';
 
 html,

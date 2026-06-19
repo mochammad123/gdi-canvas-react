@@ -1,4 +1,3 @@
-import ToastProvider from '@/components/ui/toast';
 import store from '@/redux/store';
 import { KnittoProvider } from '@knittotextile/react-ui';
 import { Provider } from 'react-redux';
@@ -9,9 +8,7 @@ function renderWithProviders(ui: React.ReactElement, { initialEntries = ['/'] }:
   return render(
     <KnittoProvider defaultTheme="light">
       <Provider store={store}>
-        <MemoryRouter initialEntries={initialEntries}>
-          <ToastProvider>{ui}</ToastProvider>
-        </MemoryRouter>
+        <MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>
       </Provider>
     </KnittoProvider>
   );

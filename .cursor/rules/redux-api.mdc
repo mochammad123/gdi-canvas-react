@@ -1,0 +1,61 @@
+---
+description: Konvensi RTK Query — api service, base query, types
+globs: "src/redux/**"
+alwaysApply: false
+---
+
+# Redux & RTK Query
+
+## Struktur
+
+```
+src/redux/
+├── api/
+│   ├── _baseQuery.ts    # baseService() — auth header, baseUrl
+│   ├── auth.ts          # createApi per domain
+│   └── {feature}.ts
+├── layoutSlice.ts
+└── store.ts
+```
+
+## Buat service baru
+
+```tsx
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { baseService } from './_baseQuery';
+
+export const featureService = createApi({
+  reducerPath: 'featureService',
+  baseQuery: baseService(),
+  tagTypes: ['Feature'],
+  endpoints: (build) => ({
+    getFeatureList: build.query<IPaginateResponse<FeatureApi.Item[]>, BasicParams>({
+      query: (params) => ({ method: 'GET', url: '/feature', params }),
+      providesTags: ['Feature'],
+    }),
+    updateFeature: build.mutation<IResponse<FeatureApi.Item>, FeatureApi.PayloadUpdate>({
+      query: ({ id, ...body }) => ({ method: 'PUT', url: `/feature/${id}`, body }),
+      invalidatesTags: ['Feature'],
+    }),
+  }),
+});
+
+export const { useGetFeatureListQuery, useUpdateFeatureMutation } = featureService;
+```
+
+## Daftarkan di store
+
+```tsx
+// store.ts — tambah reducer + middleware
+[featureService.reducerPath]: featureService.reducer,
+// middleware: ...concat(featureService.middleware)
+```
+
+## Types
+
+Namespace per domain: `FeatureApi.PayloadUpdate`, `FeatureApi.Item`. Response wrapper: `IResponse<T>`, `IPaginateResponse<T>`.
+
+## Don't
+
+- fetch/axios langsung di komponen
+- skip loading/error state dari hook RTK Query
