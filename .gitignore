@@ -30,3 +30,5 @@ dev-dist
 **/__screenshots__/
 
 coverage/*
+
+.playwright-mcp/

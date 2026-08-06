@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@knittotextile/react-ui": "^2.3.2",
+    "@knittotextile/react-ui": "^2.5.0",
     "@loadable/component": "^5.16.7",
     "@reduxjs/toolkit": "^1.9.7",
     "@tanstack/react-virtual": "^3.13.18",

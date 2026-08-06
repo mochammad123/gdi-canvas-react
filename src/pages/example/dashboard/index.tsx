@@ -35,6 +35,7 @@ const examplePageSections: PageSection[] = [
       { label: 'Modal Examples', path: '/example/komponen/modal' },
       { label: 'Dropdown Examples', path: '/example/komponen/dropdown' },
       { label: 'Big Calendar Examples', path: '/example/komponen/big-calendar' },
+      { label: 'Editor Examples', path: '/example/komponen/editor' },
     ],
   },
   {

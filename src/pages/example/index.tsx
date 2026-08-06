@@ -17,6 +17,7 @@ const RadioPage = loadable(() => import('./components/radio'));
 const ModalPage = loadable(() => import('./components/modal'));
 const DropdownPage = loadable(() => import('./components/dropdown'));
 const BigCalendarPage = loadable(() => import('./components/big-calendar'));
+const EditorPage = loadable(() => import('./components/editor'));
 const TemplateMasterAndDetailPage = loadable(() => import('./templates/template-master-and-detail'));
 const TemplateMasterDetailHistoryPage = loadable(() => import('./templates/template-master-and-detail/history'));
 const TemplateMasterDetailHistoryDetailPage = loadable(() => import('./templates/template-master-and-detail/history-detail'));
@@ -56,6 +57,7 @@ export default function AdminRoutes() {
           { label: 'Modal', url: 'komponen/modal', element: <ModalPage /> },
           { label: 'Dropdown', url: 'komponen/dropdown', element: <DropdownPage /> },
           { label: 'Big Calendar', url: 'komponen/big-calendar', element: <BigCalendarPage /> },
+          { label: 'Editor', url: 'komponen/editor', element: <EditorPage /> },
           { label: 'Table', url: 'komponen/table', element: <TablePage /> },
         ],
       },
@@ -133,7 +135,7 @@ export default function AdminRoutes() {
 
   return (
     <Layout sidebar={sidebarAdmin}>
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<div className="p-4 text-navy-100 dark:text-greyish-semi-white text-lg font-semibold">Loading...</div>}>
         <Routes>
           <Route path="/" element={getFirstComponet()} />
           <Route path="/dashboard" element={getFirstComponet()} />
