@@ -2,10 +2,7 @@ import loadable from '@loadable/component';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { registerSW } from 'virtual:pwa-register';
 import { env } from './lib/variables/env';
-const ExampleRoutes = loadable(() => import('./pages/example'));
-const LoginPage = loadable(() => import('./pages/login'));
-const LoginCabangPage = loadable(() => import('./pages/login/login-cabang'));
-const LoginChatbotPage = loadable(() => import('./pages/login/login-chatbot'));
+const LabelDesignerPage = loadable(() => import('./pages/label-designer'));
 
 function App() {
   if (env.VITE_USE_MOCK_API !== 'true') {
@@ -14,12 +11,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ExampleRoutes />} />
-        <Route path="/login-cabang" element={<LoginCabangPage />} />
-        <Route path="/login-chatbot" element={<LoginChatbotPage />} />
-
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/example/*" element={<ExampleRoutes />} />
+        <Route path="/" element={<LabelDesignerPage />} />
+        <Route path="/label-designer" element={<LabelDesignerPage />} />
       </Routes>
     </BrowserRouter>
   );

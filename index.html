@@ -7,14 +7,12 @@
     <title>Template Vite Preact Typescript Knitto</title>
     <script>
       (function () {
-        var STORAGE_KEY = 'knitto-theme';
-        var stored = localStorage.getItem(STORAGE_KEY);
-        var mode = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var isDark = mode === 'dark' || (mode === 'system' && prefersDark);
         var root = document.documentElement;
-        root.classList.toggle('dark', isDark);
-        root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        root.classList.remove('dark');
+        root.setAttribute('data-theme', 'light');
+        try {
+          localStorage.setItem('knitto-theme', 'light');
+        } catch (e) {}
       })();
     </script>
   </head>
