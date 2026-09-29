@@ -1,8 +1,12 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LabelElement, LabelTemplate, ElementType, TagItem } from '../types';
 import { BASE_SCALE, DEFAULT_TEMPLATE, AVAILABLE_TAGS, STORAGE_KEY_TEMPLATE, STORAGE_KEY_TAGS } from '../constants';
 import { useLabelHistory } from './use-label-history';
-import { downloadTemplateJson, parseTemplateJson } from '../utils';
+import { useSelectionClipboard } from './use-selection-clipboard';
+import { useCanvasInteraction } from './use-canvas-interaction';
+import { clampZoom, createLabelElement, downloadTemplateJson, parseTemplateJson } from '../utils';
+
+export type { ContextMenuState } from './use-selection-clipboard';
 
 export const useLabelDesigner = () => {
   const [template, setTemplate] = useState<LabelTemplate>(() => {
@@ -32,16 +36,20 @@ export const useLabelDesigner = () => {
   });
 
   const [newTagInput, setNewTagInput] = useState('');
-  const [selectedId, setSelectedId] = useState<string | null>('el_3');
-  const [zoom, setZoom] = useState<number>(1.5); // Default 150% zoom
-  const [snapGrid, setSnapGrid] = useState<boolean>(true);
+  const [selectedIds, setSelectedIds] = useState<string[]>(['el_3']);
+  const [zoom, setZoomRaw] = useState(1.5);
+  const [snapGrid, setSnapGrid] = useState(true);
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
-  const dragStartTemplateRef = useRef<LabelTemplate>(template);
+  const selectedIdsRef = useRef(selectedIds);
+  selectedIdsRef.current = selectedIds;
 
-  // Auto-save template & custom tags to localStorage
+  const setZoom = useCallback((value: number | ((prev: number) => number)) => {
+    setZoomRaw((prev) => clampZoom(typeof value === 'function' ? value(prev) : value));
+  }, []);
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_TEMPLATE, JSON.stringify(template));
   }, [template]);
@@ -54,28 +62,24 @@ export const useLabelDesigner = () => {
     recordToHistory(template);
   }, [recordToHistory, template]);
 
-  // Undo & Redo Handlers
   const handleUndo = useCallback(() => {
     const previous = undoHistory(template);
-    if (previous) {
-      setTemplate(previous);
-    }
+    if (previous) setTemplate(previous);
   }, [undoHistory, template]);
 
   const handleRedo = useCallback(() => {
     const next = redoHistory(template);
-    if (next) {
-      setTemplate(next);
-    }
+    if (next) setTemplate(next);
   }, [redoHistory, template]);
 
   const scale = BASE_SCALE * zoom;
   const canvasWidthPx = template.width_mm * scale;
   const canvasHeightPx = template.height_mm * scale;
-
+  const selectedId = selectedIds.length > 0 ? selectedIds[selectedIds.length - 1] : null;
   const selectedElement = template.elements.find((el) => el.id === selectedId) || null;
 
-  // Update specific property of selected element
+  const snapValue = useCallback((value: number) => (snapGrid ? Math.round(value * 2) / 2 : Math.round(value * 10) / 10), [snapGrid]);
+
   const updateSelectedElement = useCallback(
     (updates: Partial<LabelElement>) => {
       if (!selectedId) return;
@@ -88,72 +92,44 @@ export const useLabelDesigner = () => {
     [selectedId, recordCurrentState]
   );
 
-  // Update template dimensions (width / height in mm)
   const updateTemplateDimensions = useCallback((updates: Partial<{ width_mm: number; height_mm: number }>) => {
-    setTemplate((prev) => ({
-      ...prev,
-      ...updates,
-    }));
+    setTemplate((prev) => ({ ...prev, ...updates }));
   }, []);
 
-  // Add new element
   const handleAddElement = useCallback(
-    (type: ElementType, customText?: string) => {
+    (type: ElementType, customText?: string, position?: { x: number; y: number }) => {
       recordCurrentState();
-      const newId = `el_${Date.now()}`;
-      let newElement: LabelElement;
+      const snappedPosition = position
+        ? {
+            x: Math.max(0, Math.min(template.width_mm - 2, snapValue(position.x))),
+            y: Math.max(0, Math.min(template.height_mm - 2, snapValue(position.y))),
+          }
+        : undefined;
 
-      if (type === 'barcode') {
-        newElement = {
-          id: newId,
-          type: 'barcode',
-          x: 5.0,
-          y: 10.0,
-          width: 35.0,
-          height: 8.0,
-          text: customText || '{{NoRoll}}',
-        };
-      } else if (type === 'line') {
-        newElement = {
-          id: newId,
-          type: 'line',
-          x: 0,
-          y: 25.0,
-          width: template.width_mm - 4,
-          dashed: false,
-        };
-      } else if (type === 'image') {
-        newElement = {
-          id: newId,
-          type: 'image',
-          x: 5.0,
-          y: 5.0,
-          width: 15.0,
-          height: 15.0,
-          src: customText || '',
-        };
-      } else {
-        newElement = {
-          id: newId,
-          type: 'text',
-          x: 5.0,
-          y: 5.0,
-          text: customText || 'Teks Baru',
-          fontSize: 10,
-          bold: true,
-        };
+      const newElement = createLabelElement(type, {
+        widthMm: template.width_mm,
+        customText,
+        position: snappedPosition,
+      });
+
+      // Jika newElement dijatuhkan ke dalam area band, langsung pasang bandId!
+      const band = template.elements.find((el) => el.type === 'band');
+      if (band && newElement.type !== 'band') {
+        const bH = band.height || 8.0;
+        if (newElement.y >= band.y - 0.5 && newElement.y < band.y + bH) {
+          newElement.bandId = band.id;
+        }
       }
 
       setTemplate((prev) => ({
         ...prev,
-        elements: [...prev.elements, newElement],
+        elements: newElement.type === 'band' ? [newElement, ...prev.elements] : [...prev.elements, newElement],
       }));
-      setSelectedId(newId);
+      setSelectedIds([newElement.id]);
     },
-    [recordCurrentState, template.width_mm]
+    [recordCurrentState, template.width_mm, template.height_mm, snapValue]
   );
 
-  // Add custom variable tag
   const handleAddCustomTag = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
@@ -166,135 +142,52 @@ export const useLabelDesigner = () => {
         return;
       }
 
-      const newTag: TagItem = {
-        label: cleanName,
-        tag: formattedTag,
-        isCustom: true,
-      };
-
-      setTags((prev) => [...prev, newTag]);
+      setTags((prev) => [...prev, { label: cleanName, tag: formattedTag, isCustom: true }]);
       setNewTagInput('');
       handleAddElement('text', formattedTag);
     },
     [newTagInput, tags, handleAddElement]
   );
 
-  // Delete custom tag
   const handleDeleteCustomTag = useCallback((tagToDelete: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setTags((prev) => prev.filter((t) => t.tag !== tagToDelete));
   }, []);
 
-  // Delete selected element
-  const handleDeleteSelected = useCallback(() => {
-    if (!selectedId) return;
-    recordCurrentState();
-    setTemplate((prev) => ({
-      ...prev,
-      elements: prev.elements.filter((el) => el.id !== selectedId),
-    }));
-    setSelectedId(null);
-  }, [selectedId, recordCurrentState]);
+  const selection = useSelectionClipboard({
+    template,
+    setTemplate,
+    selectedIds,
+    setSelectedIds,
+    editingTextId,
+    previewOpen,
+    setPreviewOpen,
+    recordCurrentState,
+    snapValue,
+    handleUndo,
+    handleRedo,
+  });
 
-  // Keyboard shortcuts: Ctrl+Z (Undo), Ctrl+Y (Redo), Delete / Backspace (Hapus)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const isCtrlOrMeta = e.ctrlKey || e.metaKey;
-      const tag = (e.target as HTMLElement).tagName.toLowerCase();
-      const isEditingInput = tag === 'input' || tag === 'textarea';
+  const canvas = useCanvasInteraction({
+    template,
+    setTemplate,
+    scale,
+    snapGrid,
+    editingTextId,
+    setEditingTextId,
+    selectedIdsRef,
+    setSelectedIds,
+    setZoom,
+    setHistory,
+    setFuture,
+    closeContextMenu: selection.closeContextMenu,
+    onDropAddElement: handleAddElement,
+  });
 
-      // Ctrl + Z -> Undo
-      if (isCtrlOrMeta && e.key.toLowerCase() === 'z') {
-        if (e.shiftKey) {
-          e.preventDefault();
-          handleRedo();
-        } else if (!isEditingInput) {
-          e.preventDefault();
-          handleUndo();
-        }
-      }
-      // Ctrl + Y -> Redo
-      else if (isCtrlOrMeta && e.key.toLowerCase() === 'y') {
-        if (!isEditingInput) {
-          e.preventDefault();
-          handleRedo();
-        }
-      }
-      // Delete / Backspace -> Hapus Elemen
-      else if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) {
-        if (!isEditingInput) {
-          e.preventDefault();
-          handleDeleteSelected();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleUndo, handleRedo, selectedId, handleDeleteSelected]);
-
-  // Pointer / Drag logic on canvas
-  const handlePointerDown = useCallback(
-    (e: React.PointerEvent, element: LabelElement) => {
-      e.stopPropagation();
-      setSelectedId(element.id);
-      isDraggingRef.current = false;
-      dragStartTemplateRef.current = template;
-
-      const startX = e.clientX;
-      const startY = e.clientY;
-      const initialElX = element.x;
-      const initialElY = element.y;
-
-      const onPointerMove = (moveEvent: PointerEvent) => {
-        const deltaPxX = moveEvent.clientX - startX;
-        const deltaPxY = moveEvent.clientY - startY;
-
-        if (Math.abs(deltaPxX) > 2 || Math.abs(deltaPxY) > 2) {
-          isDraggingRef.current = true;
-        }
-
-        let newMmX = initialElX + deltaPxX / scale;
-        let newMmY = initialElY + deltaPxY / scale;
-
-        if (snapGrid) {
-          newMmX = Math.round(newMmX * 2) / 2;
-          newMmY = Math.round(newMmY * 2) / 2;
-        } else {
-          newMmX = Math.round(newMmX * 10) / 10;
-          newMmY = Math.round(newMmY * 10) / 10;
-        }
-
-        newMmX = Math.max(0, Math.min(template.width_mm - 2, newMmX));
-        newMmY = Math.max(0, Math.min(template.height_mm - 2, newMmY));
-
-        setTemplate((prev) => ({
-          ...prev,
-          elements: prev.elements.map((el) => (el.id === element.id ? { ...el, x: newMmX, y: newMmY } : el)),
-        }));
-      };
-
-      const onPointerUp = () => {
-        if (isDraggingRef.current) {
-          setHistory((prev) => [...prev.slice(-30), dragStartTemplateRef.current]);
-          setFuture([]);
-        }
-        window.removeEventListener('pointermove', onPointerMove);
-        window.removeEventListener('pointerup', onPointerUp);
-      };
-
-      window.addEventListener('pointermove', onPointerMove);
-      window.addEventListener('pointerup', onPointerUp);
-    },
-    [template, scale, snapGrid, setHistory, setFuture]
-  );
-
-  // Download template JSON
   const handleDownloadJSON = useCallback(() => {
     downloadTemplateJson(template);
   }, [template]);
 
-  // Upload template JSON
   const handleUploadJSON = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -305,23 +198,20 @@ export const useLabelDesigner = () => {
         (parsed) => {
           recordCurrentState();
           setTemplate(parsed);
-          setSelectedId(parsed.elements[0]?.id || null);
+          setSelectedIds(parsed.elements[0]?.id ? [parsed.elements[0].id] : []);
         },
-        (err) => {
-          alert(err);
-        }
+        (err) => alert(err)
       );
       e.target.value = '';
     },
     [recordCurrentState]
   );
 
-  // Reset to default template
   const handleResetTemplate = useCallback(() => {
     if (confirm('Kembalikan ke template awal 80x30?')) {
       recordCurrentState();
       setTemplate(DEFAULT_TEMPLATE);
-      setSelectedId('el_3');
+      setSelectedIds(['el_3']);
     }
   }, [recordCurrentState]);
 
@@ -331,6 +221,7 @@ export const useLabelDesigner = () => {
       tags,
       newTagInput,
       selectedId,
+      selectedIds,
       selectedElement,
       zoom,
       snapGrid,
@@ -339,19 +230,46 @@ export const useLabelDesigner = () => {
       canvasHeightPx,
       canUndo,
       canRedo,
+      editingTextId,
+      alignmentGuides: canvas.alignmentGuides,
+      marquee: canvas.marquee,
+      mouseMm: canvas.mouseMm,
+      contextMenu: selection.contextMenu,
+      previewOpen,
     },
     func: {
       setNewTagInput,
       setZoom,
       setSnapGrid,
-      setSelectedId,
+      selectElement: selection.selectElement,
+      clearSelection: selection.clearSelection,
       updateTemplateDimensions,
       updateSelectedElement,
       handleAddElement,
       handleAddCustomTag,
       handleDeleteCustomTag,
-      handleDeleteSelected,
-      handlePointerDown,
+      handleDeleteSelected: selection.handleDeleteSelected,
+      handleCopySelected: selection.handleCopySelected,
+      handlePasteClipboard: selection.handlePasteClipboard,
+      handleDuplicateSelected: selection.handleDuplicateSelected,
+      handleAlignSelected: selection.handleAlignSelected,
+      handleReorderSelected: selection.handleReorderSelected,
+      handleToggleLockSelected: selection.handleToggleLockSelected,
+      handleContextMenu: selection.handleContextMenu,
+      closeContextMenu: selection.closeContextMenu,
+      setPreviewOpen,
+      handlePointerDown: canvas.handlePointerDown,
+      handleResizePointerDown: canvas.handleResizePointerDown,
+      handleMarqueeStart: canvas.handleMarqueeStart,
+      handleCanvasMouseMove: canvas.handleCanvasMouseMove,
+      handleCanvasMouseLeave: canvas.handleCanvasMouseLeave,
+      handleCanvasDragOver: canvas.handleCanvasDragOver,
+      handleCanvasDrop: canvas.handleCanvasDrop,
+      handleCanvasWheel: canvas.handleCanvasWheel,
+      handleStartTextEdit: canvas.handleStartTextEdit,
+      handleChangeTextEdit: canvas.handleChangeTextEdit,
+      handleCommitTextEdit: canvas.handleCommitTextEdit,
+      handleCancelTextEdit: canvas.handleCancelTextEdit,
       handleDownloadJSON,
       handleUploadJSON,
       handleResetTemplate,
@@ -360,7 +278,7 @@ export const useLabelDesigner = () => {
     },
     refs: {
       fileInputRef,
-      canvasRef,
+      canvasRef: canvas.canvasRef,
     },
   };
 };

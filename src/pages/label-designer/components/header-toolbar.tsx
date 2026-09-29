@@ -20,6 +20,7 @@ interface HeaderToolbarProps {
   onUploadJSON: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onResetTemplate: () => void;
   onDownloadJSON: () => void;
+  onOpenPreview: () => void;
 }
 
 export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
@@ -38,6 +39,7 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
   onUploadJSON,
   onResetTemplate,
   onDownloadJSON,
+  onOpenPreview,
 }) => {
   return (
     <header className="bg-white border-b border-slate-200 px-6 py-2.5 flex items-center justify-between shadow-xs z-10">
@@ -106,7 +108,7 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
                 onUpdateDimensions({ width_mm: 80 });
               }
             }}
-            className="!w-12 !h-6 !text-xs !py-0 !px-1 bg-white text-center font-medium"
+            className="w-12! h-6! text-xs! py-0! px-1! bg-white text-center font-medium"
           />
           <Typography as="global-hint" className="text-slate-400 text-xs">
             ×
@@ -123,7 +125,7 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
                 onUpdateDimensions({ height_mm: 30 });
               }
             }}
-            className="!w-12 !h-6 !text-xs !py-0 !px-1 bg-white text-center font-medium"
+            className="w-12! h-6! text-xs! py-0! px-1! bg-white text-center font-medium"
           />
           <Typography as="global-hint" className="text-slate-500 font-medium text-xs">
             mm
@@ -135,11 +137,23 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
           <Typography as="global-strong" className="font-semibold text-slate-600 text-xs">
             Zoom:
           </Typography>
+          <Typography as="global-hint" className="text-xs font-mono font-semibold text-slate-700 min-w-10 text-center">
+            {Math.round(zoom * 100)}%
+          </Typography>
           <select
-            value={zoom}
-            onChange={(e) => onChangeZoom(Number(e.target.value))}
+            value={ZOOM_OPTIONS.some((opt) => opt.value === zoom) ? zoom : ''}
+            onChange={(e) => {
+              if (e.target.value === '') return;
+              onChangeZoom(Number(e.target.value));
+            }}
             className="bg-white border border-slate-300 rounded px-1.5 py-0 text-xs font-medium cursor-pointer h-6 outline-none text-slate-700"
+            title="Ctrl + Scroll untuk zoom di canvas"
           >
+            {!ZOOM_OPTIONS.some((opt) => opt.value === zoom) && (
+              <option value="" disabled>
+                Custom
+              </option>
+            )}
             {ZOOM_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
@@ -160,6 +174,10 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
       {/* Action Buttons */}
       <div className="flex items-center gap-2">
         <input type="file" ref={fileInputRef} onChange={onUploadJSON} accept=".json" className="hidden" />
+        <Button type="button" size="sm" variant="outline" color="navy" rounded onClick={onOpenPreview} title="Preview ukuran aktual 1:1">
+          <span>👁</span>
+          <span>Preview 1:1</span>
+        </Button>
         <Button type="button" size="sm" variant="outline" color="navy" rounded onClick={() => fileInputRef.current?.click()}>
           <span>📂</span>
           <span>Buka Template</span>

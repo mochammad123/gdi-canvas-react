@@ -40,3 +40,6 @@ export const ZOOM_OPTIONS: ZoomOption[] = [
   { label: '200% (Besar)', value: 2.0 },
   { label: '250% (Detail)', value: 2.5 },
 ];
+
+/** MIME type untuk drag & drop elemen dari toolbox ke canvas */
+export const DND_ELEMENT_MIME = 'application/x-knitto-label-element';
