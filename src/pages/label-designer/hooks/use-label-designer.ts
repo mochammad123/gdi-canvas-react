@@ -92,9 +92,12 @@ export const useLabelDesigner = () => {
     [selectedId, recordCurrentState]
   );
 
-  const updateTemplateDimensions = useCallback((updates: Partial<{ width_mm: number; height_mm: number }>) => {
-    setTemplate((prev) => ({ ...prev, ...updates }));
-  }, []);
+  const updateTemplateDimensions = useCallback(
+    (updates: Partial<{ width_mm: number; height_mm: number; auto_height: boolean; auto_cut: boolean }>) => {
+      setTemplate((prev) => ({ ...prev, ...updates }));
+    },
+    []
+  );
 
   const handleAddElement = useCallback(
     (type: ElementType, customText?: string, position?: { x: number; y: number }) => {

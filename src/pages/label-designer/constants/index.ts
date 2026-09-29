@@ -9,6 +9,8 @@ export const DEFAULT_TEMPLATE: LabelTemplate = {
   name: 'Label Kain 80x30',
   width_mm: 80,
   height_mm: 30,
+  auto_height: false,
+  auto_cut: false,
   elements: [
     { id: 'el_1', type: 'text', x: 2.0, y: 1.5, text: 'Roll Induk', fontSize: 9, bold: true },
     { id: 'el_2', type: 'text', x: 40.0, y: 1.5, text: 'Roll Pecahan', fontSize: 9, bold: true },

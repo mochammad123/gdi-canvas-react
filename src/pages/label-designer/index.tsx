@@ -20,6 +20,7 @@ export default function LabelDesigner() {
         onRedo={func.handleRedo}
         widthMm={state.template.width_mm}
         heightMm={state.template.height_mm}
+        autoHeight={state.template.auto_height}
         onUpdateDimensions={func.updateTemplateDimensions}
         zoom={state.zoom}
         onChangeZoom={func.setZoom}

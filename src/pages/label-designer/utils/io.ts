@@ -5,6 +5,8 @@ export const sanitizeTemplate = (template: LabelTemplate): LabelTemplate => ({
   ...template,
   width_mm: Number(template.width_mm) || 80,
   height_mm: Number(template.height_mm) || 30,
+  auto_height: template.auto_height ?? false,
+  auto_cut: template.auto_cut ?? false,
   elements: template.elements.map((el) => ({
     ...el,
     x: Number(el.x) || 0,

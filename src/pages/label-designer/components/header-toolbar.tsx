@@ -11,7 +11,8 @@ interface HeaderToolbarProps {
   onRedo: () => void;
   widthMm: number;
   heightMm: number;
-  onUpdateDimensions: (updates: { width_mm?: number; height_mm?: number }) => void;
+  autoHeight?: boolean;
+  onUpdateDimensions: (updates: { width_mm?: number; height_mm?: number; auto_height?: boolean; auto_cut?: boolean }) => void;
   zoom: number;
   onChangeZoom: (zoom: number) => void;
   snapGrid: boolean;
@@ -30,6 +31,7 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
   onRedo,
   widthMm,
   heightMm,
+  autoHeight,
   onUpdateDimensions,
   zoom,
   onChangeZoom,
@@ -161,6 +163,17 @@ export const HeaderToolbar: React.FC<HeaderToolbarProps> = ({
             ))}
           </select>
         </div>
+
+        {/* Auto Height Toggle (Khusus Struk Roll) */}
+        <label
+          className="flex items-center gap-1.5 text-xs text-slate-600 cursor-pointer select-none bg-slate-50 px-2 py-1 rounded-md border border-slate-200"
+          title="Centang hanya jika mendesain struk kasir roll (tinggi dinamis). Biarkan kosong untuk label stiker 80x30."
+        >
+          <Checkbox checked={!!autoHeight} onChecked={(checked) => onUpdateDimensions({ auto_height: checked, auto_cut: checked })} />
+          <Typography as="global-hint" className="text-xs text-slate-700 font-medium">
+            Auto-Height (Struk)
+          </Typography>
+        </label>
 
         {/* Grid Snap Toggle */}
         <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
